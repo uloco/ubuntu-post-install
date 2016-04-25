@@ -1,0 +1,99 @@
+#!/bin/bash
+
+function main {
+
+  sudo -k
+  
+  # add third party ppas
+  # atom editor
+  sudo add-apt-repository ppa:webupd8team/atom
+  # diodon clipboard manager
+  sudo add-apt-repository ppa:diodon-team/stable
+  #numix
+  sudo add-apt-repository ppa:numix/numix
+
+  # update
+  sudo apt-get update
+
+  # upgrade
+  sudo apt-get upgrade
+
+  # install packages
+  sudo apt-get -y install htop git unity-tweak-tool guake dconf-tools
+    compizconfig-settings-manager gksu vim gparted openjdk-8-jdk \
+    chromium-browser nautilus-terminal gcolor2 font-manager inkscape diodon meld \
+    thunderbird numix-gtk-theme numix-icon-theme-circle
+
+
+
+  # clean up installed packages
+  sudo apt-get autoremove
+
+  # to be installed
+  # webstorm
+
+  # set up diodon key binding
+  gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+  gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Diodon Clipboard Manager'
+  gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/usr/bin/diodon'
+  gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Primary><Super>v'
+
+  # thunderbird install lightning addon
+
+  # clean up launcher and set default applications
+
+  # install dreymar keyboard extended layer (capslock navigations)
+
+  # adjust global unity shortcuts
+
+  # configure guake
+
+  # overall unity settings (battery indicator, clock, date-format,...)
+
+  # middle mouse click with three fingers
+  echo "synclient TapButton3=2" >> $HOME/.bashrc
+
+  # get nvm and set up npm
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+  source $HOME/.bashrc
+  nvm install stable
+  nvm alias default stable
+  nvm use stable
+
+  npm install -g babel-cli bower cordova eslint eslint-config-angular \
+                  eslint-config-google eslint-plugin-angular flow-bin grunt-cli \
+                  gulp http-server ionic jsdoc karma-cli esformatter
+
+  # customize bash prompt with git status bar (bash it?)
+
+  # install font source code pro
+  if [ ! -d "$HOME/.fonts" ]; then
+    mkdir ~/.fonts
+  fi
+  tar -xzvf source-code-pro.tar.gz
+  cp -f source-code-pro/* ~/.fonts
+  fc-cache -f -v
+  rm -r source-code-pro/
+
+  # install grob configs if called with argument
+  if [ $1 == "grob"]; then
+    grobCustomization
+  fi
+}
+
+# grob customization
+function grobCustomization {
+  echo "grobCustomization"
+  # set npm registry
+  npm config set registry http://gmvm003lx:8081/nexus/content/repositories/npmjs/
+
+  # set up proxy
+  sudo apt-get install cntlm
+  echo "Please enter password for proxy authentication"
+
+
+  # set proxy for atom editor
+}
+
+# start script
+main
