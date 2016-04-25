@@ -1,9 +1,5 @@
 #!/bin/bash
 
-function main {
-
-  sudo -k
-  
   # add third party ppas
   # atom editor
   sudo add-apt-repository ppa:webupd8team/atom
@@ -19,12 +15,10 @@ function main {
   sudo apt-get upgrade
 
   # install packages
-  sudo apt-get -y install htop git unity-tweak-tool guake dconf-tools
+  sudo apt-get -y install htop git unity-tweak-tool guake dconf-tools \
     compizconfig-settings-manager gksu vim gparted openjdk-8-jdk \
-    chromium-browser nautilus-terminal gcolor2 font-manager inkscape diodon meld \
-    thunderbird numix-gtk-theme numix-icon-theme-circle
-
-
+    chromium-browser nautilus-terminal gcolor2 font-manager inkscape diodon \
+    meld thunderbird numix-gtk-theme numix-icon-theme-circle
 
   # clean up installed packages
   sudo apt-get autoremove
@@ -32,13 +26,19 @@ function main {
   # to be installed
   # webstorm
 
+  # download and install webstorm
+  wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.1.tar.gz"
+  tar -xzf data/webstorm.tar.gz --directory data/webstorm
+  sudo cp -r
+
+
   # set up diodon key binding
   gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Diodon Clipboard Manager'
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/usr/bin/diodon'
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Primary><Super>v'
 
-  # thunderbird install lightning addon
+  # thunderbird install lightning addon and minimize to tray
 
   # clean up launcher and set default applications
 
@@ -61,8 +61,8 @@ function main {
   nvm use stable
 
   npm install -g babel-cli bower cordova eslint eslint-config-angular \
-                  eslint-config-google eslint-plugin-angular flow-bin grunt-cli \
-                  gulp http-server ionic jsdoc karma-cli esformatter
+    eslint-config-google eslint-plugin-angular flow-bin grunt-cli \
+    gulp http-server ionic jsdoc karma-cli esformatter
 
   # customize bash prompt with git status bar (bash it?)
 
@@ -79,7 +79,6 @@ function main {
   if [ $1 == "grob"]; then
     grobCustomization
   fi
-}
 
 # grob customization
 function grobCustomization {
