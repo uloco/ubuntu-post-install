@@ -12,13 +12,30 @@
   sudo apt-get update
 
   # upgrade
-  sudo apt-get upgrade
+  sudo apt-get -y upgrade
+  sudo apt-get -y dist-upgrade
 
   # install packages
-  sudo apt-get -y install htop git unity-tweak-tool guake dconf-tools \
-    compizconfig-settings-manager gksu vim gparted openjdk-8-jdk \
-    chromium-browser nautilus-terminal gcolor2 font-manager inkscape diodon \
-    meld thunderbird numix-gtk-theme numix-icon-theme-circle
+  sudo apt-get -y install htop
+  sudo apt-get -y install git
+  sudo apt-get -y install unity-tweak-tool
+  sudo apt-get -y install guake
+  sudo apt-get -y install dconf-editor
+  sudo apt-get -y install compizconfig-settings-manager
+  sudo apt-get -y install gksu
+  sudo apt-get -y install vim
+  sudo apt-get -y install gparted
+  sudo apt-get -y install openjdk-8-jdk
+  sudo apt-get -y install chromium-browser
+  sudo apt-get -y install nautilus-terminal
+  sudo apt-get -y install gcolor2
+  sudo apt-get -y install font-manager
+  sudo apt-get -y install inkscape
+  sudo apt-get -y install diodon
+  sudo apt-get -y install meld
+  sudo apt-get -y install thunderbird
+  sudo apt-get -y install numix-gtk-theme
+  sudo apt-get -y install numix-icon-theme-circle
 
   # clean up installed packages
   sudo apt-get autoremove
@@ -29,8 +46,7 @@
   # download and install webstorm
   wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.1.tar.gz"
   tar -xzf data/webstorm.tar.gz --directory data/webstorm
-  sudo cp -r
-
+  sudo cp -r data/webstorm /opt/webstorm
 
   # set up diodon key binding
   gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
