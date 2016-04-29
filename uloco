@@ -1,102 +1,106 @@
 #!/bin/bash
 
-  # add third party ppas
-  # atom editor
-  sudo add-apt-repository ppa:webupd8team/atom
-  # diodon clipboard manager
-  sudo add-apt-repository ppa:diodon-team/stable
-  #numix
-  sudo add-apt-repository ppa:numix/numix
+# GROB: install ntlm proxy and configure user credentials
+sudo dpkg -i data/cntlm_0.92.3_amd64.deb
+# insert script here for generating password and adding hashes to /etc/cntlm.conf
 
-  # update
-  sudo apt-get update
+# add third party ppas
+# atom editor
+sudo add-apt-repository ppa:webupd8team/atom
+# diodon clipboard manager
+sudo add-apt-repository ppa:diodon-team/stable
+#numix
+sudo add-apt-repository ppa:numix/numix
 
-  # upgrade
-  sudo apt-get -y upgrade
-  sudo apt-get -y dist-upgrade
+# update
+sudo apt-get update
 
-  # install packages
-  sudo apt-get -y install htop
-  sudo apt-get -y install git
-  sudo apt-get -y install unity-tweak-tool
-  sudo apt-get -y install guake
-  sudo apt-get -y install dconf-editor
-  sudo apt-get -y install compizconfig-settings-manager
-  sudo apt-get -y install gksu
-  sudo apt-get -y install vim
-  sudo apt-get -y install gparted
-  sudo apt-get -y install openjdk-8-jdk
-  sudo apt-get -y install chromium-browser
-  sudo apt-get -y install nautilus-terminal
-  sudo apt-get -y install gcolor2
-  sudo apt-get -y install font-manager
-  sudo apt-get -y install inkscape
-  sudo apt-get -y install diodon
-  sudo apt-get -y install meld
-  sudo apt-get -y install thunderbird
-  sudo apt-get -y install numix-gtk-theme
-  sudo apt-get -y install numix-icon-theme-circle
+# upgrade
+sudo apt-get -y upgrade
+sudo apt-get -y dist-upgrade
 
-  # clean up installed packages
-  sudo apt-get autoremove
+# install packages
+sudo apt-get -y install htop
+sudo apt-get -y install git
+sudo apt-get -y install unity-tweak-tool
+sudo apt-get -y install guake
+sudo apt-get -y install dconf-editor
+sudo apt-get -y install compizconfig-settings-manager
+sudo apt-get -y install gksu
+sudo apt-get -y install vim
+sudo apt-get -y install gparted
+sudo apt-get -y install openjdk-8-jdk
+sudo apt-get -y install chromium-browser
+sudo apt-get -y install nautilus-terminal
+sudo apt-get -y install gcolor2
+sudo apt-get -y install font-manager
+sudo apt-get -y install inkscape
+sudo apt-get -y install diodon
+sudo apt-get -y install meld
+sudo apt-get -y install thunderbird
+sudo apt-get -y install numix-gtk-theme
+sudo apt-get -y install numix-icon-theme-circle
 
-  # to be installed
-  # webstorm
+# clean up installed packages
+sudo apt-get autoremove
 
-  # download and install webstorm
-  wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.1.tar.gz"
-  tar -xzf data/webstorm.tar.gz --directory data/webstorm
-  sudo cp -r data/webstorm /opt/webstorm
+# to be installed
+# webstorm
 
-  # set up diodon key binding
-  gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
-  gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Diodon Clipboard Manager'
-  gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/usr/bin/diodon'
-  gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Primary><Super>v'
+# download and install webstorm
+wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.1.tar.gz"
+tar -xzf data/webstorm.tar.gz --directory data/webstorm
+sudo cp -r data/webstorm /opt/webstorm
 
-  # thunderbird install lightning addon and minimize to tray
+# set up diodon key binding
+gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Diodon Clipboard Manager'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/usr/bin/diodon'
+gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Primary><Super>v'
 
-  # install android sdk
+# thunderbird install lightning addon and minimize to tray
 
-  # clean up launcher and set default applications
+# install android sdk
 
-  # install dreymar keyboard extended layer (capslock navigations)
+# clean up launcher and set default applications
 
-  # adjust global unity shortcuts
+# install dreymar keyboard extended layer (capslock navigations)
 
-  # configure guake
+# adjust global unity shortcuts
 
-  # overall unity settings (battery indicator, clock, date-format,...)
+# configure guake
 
-  # middle mouse click with three fingers
-  echo "synclient TapButton3=2" >> $HOME/.bashrc
+# overall unity settings (battery indicator, clock, date-format,...)
 
-  # get nvm and set up npm
-  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-  source $HOME/.bashrc
-  nvm install stable
-  nvm alias default stable
-  nvm use stable
+# middle mouse click with three fingers
+echo "synclient TapButton3=2" >> $HOME/.bashrc
 
-  npm install -g babel-cli bower cordova eslint eslint-config-angular \
-    eslint-config-google eslint-plugin-angular flow-bin grunt-cli \
-    gulp http-server ionic jsdoc karma-cli esformatter
+# get nvm and set up npm
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+source $HOME/.bashrc
+nvm install stable
+nvm alias default stable
+nvm use stable
 
-  # customize bash prompt with git status bar (bash it?)
+npm install -g babel-cli bower cordova eslint eslint-config-angular \
+  eslint-config-google eslint-plugin-angular flow-bin grunt-cli \
+  gulp http-server ionic jsdoc karma-cli esformatter
 
-  # install font source code pro
-  if [ ! -d "$HOME/.fonts" ]; then
-    mkdir ~/.fonts
-  fi
-  tar -xzvf source-code-pro.tar.gz
-  cp -f source-code-pro/* ~/.fonts
-  fc-cache -f -v
-  rm -r source-code-pro/
+# customize bash prompt with git status bar (bash it?)
 
-  # install grob configs if called with argument
-  if [ $1 == "grob"]; then
-    grobCustomization
-  fi
+# install font source code pro
+if [ ! -d "$HOME/.fonts" ]; then
+  mkdir ~/.fonts
+fi
+tar -xzvf source-code-pro.tar.gz
+cp -f source-code-pro/* ~/.fonts
+fc-cache -f -v
+rm -r source-code-pro/
+
+# install grob configs if called with argument
+if [ $1 == "grob"]; then
+  grobCustomization
+fi
 
 # grob customization
 function grobCustomization {
