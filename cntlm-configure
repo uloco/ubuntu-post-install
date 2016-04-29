@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "Configure CNTLM Proxy authentication"
+
+echo -n "User: "
+read username
+
+echo -n "Domain: "
+read domain
+
+# echo -n "Password: "
+cntlm -u $username -d $domain -f -H
+
+# add outputs to cntlm.conf (replace)
+
+# restart service
