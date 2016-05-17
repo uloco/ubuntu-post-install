@@ -9,7 +9,7 @@ sudo dpkg -i data/cntlm_0.92.3_amd64.deb
 sudo add-apt-repository ppa:webupd8team/atom
 # diodon clipboard manager
 sudo add-apt-repository ppa:diodon-team/stable
-#numix
+# numix
 sudo add-apt-repository ppa:numix/numix
 
 # update
@@ -40,6 +40,7 @@ sudo apt-get -y install meld
 sudo apt-get -y install thunderbird
 sudo apt-get -y install numix-gtk-theme
 sudo apt-get -y install numix-icon-theme-circle
+sudo apt-get -y install pandoc
 
 # clean up installed packages
 sudo apt-get autoremove
@@ -48,7 +49,7 @@ sudo apt-get autoremove
 # webstorm
 
 # download and install webstorm
-wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.1.tar.gz"
+wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.2.tar.gz"
 tar -xzf data/webstorm.tar.gz --directory data/webstorm
 sudo cp -r data/webstorm /opt/webstorm
 
