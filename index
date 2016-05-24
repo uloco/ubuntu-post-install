@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# GROB: install ntlm proxy and configure user credentials
-sudo dpkg -i data/cntlm_0.92.3_amd64.deb
-# insert script here for generating password and adding hashes to /etc/cntlm.conf
+# stop executing script on error
+set -e
+
 
 # add third party ppas
 # atom editor
@@ -33,7 +33,6 @@ sudo apt-get -y install openjdk-8-jdk
 sudo apt-get -y install chromium-browser
 sudo apt-get -y install nautilus-terminal
 sudo apt-get -y install gcolor2
-sudo apt-get -y install font-manager
 sudo apt-get -y install inkscape
 sudo apt-get -y install diodon
 sudo apt-get -y install meld
@@ -64,6 +63,7 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 # install android sdk
 
 # clean up launcher and set default applications
+# firefox chromium-browser nautilus sublime atom webstorm inkscape gcolor2
 
 # install dreymar keyboard extended layer (capslock navigations)
 
@@ -83,9 +83,23 @@ nvm install stable
 nvm alias default stable
 nvm use stable
 
-npm install -g babel-cli bower cordova eslint eslint-config-angular \
-  eslint-config-google eslint-plugin-angular flow-bin grunt-cli \
-  gulp http-server ionic jsdoc karma-cli esformatter
+npm install -g \
+  babel-cli \
+  bower \
+  cordova \
+  esformatter \
+  eslint \
+  eslint-config-angular \
+  eslint-config-google \
+  eslint-plugin-angular \
+  flow-bin \
+  grunt-cli \
+  gulp \
+  http-server \
+  ionic \
+  jsdoc \
+  karma-cli \
+  live-server
 
 # customize bash prompt with git status bar (bash it?)
 
@@ -99,23 +113,21 @@ fc-cache -f -v
 rm -r source-code-pro/
 
 # install grob configs if called with argument
-if [ $1 == "grob"]; then
+if [[ "$1" == "grob" ]]; then
   grobCustomization
+  exit 1
 fi
 
 # grob customization
 function grobCustomization {
   echo "grobCustomization"
+
+  source cntlm
+
+  cntlm-install;
+  cntlm-config;
+
   # set npm registry
   npm config set registry http://gmvm003lx:8081/nexus/content/repositories/npmjs/
 
-  # set up proxy
-  sudo apt-get install cntlm
-  echo "Please enter password for proxy authentication"
-
-
-  # set proxy for atom editor
 }
-
-# start script
-main
