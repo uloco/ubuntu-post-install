@@ -131,3 +131,12 @@ function grobCustomization {
   npm config set registry http://gmvm003lx:8081/nexus/content/repositories/npmjs/
 
 }
+
+echo "Things you will have to do manually:"
+echo "===================================="
+echo "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts"
+echo "-"
+echo "-"
+echo "-"
+echo "-"
+echo "-"
