@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# tweak config folder path here
+CONF='/etc/cntlm.conf'
+
+
+function cntlm-install {
+    echo "Installing CNTLM Proxy authentication"
+    sudo dpkg -i data/cntlm_0.92.3_amd64.deb
+}
+
+function cntlm-config {
+  echo "Configure CNTLM Proxy authentication";
+
+  echo -n "User: ";
+  read USER_NAME;
+  sudo sed -i "/^Username/c\Username  $USER_NAME" "$CONF"
+
+  echo -n "Domain: ";
+  read DOMAIN;
+  sudo sed -i "/^Domain/c\Domain\  $DOMAIN" "$CONF"
+
+  sudo sed -i "/^Password/c\# Password" "$CONF"
+
+  sudo sed -i "/^Proxy/c\Proxy  magnum:3128" "$CONF"
+
+  echo -n "Password: ";
+  PW="$(cntlm -u $USER_NAME -d $DOMAIN -f -H)";
+
+  echo " ";
+
+  echo "Adding to /etc/cntlm.conf";
+  PASSLM="$(echo "$PW" | grep PassLM)";
+  PASSNT="$(echo "$PW" | grep -e 'PassNT ')";
+  PASSNTLM="$(echo "$PW" | grep PassNTLMv2)";
+
+  sudo sed -i '/PassLM /c\'"$PASSLM" "$CONF"
+  sudo sed -i '/PassNT /c\'"$PASSNT" "$CONF"
+  sudo sed -i '/PassNTLMv2 /c\'"$PASSNTLM" "$CONF"
+
+  sudo sed -i "/^### Only for user/d" "$CONF";
+
+  echo -n "NoProxy(comma seperated list): "
+  read NO_PROXY
+  sudo sed -i "/^NoProxy/c\NoProxy  $(echo $NO_PROXY | sed s/','/'\,'/ )" "$CONF"
+
+  echo "Restarting service"
+  sudo service cntlm restart
+}
+
+function cntlm-new-pw {
+  shopt -s extglob
+
+  USER_NAME="$(sudo cat "$CONF" | grep Username)";
+  USER_NAME="${USER_NAME##Username+([[:space:]])}";
+
+  DOMAIN="$(sudo cat "$CONF" | grep Domain)";
+  DOMAIN="${DOMAIN##Domain+([[:space:]])}";
+
+  echo "User: $USER_NAME"
+  echo "Domain: $DOMAIN"
+
+  echo -n "Password: ";
+  PW="$(cntlm -u $USER_NAME -d $DOMAIN -f -H)";
+
+
+  echo "Adding to /etc/cntlm.conf";
+  PASSLM="$(echo "$PW" | grep PassLM)";
+  PASSNT="$(echo "$PW" | grep -e 'PassNT ')";
+  PASSNTLM="$(echo "$PW" | grep PassNTLMv2)";
+
+  sudo sed -i '/PassLM /c\'"$PASSLM" "$CONF"
+  sudo sed -i '/PassNT /c\'"$PASSNT" "$CONF"
+  sudo sed -i '/PassNTLMv2 /c\'"$PASSNTLM" "$CONF"
+
+  echo "Restarting service"
+  sudo service cntlm restart
+
+  shopt -u extglob
+}
