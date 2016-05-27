@@ -22,6 +22,7 @@ function install {
   sudo apt-get -y dist-upgrade
 
   # install packages
+  sudo apt-get -y install atom
   sudo apt-get -y install htop
   sudo apt-get -y install git
   sudo apt-get -y install unity-tweak-tool
@@ -51,9 +52,11 @@ function install {
 
 # download and install webstorm
 function webstorm {
-  wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.2.tar.gz"
-  tar -xzf data/webstorm.tar.gz --directory data/webstorm
+  # wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.2b.tar.gz"
+  tar -xzvf data/webstorm.tar.gz --directory data/
+  mv data/WebStorm-* data/webstorm
   sudo cp -r data/webstorm /opt/webstorm
+  rm -rf data/webstorm
 }
 
 # set up diodon key binding
@@ -146,13 +149,7 @@ function grobCustomization {
 }
 
 # let magic happen
-
-
-case "$1" in
-  install )
-    install
-    ;;
-esac
+$1;
 
 echo ;
 echo "*********************************************************************************************"
@@ -162,7 +159,7 @@ echo "UBUNTU POST INITIALIZATION SUCCESSFULL! "
 echo "Things you will have to do manually:"
 echo "============================================================================================="
 echo "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts"
-echo "-"
+echo "- Run Webstorm: /opt/webstorm/bin/webstorm.sh
 echo "-"
 echo "-"
 echo "-"
