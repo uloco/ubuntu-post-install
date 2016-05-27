@@ -3,6 +3,14 @@
 # stop executing script on error
 set -e
 
+red='\033[1;31m';
+green='\033[1;32m';
+yellow='\033[1;33m';
+blue='\033[1;34m';
+purple='\033[1;35m';
+cyan='\033[1;36m';
+white='\033[1;37m';
+
 function install {
   # add third party ppas
   # atom editor
@@ -52,6 +60,7 @@ function install {
 
 # download and install webstorm
 function webstorm {
+  echo "Installing Webstorm"
   # wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.2b.tar.gz"
   tar -xzvf data/webstorm.tar.gz --directory data/
   mv data/WebStorm-* data/webstorm
@@ -61,6 +70,7 @@ function webstorm {
 
 # set up diodon key binding
 function diodon {
+  echo "Setting up diodon shortcut CTRL+SUPER+V"
   gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Diodon Clipboard Manager'
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/usr/bin/diodon'
@@ -153,16 +163,17 @@ function grobCustomization {
 # let magic happen
 $1;
 
-echo ;
-echo "*********************************************************************************************"
-echo "*********************************************************************************************"
-echo ;
-echo "UBUNTU POST INITIALIZATION SUCCESSFULL! "
-echo "Things you will have to do manually:"
-echo "============================================================================================="
-echo "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts"
-echo "- Run Webstorm: /opt/webstorm/bin/webstorm.sh"
-echo "-"
-echo "-"
-echo "-"
-echo "-"
+echo -e \
+  "${cyan}" \
+  "\n ********************************************************************************************* \n" \
+  "********************************************************************************************* \n" \
+  "UBUNTU POST INITIALIZATION SUCCESSFULL! \n" \
+  "Things you will have to do manually: \n" \
+  "============================================================================================= \n" \
+  "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts \n" \
+  "- Run Webstorm: /opt/webstorm/bin/webstorm.sh \n" \
+  "- \n" \
+  "- \n" \
+  "- \n" \
+  "- \n"   \
+  "${white}";
