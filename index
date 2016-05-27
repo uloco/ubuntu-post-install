@@ -83,6 +83,8 @@ function diodon {
 
 # overall unity settings (battery indicator, clock, date-format,...)
 
+# add startup applications: diodon guake
+
 # middle mouse click with three fingers
 function middleClick {
   echo "synclient TapButton3=2" >> $HOME/.bashrc
@@ -159,7 +161,7 @@ echo "UBUNTU POST INITIALIZATION SUCCESSFULL! "
 echo "Things you will have to do manually:"
 echo "============================================================================================="
 echo "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts"
-echo "- Run Webstorm: /opt/webstorm/bin/webstorm.sh
+echo "- Run Webstorm: /opt/webstorm/bin/webstorm.sh"
 echo "-"
 echo "-"
 echo "-"
