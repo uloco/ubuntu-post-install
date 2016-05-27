@@ -56,7 +56,7 @@ function webstorm {
   tar -xzvf data/webstorm.tar.gz --directory data/
   mv data/WebStorm-* data/webstorm
   sudo cp -r data/webstorm /opt/webstorm
-  rm -rf data/webstorm
+  rm -rf data/webstorm*
 }
 
 # set up diodon key binding
