@@ -77,6 +77,8 @@ function diodon {
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Primary><Super>v'
 }
 
+# set german keyboard layout
+# gsettings?
 
 # thunderbird install lightning addon and minimize to tray
 
@@ -140,23 +142,18 @@ function fonts {
   rm -r source-code-pro/
 }
 
-# install grob configs if called with argument
-if [[ "$1" == "grob" ]]; then
-  grobCustomization
-  exit 1
-fi
 
 # grob customization
-function grobCustomization {
+function grob {
   echo "grobCustomization"
 
-  source cntlm
+  source ./cntlm
 
   cntlm-install;
   cntlm-config;
 
   # set npm registry
-  npm config set registry http://gmvm003lx:8081/nexus/content/repositories/npmjs/
+  #npm config set registry http://gmvm003lx:8081/nexus/content/repositories/npmjs/
 
 }
 
@@ -165,11 +162,11 @@ $1;
 
 echo -e \
   "${cyan}" \
-  "\n ********************************************************************************************* \n" \
-  "********************************************************************************************* \n" \
+  "\n ****************************************************************************** \n" \
+  "****************************************************************************** \n" \
   "UBUNTU POST INITIALIZATION SUCCESSFULL! \n" \
   "Things you will have to do manually: \n" \
-  "============================================================================================= \n" \
+  "============================================================================== \n" \
   "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts \n" \
   "- Run Webstorm: /opt/webstorm/bin/webstorm.sh \n" \
   "- \n" \
