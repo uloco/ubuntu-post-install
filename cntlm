@@ -2,7 +2,8 @@
 
 # tweak config folder path here
 CONF='/etc/cntlm.conf'
-
+CNTLM_ADDRESS="http://localhost:3128"
+APT_CONF='/etc/apt/apt.conf'
 
 function cntlm-install {
     echo "Installing CNTLM Proxy authentication"
@@ -22,7 +23,10 @@ function cntlm-config {
 
   sudo sed -i "/^Password/c\# Password" "$CONF"
 
-  sudo sed -i "/^Proxy/c\Proxy  magnum:3128" "$CONF"
+  echo -n "Listen(host:port): "
+  read LISTEN
+
+  sudo sed -i "/^Proxy/c\Proxy  ${LISTEN}" "$CONF"
 
   echo -n "Password: ";
   PW="$(cntlm -u $USER_NAME -d $DOMAIN -f -H)";
@@ -43,6 +47,17 @@ function cntlm-config {
   echo -n "NoProxy(comma seperated list): "
   read NO_PROXY
   sudo sed -i "/^NoProxy/c\NoProxy  $(echo $NO_PROXY | sed s/','/'\,'/ )" "$CONF"
+
+  # add environment variables
+  echo 'CNTLM_ADDRESS=http://localhost:3128' >> "$HOME/.bashrc";
+  echo 'http_proxy="$CNTLM_ADDRESS"' >> "$HOME/.bashrc";
+  echo 'https_proxy="$CNTLM_ADDRESS"' >> "$HOME/.bashrc";
+  source "$HOME/.bashrc";
+
+  # make apt work
+
+  echo 'Acquire::http::proxy "http://localhost:3128/";' | sudo tee -a "$APT_CONF";
+  echo 'Acquire::https::proxy "https://localhost:3128/";' | sudo tee -a "$APT_CONF";
 
   echo "Restarting service"
   sudo service cntlm restart
