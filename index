@@ -160,12 +160,12 @@ function grobCustomization {
 
 }
 
-function tuxedo {
-  sudo apt-get install -y dkms
-  wget -O data/tuxedo.sh "https://mytuxedo.de/index.php/s/Pic2TDgssQal2i9/download"
-  chmod u+x data/tuxedo.sh
-  sudo data/tuxedo.sh
-}
+#function tuxedo {
+#  sudo apt-get install -y dkms
+#  wget -O data/tuxedo.sh "https://mytuxedo.de/index.php/s/Pic2TDgssQal2i9/download"
+#  chmod u+x data/tuxedo.sh
+#  sudo data/tuxedo.sh
+#}
 
 # let magic happen
 $1;
