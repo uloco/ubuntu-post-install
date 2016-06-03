@@ -133,8 +133,8 @@ function task_grob {
 
   source ./cntlm
 
-  cntlm-install;
-  cntlm-config;
+  task_cntlm_install;
+  task_cntlm_config;
 
   # set npm registry
   #npm config set registry http://gmvm003lx:8081/nexus/content/repositories/npmjs/
