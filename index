@@ -217,7 +217,33 @@ gsettings set org.gnome.desktop.interface cursor-theme 'Numix-Cursor'
 # customize bash prompt with git status bar (bash it?)
 
 # install android sdk
+function android {
 
+  # perhaps this is enough
+  sudo apt-get install -y android-sdk
+
+  # download android sdk
+  # $CURRENT_DIR=$(pwd);
+
+  # wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
+
+  # tar -xvf android-sdk_r24.4.1-linux.tgz
+  # cd android-sdk-linux/tools
+
+  # # install all sdk packages
+  # ./android update sdk --no-ui
+
+  # # set path
+  # $HOME/.bashrc >> export PATH=${PATH}:$HOME/sdk/android-sdk-linux/platform-tools:$HOME/sdk/android-sdk-linux/tools:$HOME/sdk/android-sdk-linux/build-tools/22.0.1/
+  # source "$HOME/.bashrc"
+
+  # # adb
+  # sudo apt-get install libc6:i386 libstdc++6:i386
+  # # aapt
+  # sudo apt-get install zlib1g:i386
+
+  # cd "$CURRENT_DIR";
+}
 
 # let the magic happen
 if [ -n $1]; then
