@@ -160,8 +160,13 @@ function folders {
 }
 
 function dreymar {
-gsettings set org.gnome.desktop.input-sources xkb-options ['lv5:caps_switch_lock', 'misc:extend', 'shift:both_capslock', 'compose:rctrl']
-
+  git clone https://github.com/DreymaR/BigBagKbdTricks_XKB.git
+  cd BigBagKbdTricks_XKB
+  chmod u+x install-dreymar-xmod.sh
+  ./install-dreymar-xmod.sh -o
+  gsettings set org.gnome.desktop.input-sources xkb-options ['lv5:caps_switch_lock', 'misc:extend', 'shift:both_capslock', 'compose:rctrl']
+  cd ..
+  rm -rf BigBagKbdTricks_XKB
 }
 
 function gsettings {
