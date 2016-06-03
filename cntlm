@@ -5,12 +5,12 @@ CONF='/etc/cntlm.conf'
 CNTLM_ADDRESS="http://localhost:3128"
 APT_CONF='/etc/apt/apt.conf'
 
-function cntlm-install {
+function task_cntlm_install {
     echo "Installing CNTLM Proxy authentication"
     sudo dpkg -i data/cntlm_0.92.3_amd64.deb
 }
 
-function cntlm-config {
+function task_cntlm_config {
   echo "Configure CNTLM Proxy authentication";
 
   echo -n "User: ";
@@ -72,7 +72,7 @@ function cntlm-config {
   sudo service cntlm restart
 }
 
-function cntlm-new-pw {
+function task_cntlm_new_pw {
   shopt -s extglob
 
   USER_NAME="$(sudo cat "$CONF" | grep Username)";
