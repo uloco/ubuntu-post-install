@@ -55,8 +55,6 @@ function install {
   # clean up installed packages
   sudo apt-get -y autoremove
 }
-# to be installed
-# webstorm
 
 # download and install webstorm
 function webstorm {
@@ -77,29 +75,17 @@ function diodon {
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Primary><Super>v'
 }
 
-# set german keyboard layout
-# gsettings?
-
-# thunderbird install lightning addon and minimize to tray
-
-# install android sdk
-
-# clean up launcher and set default applications
-# firefox chromium-browser nautilus sublime atom webstorm inkscape gcolor2
-
-# install dreymar keyboard extended layer (capslock navigations)
-
-# adjust global unity shortcuts
-
-# configure guake
-
-# overall unity settings (battery indicator, clock, date-format,...)
 
 # add startup applications: diodon guake
+function autostart {
+  cp data/autostart/* "$HOME/.config/autostart/"
+}
 
 # middle mouse click with three fingers
 function middleClick {
-  echo "synclient TapButton3=2" >> $HOME/.bashrc
+  if hash synclient 2>/dev/null; then
+    echo "synclient TapButton3=2" >> $HOME/.bashrc
+  fi
 }
 
 function npm {
@@ -128,10 +114,8 @@ function npm {
     karma-cli \
     live-server
 }
-# customize bash prompt with git status bar (bash it?)
 
 # install font source code pro
-
 function fonts {
   if [ ! -d "$HOME/.fonts" ]; then
     mkdir ~/.fonts
@@ -219,7 +203,7 @@ gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
 gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
 gsettings set org.gnome.seahorse.manager keyrings-selected ['secret-service://login', 'gnupg://']
 gsettings set org.gnome.settings-daemon.plugins.media-keys calculator '<Super>asciicircum'
-
+com.canonical.Unity.Launcher favorites ['unity://expo-icon', 'unity://devices', 'application://firefox.desktop', 'application://chromium-browser.desktop', 'application://org.gnome.Nautilus.desktop', 'application://gnome-terminal.desktop', 'application://atom.desktop', 'application://jetbrains-webstorm.desktop', 'application://inkscape.desktop', 'application://gcolor2.desktop', 'application://gnome-system-monitor.desktop', 'unity://running-apps']
 gsettings set org.gnome.settings-daemon.plugins.media-keys terminal '<Super>r'
 }
 
@@ -228,79 +212,30 @@ gsettings set org.gnome.desktop.interface cursor-theme 'Numix-Cursor'
 
 }
 
-#function tuxedo {
-#  sudo apt-get install -y dkms
-#  wget -O data/tuxedo.sh "https://mytuxedo.de/index.php/s/Pic2TDgssQal2i9/download"
-#  chmod u+x data/tuxedo.sh
-#  sudo data/tuxedo.sh
-#}
+# install dreymar keyboard extended layer (capslock navigations)
+
+# customize bash prompt with git status bar (bash it?)
+
+# install android sdk
 
 
-function folders {
-  mkdir "$HOME/Source/github"
-  mkdir "$HOME/Source/bitbucket"
-  mkdir "$HOME/Software"
-  mkdir "$HOME/Scripts"
-  mkdir "$HOME/tmp"
-  mkdir "$HOME/Workshops"
-  mkdir "$HOME/Virtual Machines"
-}
-
-function dreymar {
-gsettings set org.gnome.desktop.input-sources xkb-options ['lv5:caps_switch_lock', 'misc:extend', 'shift:both_capslock', 'compose:rctrl']
-
-}
-
-function gsettings {
-
-gsettings set com.canonical.indicator.datetime show-date true
-gsettings set com.canonical.indicator.datetime show-day true
-gsettings set com.canonical.indicator.datetime show-week-numbers true
-gsettings set com.canonical.indicator.datetime time-format '24-hour'
-gsettings set com.canonical.indicator.datetime timezone-name 'Europe/Berlin Mindelheim'
-gsettings set com.canonical.indicator.messages applications ['thunderbird.desktop']
-gsettings set com.canonical.Unity integrated-menus true
-gsettings set org.compiz.integrated show-hud ['disabled']
-gsettings set org.freedesktop.ibus.general engines-order ['xkb:de:nodeadkeys:ger']
-gsettings set org.freedesktop.ibus.general preload-engines ['xkb:de:nodeadkeys:ger']
-gsettings set org.gnome.calculator button-mode 'advanced'
-gsettings set org.gnome.desktop.interface gtk-theme 'Numix'
-gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
-gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro Medium 11'
-#gsettings set org.gnome.desktop.lockdown disable-lock-screen true
-gsettings set org.gnome.desktop.notifications application-children ['diodon', 'thunderbird']
-#gsettings set org.gnome.desktop.screensaver lock-enabled false
-gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
-gsettings set org.gnome.desktop.wm.keybindings maximize ['<Primary><Super>Up']
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down ['<Control><Alt><Super>Down']
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left ['<Control><Alt><Super>Left']
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right ['<Control><Alt><Super>Right']
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up ['<Control><Alt><Super>Up']
-gsettings set org.gnome.desktop.wm.keybindings show-desktop ['<Super>d']
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down ['<Alt><Super>Down']
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['<Alt><Super>Left']
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['<Alt><Super>Right']
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up ['<Alt><Super>Up']
-gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier '<Super>'
-gsettings set org.gnome.desktop.wm.preferences theme 'Numix'
-gsettings set org.gnome.gnome-screenshot auto-save-directory "'file://$HOME/Pictures/Screenshots'"
-gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
-gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
-gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
-gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
-gsettings set org.gnome.seahorse.manager keyrings-selected ['secret-service://login', 'gnupg://']
-gsettings set org.gnome.settings-daemon.plugins.media-keys calculator '<Super>asciicircum'
-
-gsettings set org.gnome.settings-daemon.plugins.media-keys terminal '<Super>r'
-}
-
-function cursor {
-gsettings set org.gnome.desktop.interface cursor-theme 'Numix-Cursor'
-
-}
-
-# let magic happen
-$1;
+# let the magic happen
+if [ -n $1]; then
+  $1
+else
+  install
+  webstorm
+  diodon
+  # middleClick
+  npm
+  fonts
+  grob
+  # tuxedo
+  folders
+  # dreymar
+  gsettings
+  # cursor
+fi
 
 echo -e \
   "${cyan}" \
@@ -312,7 +247,7 @@ echo -e \
   "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts \n" \
   "- Run Webstorm: /opt/webstorm/bin/webstorm.sh \n" \
   "- Import compiz config settings from file 'data/ccsm.profile'\n" \
-  "- \n" \
+  "- Configure guake preferences\n" \
   "- \n" \
   "- \n"   \
   "${white}";
