@@ -6,6 +6,15 @@ CNTLM_ADDRESS="http://localhost:3128"
 APT_CONF='/etc/apt/apt.conf'
 
 function task_cntlm_install {
+    echo "Please open proxy settings via gui and click on apply everywhere"
+    echo "After succefully doing that, press any key."
+    gsettings set org.gnome.system.proxy mode 'manual'
+    gsettings set org.gnome.system.proxy use-same-proxy false
+    gsettings set org.gnome.system.proxy.http host '127.0.0.1'
+    gsettings set org.gnome.system.proxy.http port 3128
+    gsettings set org.gnome.system.proxy.https host '127.0.0.1'
+    gsettings set org.gnome.system.proxy.https port 3128
+    read foo
     echo "Installing CNTLM Proxy authentication"
     sudo dpkg -i data/cntlm_0.92.3_amd64.deb
 }
@@ -48,25 +57,16 @@ function task_cntlm_config {
   read NO_PROXY
   sudo sed -i "/^NoProxy/c\NoProxy  $(echo $NO_PROXY | sed s/','/'\,'/ )" "$CONF"
 
-  # adjust gui proxy settings
-  gsettings set org.gnome.system.proxy use-same-proxy false
-  gsettings set org.gnome.system.proxy.ftp host '127.0.0.1'
-  gsettings set org.gnome.system.proxy.ftp port 3128
-  gsettings set org.gnome.system.proxy.http host '127.0.0.1'
-  gsettings set org.gnome.system.proxy.http port 3128
-  gsettings set org.gnome.system.proxy.https host '127.0.0.1'
-  gsettings set org.gnome.system.proxy.https port 3128
-
   # add environment variables
-  echo 'CNTLM_ADDRESS=http://localhost:3128' >> "$HOME/.bashrc";
-  echo 'http_proxy="$CNTLM_ADDRESS"' >> "$HOME/.bashrc";
-  echo 'https_proxy="$CNTLM_ADDRESS"' >> "$HOME/.bashrc";
-  source "$HOME/.bashrc";
+  #echo 'CNTLM_ADDRESS=http://localhost:3128' >> "$HOME/.bashrc";
+  #echo 'http_proxy="$CNTLM_ADDRESS"' >> "$HOME/.bashrc";
+  #echo 'https_proxy="$CNTLM_ADDRESS"' >> "$HOME/.bashrc";
+  #source "$HOME/.bashrc";
+ 
+  ## make apt work
 
-  # make apt work
-
-  echo 'Acquire::http::proxy "http://localhost:3128/";' | sudo tee -a "$APT_CONF";
-  echo 'Acquire::https::proxy "https://localhost:3128/";' | sudo tee -a "$APT_CONF";
+  #echo 'Acquire::http::proxy "http://localhost:3128/";' | sudo tee -a "$APT_CONF";
+  #echo 'Acquire::https::proxy "https://localhost:3128/";' | sudo tee -a "$APT_CONF";
 
   echo "Restarting service"
   sudo service cntlm restart
