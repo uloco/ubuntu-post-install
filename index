@@ -166,45 +166,45 @@ gsettings set org.gnome.desktop.input-sources xkb-options ['lv5:caps_switch_lock
 
 function gsettings {
 
-gsettings set com.canonical.indicator.datetime show-date true
-gsettings set com.canonical.indicator.datetime show-day true
-gsettings set com.canonical.indicator.datetime show-week-numbers true
-gsettings set com.canonical.indicator.datetime time-format '24-hour'
-gsettings set com.canonical.indicator.datetime timezone-name 'Europe/Berlin Mindelheim'
-gsettings set com.canonical.indicator.messages applications ['thunderbird.desktop']
-gsettings set com.canonical.Unity integrated-menus true
-gsettings set org.compiz.integrated show-hud ['disabled']
-gsettings set org.freedesktop.ibus.general engines-order ['xkb:de:nodeadkeys:ger']
-gsettings set org.freedesktop.ibus.general preload-engines ['xkb:de:nodeadkeys:ger']
-gsettings set org.gnome.calculator button-mode 'advanced'
-gsettings set org.gnome.desktop.interface gtk-theme 'Numix'
-gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
-gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro Medium 11'
-#gsettings set org.gnome.desktop.lockdown disable-lock-screen true
-gsettings set org.gnome.desktop.notifications application-children ['diodon', 'thunderbird']
-#gsettings set org.gnome.desktop.screensaver lock-enabled false
-gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
-gsettings set org.gnome.desktop.wm.keybindings maximize ['<Primary><Super>Up']
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down ['<Control><Alt><Super>Down']
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left ['<Control><Alt><Super>Left']
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right ['<Control><Alt><Super>Right']
-gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up ['<Control><Alt><Super>Up']
-gsettings set org.gnome.desktop.wm.keybindings show-desktop ['<Super>d']
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down ['<Alt><Super>Down']
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['<Alt><Super>Left']
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['<Alt><Super>Right']
-gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up ['<Alt><Super>Up']
-gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier '<Super>'
-gsettings set org.gnome.desktop.wm.preferences theme 'Numix'
-gsettings set org.gnome.gnome-screenshot auto-save-directory "'file://$HOME/Pictures/Screenshots'"
-gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
-gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
-gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
-gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
-gsettings set org.gnome.seahorse.manager keyrings-selected ['secret-service://login', 'gnupg://']
-gsettings set org.gnome.settings-daemon.plugins.media-keys calculator '<Super>asciicircum'
-com.canonical.Unity.Launcher favorites ['unity://expo-icon', 'unity://devices', 'application://firefox.desktop', 'application://chromium-browser.desktop', 'application://org.gnome.Nautilus.desktop', 'application://gnome-terminal.desktop', 'application://atom.desktop', 'application://jetbrains-webstorm.desktop', 'application://inkscape.desktop', 'application://gcolor2.desktop', 'application://gnome-system-monitor.desktop', 'unity://running-apps']
-gsettings set org.gnome.settings-daemon.plugins.media-keys terminal '<Super>r'
+  gsettings set com.canonical.indicator.datetime show-date true
+  gsettings set com.canonical.indicator.datetime show-day true
+  gsettings set com.canonical.indicator.datetime show-week-numbers true
+  gsettings set com.canonical.indicator.datetime time-format '24-hour'
+  gsettings set com.canonical.indicator.datetime timezone-name 'Europe/Berlin Mindelheim'
+  gsettings set com.canonical.indicator.messages applications ['thunderbird.desktop']
+  gsettings set com.canonical.Unity integrated-menus true
+  gsettings set org.compiz.integrated show-hud ['disabled']
+  gsettings set org.freedesktop.ibus.general engines-order ['xkb:de:nodeadkeys:ger']
+  gsettings set org.freedesktop.ibus.general preload-engines ['xkb:de:nodeadkeys:ger']
+  gsettings set org.gnome.calculator button-mode 'advanced'
+  gsettings set org.gnome.desktop.interface gtk-theme 'Numix'
+  gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
+  gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro Medium 11'
+  #gsettings set org.gnome.desktop.lockdown disable-lock-screen true
+  gsettings set org.gnome.desktop.notifications application-children ['diodon', 'thunderbird']
+  #gsettings set org.gnome.desktop.screensaver lock-enabled false
+  gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
+  gsettings set org.gnome.desktop.wm.keybindings maximize ['<Primary><Super>Up']
+  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down ['<Control><Alt><Super>Down']
+  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left ['<Control><Alt><Super>Left']
+  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right ['<Control><Alt><Super>Right']
+  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up ['<Control><Alt><Super>Up']
+  gsettings set org.gnome.desktop.wm.keybindings show-desktop ['<Super>d']
+  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down ['<Alt><Super>Down']
+  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['<Alt><Super>Left']
+  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['<Alt><Super>Right']
+  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up ['<Alt><Super>Up']
+  gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier '<Super>'
+  gsettings set org.gnome.desktop.wm.preferences theme 'Numix'
+  gsettings set org.gnome.gnome-screenshot auto-save-directory "'file://$HOME/Pictures/Screenshots'"
+  gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
+  gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
+  gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
+  gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
+  gsettings set org.gnome.seahorse.manager keyrings-selected ['secret-service://login', 'gnupg://']
+  gsettings set org.gnome.settings-daemon.plugins.media-keys calculator '<Super>asciicircum'
+  com.canonical.Unity.Launcher favorites ['unity://expo-icon', 'unity://devices', 'application://firefox.desktop', 'application://chromium-browser.desktop', 'application://org.gnome.Nautilus.desktop', 'application://gnome-terminal.desktop', 'application://atom.desktop', 'application://jetbrains-webstorm.desktop', 'application://inkscape.desktop', 'application://gcolor2.desktop', 'application://gnome-system-monitor.desktop', 'unity://running-apps']
+  gsettings set org.gnome.settings-daemon.plugins.media-keys terminal '<Super>r'
 }
 
 function cursor {
