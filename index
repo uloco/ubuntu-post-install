@@ -311,7 +311,7 @@ echo -e \
   "============================================================================== \n" \
   "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts \n" \
   "- Run Webstorm: /opt/webstorm/bin/webstorm.sh \n" \
-  "- \n" \
+  "- Import compiz config settings from file 'data/ccsm.profile'\n" \
   "- \n" \
   "- \n" \
   "- \n"   \
