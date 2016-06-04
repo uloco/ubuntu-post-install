@@ -237,6 +237,9 @@ function task_hardcodefixer {
   sudo ./fix.sh
   cd ..
   rm -rf hardcode-fixer
+
+  # fix webstorm
+  sudo sed -i "/^Icon/c\Icon=webstorm" /usr/share/applications/jetbrains-webstorm.desktop
 }
 
 # import terminal color profile
@@ -302,7 +305,6 @@ echo -e \
   "Things you will have to do manually: \n" \
   "============================================================================== \n" \
   "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts \n" \
-  "- Run Webstorm: /opt/webstorm/bin/webstorm.sh \n" \
   "- Import compiz config settings from file 'data/ccsm.profile'\n" \
   "- Configure guake preferences\n" \
   "- \n" \
