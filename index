@@ -12,6 +12,7 @@ cyan='\033[1;36m';
 white='\033[1;37m';
 
 function task_install {
+  echo -e "${cyan}Installing packages and apps${white}"
   # add third party ppas
   # atom editor
   sudo add-apt-repository -y ppa:webupd8team/atom
@@ -21,6 +22,9 @@ function task_install {
   sudo add-apt-repository -y ppa:numix/ppa
   # nautlius embedded terminal
   # sudo add-apt-repository -y ppa:flozz/flozz
+
+  # indicator keylock
+  sudo add-apt-repository -y ppa:tsbarnes/indicator-keylock
 
   # update
   sudo apt-get update
@@ -51,6 +55,8 @@ function task_install {
   sudo apt-get -y install numix-gtk-theme
   sudo apt-get -y install numix-icon-theme-circle
   sudo apt-get -y install pandoc
+  sudo apt-get -y install indicator-keylock
+  sudo apt-get -y install nautilus-dropbox
 
   # clean up installed packages
   sudo apt-get -y autoremove
@@ -58,17 +64,18 @@ function task_install {
 
 # download and install webstorm
 function task_webstorm {
-  echo "Installing Webstorm"
-  # wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.2b.tar.gz"
+  echo -e "${cyan}Installing webstorm${white}"
+  wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.2b.tar.gz"
   tar -xzvf data/webstorm.tar.gz --directory data/
   mv data/WebStorm-* data/webstorm
   sudo cp -r data/webstorm /opt/webstorm
   rm -rf data/webstorm*
+  /opt/webstorm/bin/webstorm.sh &
 }
 
 # set up diodon key binding
 function task_diodon {
-  echo "Setting up diodon shortcut CTRL+SUPER+V"
+  echo -e "${cyan}Setting up diodon shortcut CTRL+SUPER+V${white}"
   gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Diodon Clipboard Manager'
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/usr/bin/diodon'
@@ -78,13 +85,16 @@ function task_diodon {
 
 # add startup applications: diodon guake
 function task_autostart {
+  echo -e "${cyan}Adding apps to autostart${white}"
   cp data/autostart/* "$HOME/.config/autostart/"
 }
 
 # middle mouse click with three fingers
 function task_middleClick {
   if hash synclient 2>/dev/null; then
+    echo -e "${cyan}Touchpad detected, adding middle click on 3 finger tap.${white}"
     echo "synclient TapButton3=2" >> $HOME/.bashrc
+    source "$HOME/.bashrc"
   fi
 }
 
@@ -120,7 +130,7 @@ function task_fonts {
   if [ ! -d "$HOME/.fonts" ]; then
     mkdir ~/.fonts
   fi
-  tar -xzvf source-code-pro.tar.gz
+  tar -xzvf data/source-code-pro.tar.gz
   cp -f source-code-pro/* ~/.fonts
   fc-cache -f -v
   rm -r source-code-pro/
@@ -141,15 +151,8 @@ function task_grob {
 
 }
 
-#function tuxedo {
-#  sudo apt-get install -y dkms
-#  wget -O data/tuxedo.sh "https://mytuxedo.de/index.php/s/Pic2TDgssQal2i9/download"
-#  chmod u+x data/tuxedo.sh
-#  sudo data/tuxedo.sh
-#}
-
-
 function task_folders {
+  mkdir "$HOME/Source"
   mkdir "$HOME/Source/github"
   mkdir "$HOME/Source/bitbucket"
   mkdir "$HOME/Software"
@@ -160,45 +163,45 @@ function task_folders {
 }
 
 function task_dreymar {
+  echo -e "${cyan} Set up dreymars extended keyboard layer ${white}"
   git clone https://github.com/DreymaR/BigBagKbdTricks_XKB.git
   cd BigBagKbdTricks_XKB
   chmod u+x install-dreymar-xmod.sh
   ./install-dreymar-xmod.sh -o
-  gsettings set org.gnome.desktop.input-sources xkb-options ['lv5:caps_switch_lock', 'misc:extend', 'shift:both_capslock', 'compose:rctrl']
+  gsettings set org.gnome.desktop.input-sources xkb-options "['lv5:caps_switch_lock', 'misc:extend', 'shift:both_capslock', 'compose:rctrl']"
   cd ..
   rm -rf BigBagKbdTricks_XKB
 }
 
 function task_gsettings {
-
   gsettings set com.canonical.indicator.datetime show-date true
   gsettings set com.canonical.indicator.datetime show-day true
   gsettings set com.canonical.indicator.datetime show-week-numbers true
   gsettings set com.canonical.indicator.datetime time-format '24-hour'
   gsettings set com.canonical.indicator.datetime timezone-name 'Europe/Berlin Mindelheim'
-  gsettings set com.canonical.indicator.messages applications ['thunderbird.desktop']
+  gsettings set com.canonical.indicator.messages applications "['thunderbird.desktop']"
   gsettings set com.canonical.Unity integrated-menus true
-  gsettings set org.compiz.integrated show-hud ['disabled']
-  gsettings set org.freedesktop.ibus.general engines-order ['xkb:de:nodeadkeys:ger']
-  gsettings set org.freedesktop.ibus.general preload-engines ['xkb:de:nodeadkeys:ger']
+  gsettings set org.compiz.integrated show-hud "['disabled']"
+  gsettings set org.freedesktop.ibus.general engines-order "['xkb:de:nodeadkeys:ger']"
+  gsettings set org.freedesktop.ibus.general preload-engines "['xkb:de:nodeadkeys:ger']"
   gsettings set org.gnome.calculator button-mode 'advanced'
   gsettings set org.gnome.desktop.interface gtk-theme 'Numix'
   gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
   gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro Medium 11'
   #gsettings set org.gnome.desktop.lockdown disable-lock-screen true
-  gsettings set org.gnome.desktop.notifications application-children ['diodon', 'thunderbird']
+  gsettings set org.gnome.desktop.notifications application-children "['diodon', 'thunderbird']"
   #gsettings set org.gnome.desktop.screensaver lock-enabled false
   gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
-  gsettings set org.gnome.desktop.wm.keybindings maximize ['<Primary><Super>Up']
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down ['<Control><Alt><Super>Down']
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left ['<Control><Alt><Super>Left']
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right ['<Control><Alt><Super>Right']
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up ['<Control><Alt><Super>Up']
-  gsettings set org.gnome.desktop.wm.keybindings show-desktop ['<Super>d']
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down ['<Alt><Super>Down']
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['<Alt><Super>Left']
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['<Alt><Super>Right']
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up ['<Alt><Super>Up']
+  gsettings set org.gnome.desktop.wm.keybindings maximize "['<Primary><Super>Up']"
+  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "['<Control><Alt><Super>Down']"
+  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left "['<Control><Alt><Super>Left']"
+  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right "['<Control><Alt><Super>Right']"
+  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['<Control><Alt><Super>Up']"
+  gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
+  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['<Alt><Super>Down']"
+  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Alt><Super>Left']"
+  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Alt><Super>Right']"
+  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['<Alt><Super>Up']"
   gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier '<Super>'
   gsettings set org.gnome.desktop.wm.preferences theme 'Numix'
   gsettings set org.gnome.gnome-screenshot auto-save-directory "'file://$HOME/Pictures/Screenshots'"
@@ -206,10 +209,21 @@ function task_gsettings {
   gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
   gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
   gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
-  gsettings set org.gnome.seahorse.manager keyrings-selected ['secret-service://login', 'gnupg://']
+  gsettings set org.gnome.seahorse.manager keyrings-selected "['secret-service://login', 'gnupg://']"
   gsettings set org.gnome.settings-daemon.plugins.media-keys calculator '<Super>asciicircum'
-  com.canonical.Unity.Launcher favorites ['unity://expo-icon', 'unity://devices', 'application://firefox.desktop', 'application://chromium-browser.desktop', 'application://org.gnome.Nautilus.desktop', 'application://gnome-terminal.desktop', 'application://atom.desktop', 'application://jetbrains-webstorm.desktop', 'application://inkscape.desktop', 'application://gcolor2.desktop', 'application://gnome-system-monitor.desktop', 'unity://running-apps']
+  gsettings set com.canonical.Unity.Launcher favorites "['unity://expo-icon', 'unity://devices', 'application://firefox.desktop', 'application://chromium-browser.desktop', 'application://org.gnome.Nautilus.desktop', 'application://gnome-terminal.desktop', 'application://atom.desktop', 'application://jetbrains-webstorm.desktop', 'application://inkscape.desktop', 'application://gcolor2.desktop', 'application://gnome-system-monitor.desktop', 'unity://running-apps']"
   gsettings set org.gnome.settings-daemon.plugins.media-keys terminal '<Super>r'
+}
+
+function task_dconf {
+  dconf write /org/compiz/profiles/unity/plugins/core/vsize 2
+  dconf write /org/compiz/profiles/unity/plugins/core/hsize 2
+  dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window truedconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window true
+  dconf write /org/gnome/desktop/wm/preferences/action-middle-click-titlebar/org/gnome/desktop/wm/preferences/action-middle-click-titlebar "'none'"
+  dconf write /org/gtk/settings/file-chooser/show-hidden true
+  dconf write /org/gnome/nautilus/list-view/use-tree-view true
+  dconf write /com/canonical/indicator/power/show-time true
+  dconf write /com/canonical/indicator/power/show-percentage true
 }
 
 function task_cursor {
@@ -217,7 +231,15 @@ gsettings set org.gnome.desktop.interface cursor-theme 'Numix-Cursor'
 
 }
 
-# install dreymar keyboard extended layer (capslock navigations)
+function task_hardcodefixer {
+  git clone https://github.com/Foggalong/hardcode-fixer.git
+  cd hardcode-fixer
+  sudo ./fix.sh
+  cd ..
+  rm -rf hardcode-fixer
+}
+
+# import terminal color profile
 
 # customize bash prompt with git status bar (bash it?)
 
@@ -257,15 +279,19 @@ else
   task_install
   task_webstorm
   task_diodon
-  # task_middleClick
+  task_autostart
+  task_middleClick
   task_npm
   task_fonts
   task_grob
-  # task_tuxedo
   task_folders
-  # task_dreymar
+  task_dreymar
   task_gsettings
-  # task_cursor
+  task_dconf
+  task_cursor
+  task_hardcodefixer
+  task_android
+
 fi
 
 echo -e \
