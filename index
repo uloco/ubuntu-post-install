@@ -57,6 +57,8 @@ function task_install {
   sudo apt-get -y install pandoc
   sudo apt-get -y install indicator-keylock
   sudo apt-get -y install nautilus-dropbox
+  sudo apt-get -y install python-pip
+  sudo apt-get -y install libwww-dict-leo-org-perl
 
   # clean up installed packages
   sudo apt-get -y autoremove
@@ -243,8 +245,9 @@ function task_hardcodefixer {
 }
 
 # import terminal color profile
-
+# get atom settings
 # customize bash prompt with git status bar (bash it?)
+# set up aliases
 
 # install android sdk
 function task_android {
@@ -284,14 +287,14 @@ else
   task_diodon
   task_autostart
   task_middleClick
-  task_npm
+  # todo task_npm
   task_fonts
-  task_grob
+  #task_grob
   task_folders
   task_dreymar
   task_gsettings
   task_dconf
-  task_cursor
+  # todo task_cursor
   task_hardcodefixer
   task_android
 
