@@ -229,7 +229,14 @@ function task_dconf {
 }
 
 function task_cursor {
-gsettings set org.gnome.desktop.interface cursor-theme 'Numix-Cursor'
+  git clone https://github.com/uloco/numix-cursor.git
+  if [[ ! -d "$HOME/.icons" ]]; then
+    mkdir "$HOME/.icons"
+  fi
+  if [[ ! -d "$HOME/.icons/Numix-Cursor" ]]; then
+    cp -rv numix-cursor/theme/Numix-Cursor "$HOME/.icons/Numix-Cursor"
+  fi
+  gsettings set org.gnome.desktop.interface cursor-theme "Numix-Cursor"
 
 }
 
