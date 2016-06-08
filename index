@@ -181,6 +181,7 @@ function task_dreymar {
 }
 
 function task_gsettings {
+  gsettings set org.gnome.desktop.input-sources sources "[('xkb','de')]"
   gsettings set com.canonical.indicator.datetime show-date true
   gsettings set com.canonical.indicator.datetime show-day true
   gsettings set com.canonical.indicator.datetime show-week-numbers true
@@ -225,8 +226,8 @@ function task_gsettings {
 function task_dconf {
   dconf write /org/compiz/profiles/unity/plugins/core/vsize 2
   dconf write /org/compiz/profiles/unity/plugins/core/hsize 2
-  dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window truedconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window true
-  dconf write /org/gnome/desktop/wm/preferences/action-middle-click-titlebar/org/gnome/desktop/wm/preferences/action-middle-click-titlebar "'none'"
+  dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window true
+  dconf write /org/gnome/desktop/wm/preferences/action-middle-click-titlebar "'none'"
   dconf write /org/gtk/settings/file-chooser/show-hidden true
   dconf write /org/gnome/nautilus/list-view/use-tree-view true
   dconf write /com/canonical/indicator/power/show-time true
