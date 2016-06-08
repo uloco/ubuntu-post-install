@@ -11,6 +11,11 @@ purple='\033[1;35m';
 cyan='\033[1;36m';
 reset='\E(B\E[m';
 
+function task_mirrors {
+  echo -e "${cyan}Switching to german update server${reset}"
+  sudo sed -i 's/us\.archive\.ubuntu\.com/de.archive.ubuntu.com/' /etc/apt/sources.list
+}
+
 function task_install {
   echo -e "${cyan}Installing packages and apps${reset}"
   # add third party ppas
