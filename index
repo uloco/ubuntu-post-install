@@ -131,7 +131,9 @@ function task_npm {
 }
 
 # install font source code pro
+
 function task_fonts {
+echo -e "${cyan}Installing missing fonts.${white}"
   if [ ! -d "$HOME/.fonts" ]; then
     mkdir ~/.fonts
   fi
@@ -157,18 +159,18 @@ function task_grob {
 }
 
 function task_folders {
-  mkdir "$HOME/Source"
-  mkdir "$HOME/Source/github"
-  mkdir "$HOME/Source/bitbucket"
-  mkdir "$HOME/Software"
-  mkdir "$HOME/Scripts"
-  mkdir "$HOME/tmp"
-  mkdir "$HOME/Workshops"
-  mkdir "$HOME/Virtual Machines"
+  mkdir -v "$HOME/Source"
+  mkdir -v "$HOME/Source/github"
+  mkdir -v "$HOME/Source/bitbucket"
+  mkdir -v "$HOME/Software"
+  mkdir -v "$HOME/Scripts"
+  mkdir -v "$HOME/tmp"
+  mkdir -v "$HOME/Workshops"
+  mkdir -v "$HOME/Virtual Machines"
 }
 
 function task_dreymar {
-  echo -e "${cyan} Set up dreymars extended keyboard layer ${white}"
+  echo -e "${cyan}Set up dreymars extended keyboard layer ${white}"
   git clone https://github.com/DreymaR/BigBagKbdTricks_XKB.git
   cd BigBagKbdTricks_XKB
   chmod u+x install-dreymar-xmod.sh
