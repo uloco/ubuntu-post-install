@@ -88,6 +88,9 @@ function task_diodon {
 # add startup applications: diodon guake
 function task_autostart {
   echo -e "${cyan}Adding apps to autostart${white}"
+  if [ ! -d "$HOME/.config/autostart/"]; then
+    mkdir "$HOME/.config/autostart/"
+  fi
   cp data/autostart/* "$HOME/.config/autostart/"
 }
 
