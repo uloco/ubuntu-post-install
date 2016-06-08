@@ -285,10 +285,7 @@ function task_android {
   # cd "$CURRENT_DIR";
 }
 
-# let the magic happen
-if [ -n $1 ]; then
-  $1
-else
+function task_runall {
   task_install
   task_webstorm
   task_diodon
@@ -296,15 +293,21 @@ else
   task_middleClick
   # todo task_npm
   task_fonts
-  #task_grob
+  # task_grob
   task_folders
   task_dreymar
   task_gsettings
   task_dconf
-  # todo task_cursor
+  todo task_cursor
   task_hardcodefixer
   task_android
+}
 
+if [ ! $# -eq 0 ]
+  then
+    "$1"
+  else
+    task_runall
 fi
 
 echo -e \
