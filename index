@@ -309,8 +309,8 @@ function task_runall {
   task_webstorm
   task_diodon
   task_autostart
-  task_middleClick
-  # todo task_npm
+  # task_middleClick
+  # task_npm
   task_fonts
   # task_grob
   task_folders
@@ -318,7 +318,7 @@ function task_runall {
   task_language
   task_gsettings
   task_dconf
-  todo task_cursor
+  task_cursor
   task_hardcodefixer
   task_android
 }
