@@ -180,6 +180,10 @@ function task_dreymar {
   rm -rf BigBagKbdTricks_XKB
 }
 
+function task_language {
+  sudo apt-get -y install $(check-language-support -l de)
+}
+
 function task_gsettings {
   gsettings set org.gnome.desktop.input-sources sources "[('xkb','de')]"
   gsettings set com.canonical.indicator.datetime show-date true
@@ -302,6 +306,7 @@ function task_runall {
   # task_grob
   task_folders
   task_dreymar
+  task_language
   task_gsettings
   task_dconf
   todo task_cursor
