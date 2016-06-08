@@ -72,12 +72,15 @@ function task_install {
 # download and install webstorm
 function task_webstorm {
   echo -e "${cyan}Installing webstorm${reset}"
-  wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.2b.tar.gz"
-  tar -xzvf data/webstorm.tar.gz --directory data/
-  mv data/WebStorm-* data/webstorm
-  sudo cp -r data/webstorm /opt/webstorm
-  rm -rf data/webstorm*
-  /opt/webstorm/bin/webstorm.sh &
+  if [ ! -d "/opt/webstorm" ]; then
+
+    wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.2b.tar.gz"
+    tar -xzvf data/webstorm.tar.gz --directory data/
+    mv data/WebStorm-* data/webstorm
+    sudo cp -r data/webstorm /opt/webstorm
+    rm -rf data/webstorm*
+    /opt/webstorm/bin/webstorm.sh &
+  fi
 }
 
 # set up diodon key binding
