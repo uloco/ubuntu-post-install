@@ -337,7 +337,6 @@ function goloco {
     cp -r data/powerline-nice "$HOME/.bash_it/themes/"
 
     sed -i "/^export BASH_IT_THEME/c\export BASH_IT_THEME=\'powerline-nice\'" "$HOME/.bashrc"
-    read foo
   }
 
   function task_runall {
