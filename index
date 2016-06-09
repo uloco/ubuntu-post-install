@@ -73,12 +73,23 @@ function task_install {
 # download and install webstorm
 function task_webstorm {
   echo -e "${cyan}Installing webstorm${reset}"
-  wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.2b.tar.gz"
-  tar -xzvf data/webstorm.tar.gz --directory data/
-  mv data/WebStorm-* data/webstorm
-  sudo cp -r data/webstorm /opt/webstorm
-  rm -rf data/webstorm*
-  /opt/webstorm/bin/webstorm.sh &
+  if [ ! -d "/opt/webstorm" ]; then
+
+    wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.1.2b.tar.gz"
+    tar -xzvf data/webstorm.tar.gz --directory data/
+    mv data/WebStorm-* data/webstorm
+    sudo cp -r data/webstorm /opt/webstorm
+    rm -rf data/webstorm*
+    /opt/webstorm/bin/webstorm.sh &
+  fi
+}
+
+function task_git {
+  git config --global user.name "Umut Topuzoğlu"
+  git config --global user.email "uloco@schiefewelt.de"
+  git config --global push.default simple
+  git config --global credential.helper cache
+  git config --global svn.rmdir true
 }
 
 # set up diodon key binding
@@ -165,25 +176,29 @@ function task_grob {
 }
 
 function task_folders {
-  mkdir -v "$HOME/Source"
-  mkdir -v "$HOME/Source/github"
-  mkdir -v "$HOME/Source/bitbucket"
-  mkdir -v "$HOME/Software"
-  mkdir -v "$HOME/Scripts"
-  mkdir -v "$HOME/tmp"
-  mkdir -v "$HOME/Workshops"
-  mkdir -v "$HOME/Virtual Machines"
+  mkdir -pv "$HOME/Source/github"
+  mkdir -pv "$HOME/Source/bitbucket"
+  mkdir -pv "$HOME/Software"
+  mkdir -pv "$HOME/Scripts"
+  mkdir -pv "$HOME/tmp"
+  mkdir -pv "$HOME/Workshops"
+  mkdir -pv "$HOME/Virtual Machines"
 }
 
 function task_dreymar {
   echo -e "${cyan}Set up dreymars extended keyboard layer ${reset}"
-  git clone https://github.com/DreymaR/BigBagKbdTricks_XKB.git
-  cd BigBagKbdTricks_XKB
-  chmod u+x install-dreymar-xmod.sh
-  ./install-dreymar-xmod.sh -o
-  gsettings set org.gnome.desktop.input-sources xkb-options "['lv5:caps_switch_lock', 'misc:extend', 'shift:both_capslock', 'compose:rctrl']"
-  cd ..
-  rm -rf BigBagKbdTricks_XKB
+
+  if ls /usr/share/X11/dbak-* 1> /dev/null 2>&1; then
+    echo -e "${purple}  Already installed, skipping.${reset}"
+  else
+    git clone https://github.com/DreymaR/BigBagKbdTricks_XKB.git
+    cd BigBagKbdTricks_XKB
+    chmod u+x install-dreymar-xmod.sh
+    ./install-dreymar-xmod.sh -o
+    gsettings set org.gnome.desktop.input-sources xkb-options "['lv5:caps_switch_lock', 'misc:extend', 'shift:both_capslock', 'compose:rctrl']"
+    cd ..
+    rm -rf BigBagKbdTricks_XKB
+  fi
 }
 
 function task_language {
@@ -303,12 +318,13 @@ function task_android {
 }
 
 function task_runall {
+  task_mirrors
   task_install
   task_webstorm
   task_diodon
   task_autostart
-  task_middleClick
-  # todo task_npm
+  # task_middleClick
+  # task_npm
   task_fonts
   # task_grob
   task_folders
@@ -316,7 +332,7 @@ function task_runall {
   task_language
   task_gsettings
   task_dconf
-  todo task_cursor
+  task_cursor
   task_hardcodefixer
   task_android
 }
