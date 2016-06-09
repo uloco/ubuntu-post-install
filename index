@@ -305,6 +305,7 @@ function task_android {
 }
 
 function task_runall {
+  task_mirrors
   task_install
   task_webstorm
   task_diodon
