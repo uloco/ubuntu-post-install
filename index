@@ -186,13 +186,18 @@ function task_folders {
 
 function task_dreymar {
   echo -e "${cyan}Set up dreymars extended keyboard layer ${reset}"
-  git clone https://github.com/DreymaR/BigBagKbdTricks_XKB.git
-  cd BigBagKbdTricks_XKB
-  chmod u+x install-dreymar-xmod.sh
-  ./install-dreymar-xmod.sh -o
-  gsettings set org.gnome.desktop.input-sources xkb-options "['lv5:caps_switch_lock', 'misc:extend', 'shift:both_capslock', 'compose:rctrl']"
-  cd ..
-  rm -rf BigBagKbdTricks_XKB
+
+  if ls /usr/share/X11/dbak-* 1> /dev/null 2>&1; then
+    echo -e "${purple}  Already installed, skipping.${reset}"
+  else
+    git clone https://github.com/DreymaR/BigBagKbdTricks_XKB.git
+    cd BigBagKbdTricks_XKB
+    chmod u+x install-dreymar-xmod.sh
+    ./install-dreymar-xmod.sh -o
+    gsettings set org.gnome.desktop.input-sources xkb-options "['lv5:caps_switch_lock', 'misc:extend', 'shift:both_capslock', 'compose:rctrl']"
+    cd ..
+    rm -rf BigBagKbdTricks_XKB
+  fi
 }
 
 function task_language {
