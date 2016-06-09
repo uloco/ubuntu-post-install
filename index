@@ -12,7 +12,6 @@ cyan='\033[1;36m';
 reset='\E(B\E[m';
 
 function goloco {
-
   function task_mirrors {
     echo -e "${cyan}Switching to german update server${reset}"
     sudo sed -i 's/us\.archive\.ubuntu\.com/de.archive.ubuntu.com/' /etc/apt/sources.list
@@ -87,6 +86,7 @@ function goloco {
   }
 
   function task_git {
+    echo -e "${cyan}Initial git config${reset}"
     git config --global user.name "Umut Topuzoğlu"
     git config --global user.email "uloco@schiefewelt.de"
     git config --global push.default simple
@@ -124,6 +124,7 @@ function goloco {
 
   function task_npm {
     # get nvm and set up npm
+    echo -e "${cyan}Setting up nvm, nodeJS and npm${reset}"
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
     source $HOME/.bashrc
     nvm install stable
@@ -131,6 +132,7 @@ function goloco {
     nvm use stable
 
     npm install -g \
+      npm
       babel-cli \
       bower \
       cordova \
@@ -162,22 +164,8 @@ function goloco {
     rm -r source-code-pro/
   }
 
-
-  # grob customization
-  function task_grob {
-    echo "grobCustomization"
-
-    source ./cntlm
-
-    task_cntlm_install;
-    task_cntlm_config;
-
-    # set npm registry
-    #npm config set registry http://gmvm003lx:8081/nexus/content/repositories/npmjs/
-
-  }
-
   function task_folders {
+    echo -e "${cyan}Creating default folders${reset}"
     mkdir -pv "$HOME/Source/github"
     mkdir -pv "$HOME/Source/bitbucket"
     mkdir -pv "$HOME/Software"
@@ -205,10 +193,19 @@ function goloco {
   }
 
   function task_language {
+    echo -e "${cyan}Installing missing language packs${reset}"
     sudo apt-get -y install $(check-language-support -l de)
   }
 
   function task_gsettings {
+    echo -e "${cyan}Setting gsettings values${reset}"
+
+    if [ ! -f "/usr/share/applications/jetbrains-webstorm.desktop" ]; then
+      echo -e "${red}Webstorm icon not found.${reset}"
+      echo -e "${yellow}Please finish webstorm initiaization and then press any key to continue.${reset}"
+      read foo
+    fi
+
     gsettings set org.gnome.desktop.input-sources sources "[('xkb','de')]"
     gsettings set com.canonical.indicator.datetime show-date true
     gsettings set com.canonical.indicator.datetime show-day true
@@ -252,6 +249,7 @@ function goloco {
   }
 
   function task_dconf {
+    echo -e "${cyan}Setting dconf settings${reset}"
     dconf write /org/compiz/profiles/unity/plugins/core/vsize 2
     dconf write /org/compiz/profiles/unity/plugins/core/hsize 2
     dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window true
@@ -263,6 +261,7 @@ function goloco {
   }
 
   function task_cursor {
+    echo -e "${cyan}Installing custom x-cursor theme 'numix'${reset}"
     git clone https://github.com/uloco/numix-cursor.git
     if [[ ! -d "$HOME/.icons" ]]; then
       mkdir "$HOME/.icons"
@@ -276,6 +275,7 @@ function goloco {
   }
 
   function task_hardcodefixer {
+    echo -e "${cyan}Fixing hardcoded desktop icons${reset}"
     git clone https://github.com/Foggalong/hardcode-fixer.git
     cd hardcode-fixer
     sudo ./fix.sh
@@ -286,15 +286,12 @@ function goloco {
     sudo sed -i "/^Icon/c\Icon=webstorm" /usr/share/applications/jetbrains-webstorm.desktop
   }
 
-  # import terminal color profile
-  # get atom settings
-  # customize bash prompt with git status bar (bash it?)
-  # set up aliases
-
   # install android sdk
   function task_android {
 
     # perhaps this is enough
+    echo -e "${cyan}Installing android${reset}"
+
     sudo apt-get install -y android-sdk
 
     # download android sdk
@@ -321,12 +318,14 @@ function goloco {
   }
 
   function task_terminal {
-    dconf set /org/gnome/terminal/legacy/profiles:/list "['c54d3223-6d98-4650-98a9-37d912292c4b']"
-    dconf set /org/gnome/terminal/legacy/profiles:/default 'c54d3223-6d98-4650-98a9-37d912292c4b'
+    echo -e "${cyan}Setting up terminal colors and prompt${reset}"
 
-    dconf set /org/gnome/terminal/legacy/profiles:/:c54d3223-6d98-4650-98a9-37d912292c4b/palette "['rgb(80,80,80)', 'rgb(255,46,63)', 'rgb(111,214,93)', 'rgb(255,111,35)', 'rgb(52,118,255)', 'rgb(152,97,248)', 'rgb(0,205,179)', 'rgb(255,252,194)', 'rgb(124,124,124)', 'rgb(255,100,128)', 'rgb(63,197,107)', 'rgb(249,200,89)', 'rgb(0,177,254)', 'rgb(182,141,255)', 'rgb(179,139,125)', 'rgb(255,254,227)']"
+    dconf write /org/gnome/terminal/legacy/profiles:/list "['c54d3223-6d98-4650-98a9-37d912292c4b']"
+    dconf write /org/gnome/terminal/legacy/profiles:/default 'c54d3223-6d98-4650-98a9-37d912292c4b'
 
-    dconf set /org/gnome/terminal/legacy/profiles:/:c54d3223-6d98-4650-98a9-37d912292c4b/scrollback-lines '999999'
+    dconf write /org/gnome/terminal/legacy/profiles:/:c54d3223-6d98-4650-98a9-37d912292c4b/palette "['rgb(80,80,80)', 'rgb(255,46,63)', 'rgb(111,214,93)', 'rgb(255,111,35)', 'rgb(52,118,255)', 'rgb(152,97,248)', 'rgb(0,205,179)', 'rgb(255,252,194)', 'rgb(124,124,124)', 'rgb(255,100,128)', 'rgb(63,197,107)', 'rgb(249,200,89)', 'rgb(0,177,254)', 'rgb(182,141,255)', 'rgb(179,139,125)', 'rgb(255,254,227)']"
+
+    dconf write /org/gnome/terminal/legacy/profiles:/:c54d3223-6d98-4650-98a9-37d912292c4b/scrollback-lines '999999'
 
     git clone --depth=1 https://github.com/Bash-it/bash-it.git "$HOME/.bash_it"
     echo 'y' | "$HOME/.bash_it/install.sh"
@@ -340,7 +339,6 @@ function goloco {
   }
 
   function task_runall {
-    # task_grob
     task_mirrors
     task_install
     task_language
@@ -350,8 +348,8 @@ function goloco {
     task_webstorm
     task_git
     task_diodon
-    # task_middleClick
-    # task_npm
+    task_middleClick
+    task_npm
     task_gsettings
     task_dreymar
     task_dconf
@@ -361,7 +359,7 @@ function goloco {
     task_android
 
     echo -e \
-      "${cyan}" \
+      "${green}" \
       "\n ****************************************************************************** \n" \
       "****************************************************************************** \n" \
       "UBUNTU POST INITIALIZATION SUCCESSFULL! \n" \
@@ -373,14 +371,24 @@ function goloco {
       "- \n" \
       "- \n"   \
       "${reset}";
+      read foo
   }
 
-  task_runall
+  # Prevent sudo timeout
+  sudo -v # ask for sudo password up-front
+  while true; do
+    # Update user's timestamp without running a command
+    sudo -nv; sleep 1m
+    # Exit when the parent process is not running any more. In fact this loop
+    # would be killed anyway after being an orphan(when the parent process
+    # exits). But this ensures that and probably exit sooner.
+    kill -0 $$ 2>/dev/null || exit
+  done &
 
+  task_runall
 }
-# if [ ! $# -eq 0 ]
-#   then
-#     "$1"
-#   else
-#     task_runall
-# fi
+
+# TODO
+# atom settings
+# exit on error
+# grob minimal version
