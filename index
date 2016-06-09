@@ -167,14 +167,13 @@ function task_grob {
 }
 
 function task_folders {
-  mkdir -v "$HOME/Source"
-  mkdir -v "$HOME/Source/github"
-  mkdir -v "$HOME/Source/bitbucket"
-  mkdir -v "$HOME/Software"
-  mkdir -v "$HOME/Scripts"
-  mkdir -v "$HOME/tmp"
-  mkdir -v "$HOME/Workshops"
-  mkdir -v "$HOME/Virtual Machines"
+  mkdir -pv "$HOME/Source/github"
+  mkdir -pv "$HOME/Source/bitbucket"
+  mkdir -pv "$HOME/Software"
+  mkdir -pv "$HOME/Scripts"
+  mkdir -pv "$HOME/tmp"
+  mkdir -pv "$HOME/Workshops"
+  mkdir -pv "$HOME/Virtual Machines"
 }
 
 function task_dreymar {
