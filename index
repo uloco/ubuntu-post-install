@@ -325,6 +325,17 @@ function task_terminal {
   dconf set /org/gnome/terminal/legacy/profiles:/:c54d3223-6d98-4650-98a9-37d912292c4b/palette "['rgb(80,80,80)', 'rgb(255,46,63)', 'rgb(111,214,93)', 'rgb(255,111,35)', 'rgb(52,118,255)', 'rgb(152,97,248)', 'rgb(0,205,179)', 'rgb(255,252,194)', 'rgb(124,124,124)', 'rgb(255,100,128)', 'rgb(63,197,107)', 'rgb(249,200,89)', 'rgb(0,177,254)', 'rgb(182,141,255)', 'rgb(179,139,125)', 'rgb(255,254,227)']"
 
   dconf set /org/gnome/terminal/legacy/profiles:/:c54d3223-6d98-4650-98a9-37d912292c4b/scrollback-lines '999999'
+
+  git clone --depth=1 https://github.com/Bash-it/bash-it.git "$HOME/.bash_it"
+  echo 'y' | "$HOME/.bash_it/install.sh"
+
+  source "$HOME/.bashrc"
+
+  bash-it enable alias git
+  cp -r data/powerline-nice "$HOME/.bash_it/themes/"
+
+  sed -i "/^export BASH_IT_THEME/c\export BASH_IT_THEME=\'powerline-nice\'" "$HOME/.bashrc"
+  read foo
 }
 
 function task_runall {
