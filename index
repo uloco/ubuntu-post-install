@@ -327,20 +327,22 @@ function task_terminal {
 }
 
 function task_runall {
+  # task_grob
   task_mirrors
   task_install
-  task_webstorm
-  task_diodon
+  task_language
+  task_fonts
+  task_folders
   task_autostart
+  task_webstorm
+  task_git
+  task_diodon
   # task_middleClick
   # task_npm
-  task_fonts
-  # task_grob
-  task_folders
-  task_dreymar
-  task_language
   task_gsettings
+  task_dreymar
   task_dconf
+  task_terminal
   task_cursor
   task_hardcodefixer
   task_android
