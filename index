@@ -56,6 +56,7 @@ function task_install {
   sudo apt-get -y install inkscape
   sudo apt-get -y install diodon
   sudo apt-get -y install meld
+  sudo apt-get -y install nautilus-compare
   sudo apt-get -y install thunderbird
   sudo apt-get -y install numix-gtk-theme
   sudo apt-get -y install numix-icon-theme-circle
