@@ -83,6 +83,14 @@ function task_webstorm {
   fi
 }
 
+function task_git {
+  git config --global user.name "Umut Topuzoğlu"
+  git config --global user.email "uloco@schiefewelt.de"
+  git config --global push.default simple
+  git config --global credential.helper cache
+  git config --global svn.rmdir true
+}
+
 # set up diodon key binding
 function task_diodon {
   echo -e "${cyan}Setting up diodon shortcut CTRL+SUPER+V${reset}"
