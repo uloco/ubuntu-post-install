@@ -113,7 +113,7 @@ function task_autostart {
 
 # middle mouse click with three fingers
 function task_middleClick {
-  if hash synclient 2>/dev/null; then
+  if synclient &>/dev/null && ! grep 'synclient TapButton3=2' "$HOME/.bashrc" &>/dev/null; then
     echo -e "${cyan}Touchpad detected, adding middle click on 3 finger tap.${reset}"
     echo "synclient TapButton3=2" >> $HOME/.bashrc
     source "$HOME/.bashrc"
