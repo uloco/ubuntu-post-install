@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # stop executing script on error
-set -e
+# set -e
 
 red='\033[1;31m';
 green='\033[1;32m';
@@ -358,25 +358,25 @@ function task_runall {
   task_cursor
   task_hardcodefixer
   task_android
+
+  echo -e \
+    "${cyan}" \
+    "\n ****************************************************************************** \n" \
+    "****************************************************************************** \n" \
+    "UBUNTU POST INITIALIZATION SUCCESSFULL! \n" \
+    "Things you will have to do manually: \n" \
+    "============================================================================== \n" \
+    "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts \n" \
+    "- Import compiz config settings from file 'data/ccsm.profile'\n" \
+    "- Configure guake preferences\n" \
+    "- \n" \
+    "- \n"   \
+    "${reset}";
 }
 
-if [ ! $# -eq 0 ]
-  then
-    "$1"
-  else
-    task_runall
-fi
-
-echo -e \
-  "${cyan}" \
-  "\n ****************************************************************************** \n" \
-  "****************************************************************************** \n" \
-  "UBUNTU POST INITIALIZATION SUCCESSFULL! \n" \
-  "Things you will have to do manually: \n" \
-  "============================================================================== \n" \
-  "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts \n" \
-  "- Import compiz config settings from file 'data/ccsm.profile'\n" \
-  "- Configure guake preferences\n" \
-  "- \n" \
-  "- \n"   \
-  "${reset}";
+# if [ ! $# -eq 0 ]
+#   then
+#     "$1"
+#   else
+#     task_runall
+# fi
