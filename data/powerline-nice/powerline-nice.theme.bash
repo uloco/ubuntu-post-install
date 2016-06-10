@@ -3,7 +3,7 @@
 THEME_PROMPT_SEPARATOR=""
 
 SHELL_SSH_CHAR=" "
-SHELL_THEME_PROMPT_COLOR=12
+SHELL_THEME_PROMPT_COLOR=4
 SHELL_THEME_PROMPT_COLOR_SUDO=3
 
 VIRTUALENV_CHAR="ⓔ "
@@ -12,16 +12,15 @@ VIRTUALENV_THEME_PROMPT_COLOR=10
 SCM_NONE_CHAR=""
 SCM_GIT_CHAR=" "
 
-SCM_THEME_PROMPT_CLEAN=""
-SCM_THEME_PROMPT_DIRTY=""
-
 SCM_THEME_PROMPT_COLOR=0
 SCM_THEME_PROMPT_CLEAN_COLOR=15
 SCM_THEME_PROMPT_DIRTY_COLOR=9
 SCM_THEME_PROMPT_STAGED_COLOR=11
 SCM_THEME_PROMPT_UNSTAGED_COLOR=3
 
-CWD_THEME_PROMPT_COLOR=240
+INPUT_LINE_COLOR=12
+
+CWD_THEME_PROMPT_COLOR=8
 
 LAST_STATUS_THEME_PROMPT_COLOR=14
 
@@ -42,7 +41,7 @@ function set_rgb_color {
 
 function powerline_shell_prompt {
     SHELL_PROMPT_COLOR=${SHELL_THEME_PROMPT_COLOR}
-    if sudo -n uptime 2>&1 | grep -q "load"; then
+    if [ "$USER" == "root" ]; then
         SHELL_PROMPT_COLOR=${SHELL_THEME_PROMPT_COLOR_SUDO}
     fi
     if [[ -n "${SSH_CLIENT}" ]]; then
@@ -85,7 +84,7 @@ function powerline_scm_prompt {
             SCM_PROMPT="$(set_rgb_color ${SCM_THEME_PROMPT_CLEAN_COLOR} ${SCM_THEME_PROMPT_COLOR})"
         fi
         if [[ "${SCM_GIT_CHAR}" == "${SCM_CHAR}" ]]; then
-            SCM_PROMPT+=" ${SCM_CHAR}${SCM_BRANCH}${SCM_STATE}"
+            SCM_PROMPT+=" ${SCM_CHAR}${SCM_BRANCH}"
         fi
         SCM_PROMPT="$(set_rgb_color ${LAST_THEME_COLOR} ${SCM_THEME_PROMPT_COLOR})${THEME_PROMPT_SEPARATOR}${normal}${SCM_PROMPT} ${normal}"
         LAST_THEME_COLOR=${SCM_THEME_PROMPT_COLOR}
@@ -126,7 +125,7 @@ function powerline_prompt_command() {
     powerline_cwd_prompt
     powerline_last_status_prompt LAST_STATUS
 
-    PS1="${SHELL_PROMPT}${IN_VIM_PROMPT}${VIRTUALENV_PROMPT}${SCM_PROMPT}${CWD_PROMPT}${LAST_STATUS_PROMPT}\n ➤ "
+    PS1="${SHELL_PROMPT}${IN_VIM_PROMPT}${VIRTUALENV_PROMPT}${SCM_PROMPT}${CWD_PROMPT}${LAST_STATUS_PROMPT}\n$(set_rgb_color - ${INPUT_LINE_COLOR}) ${normal}$(set_rgb_color ${INPUT_LINE_COLOR} -)${THEME_PROMPT_SEPARATOR}${normal} "
 }
 
 PROMPT_COMMAND=powerline_prompt_command
