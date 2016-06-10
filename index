@@ -194,6 +194,7 @@ function goloco {
 
   function task_language {
     echo -e "${cyan}Installing missing language packs${reset}"
+    sudo apt-get -y install $(check-language-support -l en)
     sudo apt-get -y install $(check-language-support -l de)
   }
 
