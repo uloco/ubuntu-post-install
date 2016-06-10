@@ -148,7 +148,8 @@ function goloco {
       ionic \
       jsdoc \
       karma-cli \
-      live-server
+      live-server \
+      ungit
   }
 
   # install font source code pro
