@@ -132,7 +132,7 @@ function goloco {
     nvm use stable
 
     npm install -g \
-      npm
+      npm \
       babel-cli \
       bower \
       cordova \
@@ -221,9 +221,10 @@ function goloco {
     gsettings set org.gnome.desktop.interface gtk-theme 'Numix'
     gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
     gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro Medium 11'
+    gsettings set org.gnome.desktop.session idle-delay uint32 0
     #gsettings set org.gnome.desktop.lockdown disable-lock-screen true
     gsettings set org.gnome.desktop.notifications application-children "['diodon', 'thunderbird']"
-    #gsettings set org.gnome.desktop.screensaver lock-enabled false
+    gsettings set org.gnome.desktop.screensaver lock-enabled false
     gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend false
     gsettings set org.gnome.desktop.wm.keybindings maximize "['<Primary><Super>Up']"
     gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "['<Control><Alt><Super>Down']"
@@ -258,6 +259,7 @@ function goloco {
     dconf write /org/gnome/nautilus/list-view/use-tree-view true
     dconf write /com/canonical/indicator/power/show-time true
     dconf write /com/canonical/indicator/power/show-percentage true
+    dconf write /org/gnome/desktop/screensaver/lock-enabled false
   }
 
   function task_cursor {
@@ -320,13 +322,6 @@ function goloco {
   function task_terminal {
     echo -e "${cyan}Setting up terminal colors and prompt${reset}"
 
-    dconf write /org/gnome/terminal/legacy/profiles:/list "['c54d3223-6d98-4650-98a9-37d912292c4b']"
-    dconf write /org/gnome/terminal/legacy/profiles:/default 'c54d3223-6d98-4650-98a9-37d912292c4b'
-
-    dconf write /org/gnome/terminal/legacy/profiles:/:c54d3223-6d98-4650-98a9-37d912292c4b/palette "['rgb(80,80,80)', 'rgb(255,46,63)', 'rgb(111,214,93)', 'rgb(255,111,35)', 'rgb(52,118,255)', 'rgb(152,97,248)', 'rgb(0,205,179)', 'rgb(255,252,194)', 'rgb(124,124,124)', 'rgb(255,100,128)', 'rgb(63,197,107)', 'rgb(249,200,89)', 'rgb(0,177,254)', 'rgb(182,141,255)', 'rgb(179,139,125)', 'rgb(255,254,227)']"
-
-    dconf write /org/gnome/terminal/legacy/profiles:/:c54d3223-6d98-4650-98a9-37d912292c4b/scrollback-lines '999999'
-
     git clone --depth=1 https://github.com/Bash-it/bash-it.git "$HOME/.bash_it"
     echo 'y' | "$HOME/.bash_it/install.sh"
 
@@ -368,7 +363,7 @@ function goloco {
       "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts \n" \
       "- Import compiz config settings from file 'data/ccsm.profile'\n" \
       "- Configure guake preferences\n" \
-      "- \n" \
+      "- Copy colors from guake bluloco to gnome-terminal \n" \
       "- \n"   \
       "${reset}";
       read foo
