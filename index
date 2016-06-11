@@ -226,7 +226,7 @@ function goloco {
       read foo
     fi
 
-    gsettings set org.gnome.desktop.input-sources sources "[('xkb','de')]"
+    gsettings set org.gnome.desktop.input-sources sources "[('xkb','de+nodeadkeys')]"
     gsettings set com.canonical.indicator.datetime show-date true
     gsettings set com.canonical.indicator.datetime show-day true
     gsettings set com.canonical.indicator.datetime show-week-numbers true
@@ -384,6 +384,10 @@ function goloco {
       "- Import compiz config settings from file 'data/ccsm.profile'\n" \
       "- Configure guake preferences\n" \
       "- Copy colors from guake bluloco to gnome-terminal \n" \
+      "- REBOOT!\n"   \
+      "- \n"   \
+      "- \n"   \
+      "- \n"   \
       "- \n"   \
       "${reset}";
       read foo
