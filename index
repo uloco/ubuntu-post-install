@@ -340,7 +340,11 @@ function goloco {
 
     sed -i "/^export BASH_IT_THEME/c\export BASH_IT_THEME=\'powerline-nice\'" "$HOME/.bashrc"
   }
-
+  
+  function alternatives {
+    sudo sed -i 's/gedit.desktop/atom.desktop/g' /etc/gnome/defaults.list  
+  }
+  
   function task_runall {
     task_mirrors
     task_install
