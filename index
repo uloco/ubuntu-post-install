@@ -392,6 +392,7 @@ function goloco {
     kill -0 $$ 2>/dev/null || exit
   done &
 
+  source "$HOME/.bashrc"
   task_runall
 }
 
