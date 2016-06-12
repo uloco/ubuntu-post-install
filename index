@@ -68,6 +68,7 @@ function goloco {
     sudo apt-get -y install libwww-dict-leo-org-perl
     sudo apt-get -y install gnome-tweak-tool
     sudo apt-get -y install ppa-purge
+    sudo apt-get -y install synaptic
 
     # clean up installed packages
     sudo apt-get -y autoremove
