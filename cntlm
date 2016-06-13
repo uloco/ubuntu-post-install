@@ -1,9 +1,4 @@
-#!/bin/bash
-
-# tweak config folder path here
-CONF='/etc/cntlm.conf'
-CNTLM_ADDRESS="http://localhost:3128"
-APT_CONF='/etc/apt/apt.conf'
+#!/usr/bin/env bash
 
 function task_cntlm_install {
     echo "Please open proxy settings via gui and click on apply everywhere"
@@ -14,7 +9,10 @@ function task_cntlm_install {
     gsettings set org.gnome.system.proxy.http port 3128
     gsettings set org.gnome.system.proxy.https host '127.0.0.1'
     gsettings set org.gnome.system.proxy.https port 3128
+    gsettings set org.gnome.system.proxy.ftp host '127.0.0.1'
+    gsettings set org.gnome.system.proxy.ftp port 3128
     read foo
+    source "$HOME/.bashrc"
     echo "Installing CNTLM Proxy authentication"
     sudo dpkg -i data/cntlm_0.92.3-1ubuntu1_amd64.deb
 }
@@ -58,15 +56,21 @@ function task_cntlm_config {
   sudo sed -i "/^NoProxy/c\NoProxy  $(echo $NO_PROXY | sed s/','/'\,'/ )" "$CONF"
 
   # add environment variables
-  #echo 'CNTLM_ADDRESS=http://localhost:3128' >> "$HOME/.bashrc";
-  #echo 'http_proxy="$CNTLM_ADDRESS"' >> "$HOME/.bashrc";
-  #echo 'https_proxy="$CNTLM_ADDRESS"' >> "$HOME/.bashrc";
-  #source "$HOME/.bashrc";
- 
-  ## make apt work
+  if ! grep "export http_proxy" "$HOME/.bashrc"
+  echo '
+  # Proxy
+  export http_proxy="http://127.0.0.1:3128"
+  export https_proxy="http://127.0.0.1:3128"
+  export ftp_proxy="http://127.0.0.1:3128"
+  export HTTP_PROXY="http://127.0.0.1:3128"
+  export HTTPS_PROXY="http://127.0.0.1:3128"
+  export FTP_PROXY="http://127.0.0.1:3128"
+  ' >> "$HOME/.bashrc";
+  source "$HOME/.bashrc";
 
-  #echo 'Acquire::http::proxy "http://localhost:3128/";' | sudo tee -a "$APT_CONF";
-  #echo 'Acquire::https::proxy "https://localhost:3128/";' | sudo tee -a "$APT_CONF";
+  ## make apt work
+  echo 'Acquire::http::Pipeline-Depth 0;' | sudo tee -a "/etc/apt/apt.conf";
+  echo 'Acquire::http::No-Cache=True;' | sudo tee -a "/etc/apt/apt.conf";
 
   echo "Restarting service"
   sudo service cntlm restart
