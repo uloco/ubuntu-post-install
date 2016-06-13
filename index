@@ -84,6 +84,7 @@ function goloco {
       mv data/WebStorm-* data/webstorm
       sudo cp -r data/webstorm /opt/webstorm
       rm -rf data/webstorm*
+      sudo chown -R $USER:$USER /opt/webstorm
       /opt/webstorm/bin/webstorm.sh &
     fi
   }
@@ -382,7 +383,6 @@ function goloco {
       "- \n"   \
       "- \n"   \
       "${reset}";
-      read foo
   }
 
   # Prevent sudo timeout
