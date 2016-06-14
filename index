@@ -37,11 +37,9 @@ function post-install {
   function task_grob {
     task_cntlm_install
     task_cntlm_config
-    task_base
   }
 
-  function task_umut {
-    task_base
+  function task_advanced {
     task_git
     task_dreymar
     task_themeing
@@ -59,14 +57,20 @@ function post-install {
   done &
 
   case $1 in
-    'grob')
-    task_grob
+    '--grob')
+      task_grob
+      task_base
       ;;
+    '--full')
+    	task_grob
+    	task_base
+    	task_advanced
+    	;;
     *)
-    task_base
-    ;;
+    	task_base
+    	;;
   esac
-
+  
   source "$HOME/.bashrc"
 
   echo -e \
