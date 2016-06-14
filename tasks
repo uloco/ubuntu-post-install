@@ -229,6 +229,7 @@ function task_gsettings {
   gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Alt><Super>Left']"
   gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Alt><Super>Right']"
   gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['<Alt><Super>Up']"
+  gsettings set org.gnome.desktop.wm.keybindings toggle-shaded "['']"
   gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier '<Super>'
   gsettings set org.gnome.gnome-screenshot auto-save-directory "'file://$HOME/Pictures/Screenshots'"
   gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
