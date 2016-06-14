@@ -73,8 +73,12 @@ function task_webstorm {
 
 function task_git {
   echo -e "${cyan}Initial git config${reset}"
-  git config --global user.name "Umut Topuzoğlu"
-  git config --global user.email "uloco@schiefewelt.de"
+  echo -n "Git Name: "
+  read GIT_USER
+  echo -n "Git Email"
+  read GIT_EMAIL
+  git config --global user.name "$GIT_USER"
+  git config --global user.email "$GIT_EMAIL"
   git config --global push.default simple
   git config --global credential.helper cache
   git config --global svn.rmdir true
