@@ -3,7 +3,7 @@
 CONF='/etc/cntlm.conf'
 
 function task_cntlm_install {
-    
+    sudo sed -i '/Defaults\tenv_reset/i Defaults\tenv_keep="http_proxy https_proxy ftp_proxy no_proxy HTTP_PROXY HTTPS_PROXY FTP_PROXY NO_PROXY"' /etc/sudoers
     echo "Please open proxy settings via gui and click on apply everywhere"
     echo "After succefully doing that, press any key."
     gsettings set org.gnome.system.proxy mode 'manual'
