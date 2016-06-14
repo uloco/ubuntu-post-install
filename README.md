@@ -14,7 +14,7 @@ To install the base configuration just run
 
 Only one option is allowed at the moment
 
-`--grob` Installs proxy and base stuff
+`--grob` Installs proxy and base stuff  
 `--full` Installs proxy, base and advanced stuff
 
 
