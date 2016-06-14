@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
+CONF='/etc/cntlm.conf'
+
 function task_cntlm_install {
+    
     echo "Please open proxy settings via gui and click on apply everywhere"
     echo "After succefully doing that, press any key."
     gsettings set org.gnome.system.proxy mode 'manual'
@@ -56,17 +59,18 @@ function task_cntlm_config {
   sudo sed -i "/^NoProxy/c\NoProxy  $(echo $NO_PROXY | sed s/','/'\,'/ )" "$CONF"
 
   # add environment variables
-  if ! grep "export http_proxy" "$HOME/.bashrc"
-  echo '
-  # Proxy
-  export http_proxy="http://127.0.0.1:3128"
-  export https_proxy="http://127.0.0.1:3128"
-  export ftp_proxy="http://127.0.0.1:3128"
-  export HTTP_PROXY="http://127.0.0.1:3128"
-  export HTTPS_PROXY="http://127.0.0.1:3128"
-  export FTP_PROXY="http://127.0.0.1:3128"
-  ' >> "$HOME/.bashrc";
-  source "$HOME/.bashrc";
+  if ! grep "export http_proxy" "$HOME/.bashrc"; then
+		echo '
+		# Proxy
+		export http_proxy="http://127.0.0.1:3128"
+		export https_proxy="http://127.0.0.1:3128"
+		export ftp_proxy="http://127.0.0.1:3128"
+		export HTTP_PROXY="http://127.0.0.1:3128"
+		export HTTPS_PROXY="http://127.0.0.1:3128"
+		export FTP_PROXY="http://127.0.0.1:3128"
+		' >> "$HOME/.bashrc";
+		source "$HOME/.bashrc";
+  fi
 
   ## make apt work
   echo 'Acquire::http::Pipeline-Depth 0;' | sudo tee -a "/etc/apt/apt.conf";
