@@ -16,6 +16,8 @@ function task_install {
   # indicator keylock
   sudo add-apt-repository -y ppa:tsbarnes/indicator-keylock
 
+  # take a break
+  sudo add-apt-repository -y ppa:vlijm/takeabreak
   # update
   sudo apt-get update
 
@@ -52,6 +54,7 @@ function task_install {
     ppa-purge \
     buildnotify \
     checkinstall \
+    takeabreak \
     synaptic
 
   # clean up installed packages
