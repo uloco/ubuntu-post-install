@@ -257,6 +257,16 @@ function task_dconf {
   dconf write /com/canonical/indicator/power/show-percentage true
 }
 
+function task_settings {
+  # set timezone
+  timedatectl set-timezone Europe/Berlin
+  # set atom proxy if needed
+  if [[ -n $http_proxy ]] && hash apm &>/dev/null; then
+    apm config set proxy "$http_proxy"
+    apm config set https_proxy "$https_proxy"
+  fi
+}
+
 function task_cursor {
   echo -e "${cyan}Installing custom x-cursor theme 'numix'${reset}"
   git clone https://github.com/uloco/numix-cursor.git

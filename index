@@ -28,6 +28,7 @@ function post-install {
     task_middleClick
     task_npm
     task_gsettings
+    task_settings
     task_dconf
     task_terminal
     task_alternatives
@@ -70,7 +71,7 @@ function post-install {
     	task_base
     	;;
   esac
-  
+
   source "$HOME/.bashrc"
 
   echo -e \
