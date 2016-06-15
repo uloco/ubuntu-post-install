@@ -50,6 +50,7 @@ function task_install {
     libwww-dict-leo-org-perl \
     gnome-tweak-tool \
     ppa-purge \
+    buildnotify \
     synaptic
 
   # clean up installed packages
