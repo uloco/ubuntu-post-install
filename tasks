@@ -51,6 +51,7 @@ function task_install {
     gnome-tweak-tool \
     ppa-purge \
     buildnotify \
+    checkinstall \
     synaptic
 
   # clean up installed packages
