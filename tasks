@@ -334,23 +334,20 @@ function task_android {
   # download android sdk
   wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
   tar -xvf android-sdk_r24.4.1-linux.tgz
+  mv android-sdk-linux "$HOME/Software/"
 
   # install missing libs
   sudo apt-get -y install libbz2-1.0
   sudo apt-get -y install lib32z1 lib32ncurses5 lib32stdc++6
 
-  sudo chown -R root:root android-sdk-linux
-  sudo chmod -R 777 android-sdk-linux
-  sudo mv android-sdk-linux /opt/
-
-  # set android path
-  echo -e '\n# Set android path\nexport PATH=${PATH}:/opt/android-sdk-linux/tools:/opt/android-sdk-linux/platform-tools\nexport ANDROID_HOME=/opt/android-sdk-linux' >> "$HOME/.bashrc"
+  # set path
+  echo -e '\n# Set android path\nexport PATH=${PATH}:${HOME}/Software/android-sdk-linux/tools:${HOME}/Software/android-sdk-linux/platform-tools\nexport ANDROID_HOME=${HOME}/Software/android-sdk-linux' >> "$HOME/.bashrc"
   source "$HOME/.bashrc"
-
-  rm android-sdk_r24.4.1-linux.tgz
 
   # run sdk manager
   android &
+
+  rm android-sdk_r24.4.1-linux.tgz
   cd "$CURRENT_DIR";
 }
 
