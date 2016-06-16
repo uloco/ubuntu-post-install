@@ -8,8 +8,10 @@ function task_mirrors {
 function task_install {
   echo -e "${echo_cyan}Installing packages and apps${echo_normal}"
   # add third party ppas
+
   # atom editor
   sudo add-apt-repository -y ppa:webupd8team/atom
+
   # diodon clipboard manager
   sudo add-apt-repository -y ppa:diodon-team/stable
 
@@ -18,6 +20,10 @@ function task_install {
 
   # take a break
   sudo add-apt-repository -y ppa:vlijm/takeabreak
+
+  # java 7 needed for android 6.0
+  sudo add-apt-repository -y ppa:openjdk-r/ppa
+
   # update
   sudo apt-get update
 
@@ -37,6 +43,7 @@ function task_install {
     vim \
     gparted \
     openjdk-8-jdk \
+    openjdk-7-jdk \
     chromium-browser \
     # nautilus-terminal \
     gcolor2 \
