@@ -320,31 +320,31 @@ function task_themeing {
 function task_android {
 
   # perhaps this is enough
-  echo -e "${cyan}Installing android${reset}"
+  echo -e "${echo_cyan}Installing android${echo_normal}"
 
-  sudo apt-get install -y android-sdk
+  $CURRENT_DIR=$(pwd);
 
   # download android sdk
-  # $CURRENT_DIR=$(pwd);
+  wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
+  tar -xvf android-sdk_r24.4.1-linux.tgz
 
-  # wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
+  # install missing libs
+  sudo apt-get -y install libbz2-1.0
+  sudo apt-get -y install lib32z1 lib32ncurses5 lib32stdc++6
 
-  # tar -xvf android-sdk_r24.4.1-linux.tgz
-  # cd android-sdk-linux/tools
+  sudo chown -R root:root android-sdk-linux
+  sudo chmod -R 777 android-sdk-linux
+  sudo mv android-sdk-linux /opt/
 
-  # # install all sdk packages
-  # ./android update sdk --no-ui
+  # set android path
+  echo -e '\n# Set android path\nexport PATH=${PATH}:/opt/android-sdk-linux/tools:/opt/android-sdk-linux/platform-tools\nexport ANDROID_HOME=/opt/android-sdk-linux' >> "$HOME/.bashrc"
+  source "$HOME/.bashrc"
 
-  # # set path
-  # $HOME/.bashrc >> export PATH=${PATH}:$HOME/sdk/android-sdk-linux/platform-tools:$HOME/sdk/android-sdk-linux/tools:$HOME/sdk/android-sdk-linux/build-tools/22.0.1/
-  # source "$HOME/.bashrc"
+  rm android-sdk_r24.4.1-linux.tgz
 
-  # # adb
-  # sudo apt-get install libc6:i386 libstdc++6:i386
-  # # aapt
-  # sudo apt-get install zlib1g:i386
-
-  # cd "$CURRENT_DIR";
+  # run sdk manager
+  android &
+  cd "$CURRENT_DIR";
 }
 
 function task_terminal {
