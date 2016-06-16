@@ -3,13 +3,14 @@
 # stop executing script on error
 # set -e
 
-red='\033[1;31m';
-green='\033[1;32m';
-yellow='\033[1;33m';
-blue='\033[1;34m';
-purple='\033[1;35m';
-cyan='\033[1;36m';
-reset='\E(B\E[m';
+echo_red='\033[1;31m';
+echo_green='\033[1;32m';
+echo_yellow='\033[1;33m';
+echo_blue='\033[1;34m';
+echo_purple='\033[1;35m';
+echo_cyan='\033[1;36m';
+echo_normal="\033[0m"
+
 
 function post-install {
 
@@ -75,7 +76,7 @@ function post-install {
   source "$HOME/.bashrc"
 
   echo -e \
-    "${green}" \
+    "${echo_green}" \
     "\n ****************************************************************************** \n" \
     "****************************************************************************** \n" \
     "UBUNTU POST INITIALIZATION SUCCESSFULL! \n" \
@@ -90,7 +91,7 @@ function post-install {
     "- \n"   \
     "- \n"   \
     "- \n"   \
-    "${reset}";
+    "${echo_normal}";
 }
 
 # TODO
