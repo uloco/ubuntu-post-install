@@ -175,7 +175,7 @@ function task_folders {
   mkdir -pv "$HOME/Source/bitbucket"
   mkdir -pv "$HOME/Software"
   mkdir -pv "$HOME/Scripts"
-  mkdir -pv "$HOME/Screenshots"
+  mkdir -pv "$HOME/Pictures/Screenshots"
   mkdir -pv "$HOME/tmp"
   mkdir -pv "$HOME/Workshops"
   mkdir -pv "$HOME/Virtual Machines"
