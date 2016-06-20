@@ -92,7 +92,7 @@ function task_git {
   git config --global user.name "$GIT_USER"
   git config --global user.email "$GIT_EMAIL"
   git config --global push.default simple
-  git config --global credential.helper cache
+  git config --global credential.helper cache 3600
   git config --global svn.rmdir true
 }
 
@@ -176,7 +176,7 @@ function task_folders {
   mkdir -pv "$HOME/Source/bitbucket"
   mkdir -pv "$HOME/Software"
   mkdir -pv "$HOME/Scripts"
-  mkdir -pv "$HOME/Screenshots"
+  mkdir -pv "$HOME/Pictures/Screenshots"
   mkdir -pv "$HOME/tmp"
   mkdir -pv "$HOME/Workshops"
   mkdir -pv "$HOME/Virtual Machines"
@@ -261,7 +261,7 @@ function task_dconf {
   echo -e "${echo_cyan}Setting dconf settings${echo_normal}"
   dconf write /org/compiz/profiles/unity/plugins/core/vsize 2
   dconf write /org/compiz/profiles/unity/plugins/core/hsize 2
-  dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window true
+  dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window false
   dconf write /org/gnome/desktop/wm/preferences/action-middle-click-titlebar "'none'"
   dconf write /org/gtk/settings/file-chooser/show-hidden true
   dconf write /org/gnome/nautilus/list-view/use-tree-view true
