@@ -140,9 +140,10 @@ function task_npm {
     cordova \
     esformatter \
     eslint \
-    eslint-config-angular \
-    eslint-config-google \
-    eslint-plugin-angular \
+    eslint-config-standard
+    eslint-plugin-standard
+    eslint-plugin-promise
+    babel-eslint
     flow-bin \
     grunt-cli \
     gulp \
