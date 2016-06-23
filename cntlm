@@ -33,10 +33,10 @@ function task_cntlm_config {
 
   sudo sed -i "/^Password/c\# Password" "$CONF"
 
-  echo -n "Listen(host:port): "
-  read LISTEN
+  echo -n "Proxy(host:port): "
+  read PROXY
 
-  sudo sed -i "/^Proxy/c\Proxy  ${LISTEN}" "$CONF"
+  sudo sed -i "/^Proxy/c\Proxy  ${PROXY}" "$CONF"
 
   echo -n "Password: ";
   PW="$(cntlm -u $USER_NAME -d $DOMAIN -f -H)";
