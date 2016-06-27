@@ -45,7 +45,6 @@ function task_install {
     openjdk-8-jdk \
     openjdk-7-jdk \
     chromium-browser \
-    # nautilus-terminal \
     gcolor2 \
     inkscape \
     diodon \
