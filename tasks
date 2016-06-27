@@ -86,7 +86,7 @@ function task_git {
   echo -e "${echo_cyan}Initial git config${echo_normal}"
   echo -n "Git Name: "
   read GIT_USER
-  echo -n "Git Email"
+  echo -n "Git Email: "
   read GIT_EMAIL
   git config --global user.name "$GIT_USER"
   git config --global user.email "$GIT_EMAIL"
