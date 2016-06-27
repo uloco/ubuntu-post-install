@@ -68,6 +68,9 @@ function post-install {
     	task_base
     	task_advanced
     	;;
+    '--kernel')
+    	task_kernel
+    	;;
     *)
     	task_base
     	;;

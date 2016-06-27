@@ -368,3 +368,11 @@ function task_terminal {
 function task_alternatives {
   sudo sed -i 's/gedit.desktop/atom.desktop/g' /etc/gnome/defaults.list
 }
+
+function task_kernel {
+  git clone https://github.com/mtompkins/linux-kernel-utilities.git
+  cd linux-kernel-utilities
+  ./update_ubuntu_kernel.sh latest
+  cd ..
+  rm -rf linux-kernel-utilities
+}
