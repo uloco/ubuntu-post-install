@@ -39,6 +39,7 @@ function task_install {
     guake \
     dconf-editor \
     compizconfig-settings-manager \
+    compiz-plugins-extra \
     gksu \
     vim \
     gparted \
