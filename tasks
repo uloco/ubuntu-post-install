@@ -349,6 +349,8 @@ function task_android {
   android &
 
   rm android-sdk_r24.4.1-linux.tgz
+
+  sudo cp data/android-sdk.desktop /usr/share/applications/
   cd "$CURRENT_DIR";
 }
 
