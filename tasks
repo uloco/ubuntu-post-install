@@ -153,6 +153,8 @@ function task_npm {
     karma-cli \
     live-server \
     ungit
+
+  npm completion >> "$HOME/.bashrc"
 }
 
 # install font source code pro
