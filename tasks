@@ -62,7 +62,8 @@ function task_install {
     buildnotify \
     checkinstall \
     takeabreak \
-    synaptic
+    synaptic \
+    byobu
 
   # clean up installed packages
   sudo apt-get -y autoremove
