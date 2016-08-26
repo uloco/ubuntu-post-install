@@ -63,7 +63,16 @@ function task_install {
     checkinstall \
     takeabreak \
     synaptic \
-    byobu
+    byobu \
+    virtualbox \
+    ansible
+
+    # install latest version of vagrant due to plugin bugs
+    sudo bash -c 'echo deb http://vagrant-deb.linestarve.com/ any main > /etc/apt/sources.list.d/wolfgang42-vagrant.list'
+  	sudo apt-key adv --keyserver pgp.mit.edu --recv-key AD319E0F7CFFA38B4D9F6E55CE3F3DE92099F7A4
+  	sudo apt-get update
+
+    sudo apt-get install vagrant
 
   # clean up installed packages
   sudo apt-get -y autoremove
