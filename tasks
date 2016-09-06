@@ -104,6 +104,7 @@ function task_git {
   git config --global push.default simple
   git config --global credential.helper cache 3600
   git config --global svn.rmdir true
+  git config --global core.autocrlf input
 }
 
 # set up diodon key binding
