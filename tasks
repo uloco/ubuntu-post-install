@@ -65,6 +65,7 @@ function task_install {
     synaptic \
     byobu \
     virtualbox \
+    gimp \
     ansible
 
     # install latest version of vagrant due to plugin bugs
@@ -83,7 +84,7 @@ function task_webstorm {
   echo -e "${echo_cyan}Installing webstorm${echo_normal}"
   if [ ! -d "/opt/webstorm" ]; then
 
-    wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.2.tar.gz"
+    wget -O data/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.2.3.tar.gz"
     tar -xzvf data/webstorm.tar.gz --directory data/
     mv data/WebStorm-* data/webstorm
     sudo cp -r data/webstorm /opt/webstorm
@@ -140,9 +141,9 @@ function task_npm {
   echo -e "${echo_cyan}Setting up nvm, nodeJS and npm${echo_normal}"
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
   source $HOME/.bashrc
-  nvm install stable
-  nvm alias default stable
-  nvm use stable
+  nvm install 6
+  nvm alias default 6
+  nvm use default
 
   npm install -g \
     npm \
@@ -163,7 +164,9 @@ function task_npm {
     jsdoc \
     karma-cli \
     live-server \
-    ungit
+    lite-server \
+    typescript \
+    tslint
 
   npm completion >> "$HOME/.bashrc"
 }
