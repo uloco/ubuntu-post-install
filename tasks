@@ -141,8 +141,8 @@ function task_npm {
   echo -e "${echo_cyan}Setting up nvm, nodeJS and npm${echo_normal}"
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
   source $HOME/.bashrc
-  nvm install 6
-  nvm alias default 6
+  nvm install 6.9.4
+  nvm alias default 6.9.4
   nvm use default
 
   npm install -g \
@@ -164,7 +164,6 @@ function task_npm {
     jsdoc \
     karma-cli \
     live-server \
-    lite-server \
     typescript \
     tslint
 
