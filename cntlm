@@ -18,6 +18,9 @@ function task_cntlm_install {
     source "$HOME/.bashrc"
     echo "Installing CNTLM Proxy authentication"
     sudo dpkg -i data/cntlm_0.92.3-1ubuntu1_amd64.deb
+
+    mkdir "$HOME/bin"
+    cp data/cntlm-new-pw "$HOME/bin/"
 }
 
 function task_cntlm_config {
@@ -78,35 +81,4 @@ function task_cntlm_config {
 
   echo "Restarting service"
   sudo service cntlm restart
-}
-
-function task_cntlm_new_pw {
-  shopt -s extglob
-
-  USER_NAME="$(sudo cat "$CONF" | grep Username)";
-  USER_NAME="${USER_NAME##Username+([[:space:]])}";
-
-  DOMAIN="$(sudo cat "$CONF" | grep Domain)";
-  DOMAIN="${DOMAIN##Domain+([[:space:]])}";
-
-  echo "User: $USER_NAME"
-  echo "Domain: $DOMAIN"
-
-  echo -n "Password: ";
-  PW="$(cntlm -u $USER_NAME -d $DOMAIN -f -H)";
-
-
-  echo "Adding to /etc/cntlm.conf";
-  PASSLM="$(echo "$PW" | grep PassLM)";
-  PASSNT="$(echo "$PW" | grep -e 'PassNT ')";
-  PASSNTLM="$(echo "$PW" | grep PassNTLMv2)";
-
-  sudo sed -i '/PassLM /c\'"$PASSLM" "$CONF"
-  sudo sed -i '/PassNT /c\'"$PASSNT" "$CONF"
-  sudo sed -i '/PassNTLMv2 /c\'"$PASSNTLM" "$CONF"
-
-  echo "Restarting service"
-  sudo service cntlm restart
-
-  shopt -u extglob
 }
