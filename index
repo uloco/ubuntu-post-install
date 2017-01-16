@@ -36,7 +36,7 @@ function post-install {
     task_android
   }
 
-  function task_grob {
+  function task_proxy {
     task_cntlm_install
     task_cntlm_config
   }
@@ -59,12 +59,11 @@ function post-install {
   done &
 
   case $1 in
-    '--grob')
-      task_grob
-      task_base
+    '--proxy')
+      task_cntlm_install
+      task_cntlm_config
       ;;
     '--full')
-    	task_grob
     	task_base
     	task_advanced
     	;;
