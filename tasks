@@ -59,7 +59,6 @@ function task_install {
     libwww-dict-leo-org-perl \
     gnome-tweak-tool \
     ppa-purge \
-    buildnotify \
     checkinstall \
     takeabreak \
     synaptic \
@@ -293,9 +292,6 @@ function task_settings {
     apm config set proxy "$http_proxy"
     apm config set https_proxy "$https_proxy"
   fi
-  # install buildnotify desktop
-  chmod u+x data/autostart/buildnotify.desktop
-  sudo cp data/autostart/buildnotify.desktop /usr/share/applications
 }
 
 function task_cursor {
