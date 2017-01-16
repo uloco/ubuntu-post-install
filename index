@@ -45,6 +45,7 @@ function post-install {
     task_git
     task_dreymar
     task_themeing
+    task_byobu
   }
 
   # Prevent sudo timeout

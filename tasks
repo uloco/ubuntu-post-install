@@ -391,3 +391,9 @@ function task_kernel {
   cd ..
   rm -rf linux-kernel-utilities
 }
+
+function task_byobu {
+  if command -v byobu >/dev/null; then
+    byobu-enable
+  fi
+}
