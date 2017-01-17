@@ -13,6 +13,10 @@ To install the base configuration just run
 ### Options
 
 Only one option at a time is allowed at the moment
+e.g. post-install --proxy && post-install --base
 
-`--grob` Installs proxy and base stuff  
-`--full` Installs proxy, base and advanced stuff
+`--proxy` install proxy settings (cntlm)
+`--base` base installation
+`--advanced` advanced installation (git config, themeing, extend keyboard)
+`--optional` optional installation
+`--kernel` install latest available kernel from official ubuntu repos

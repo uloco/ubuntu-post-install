@@ -19,7 +19,7 @@ function post-install {
 
   function task_base {
     task_mirrors
-    task_install
+    task_install_base
     task_language
     task_fonts
     task_folders
@@ -42,10 +42,15 @@ function post-install {
   }
 
   function task_advanced {
+    task_install_advanced
     task_git
     task_dreymar
     task_themeing
     task_byobu
+  }
+
+  function task_optional {
+    task_install_optional
   }
 
   # Prevent sudo timeout
@@ -64,9 +69,14 @@ function post-install {
       task_cntlm_install
       task_cntlm_config
       ;;
-    '--full')
+    '--base')
     	task_base
+    	;;
+    '--advanced')
     	task_advanced
+    	;;
+    '--optional')
+    	task_optional
     	;;
     '--kernel')
     	task_kernel
@@ -90,10 +100,7 @@ function post-install {
     "- Configure guake preferences\n" \
     "- Copy colors from guake bluloco to gnome-terminal \n" \
     "- REBOOT!\n"   \
-    "- \n"   \
-    "- \n"   \
-    "- \n"   \
-    "- \n"   \
+    "\n"   \
     "${echo_normal}";
 }
 

@@ -5,7 +5,7 @@ function task_mirrors {
   sudo sed -i 's/us\.archive\.ubuntu\.com/de.archive.ubuntu.com/' /etc/apt/sources.list
 }
 
-function task_install {
+function task_install_base {
   echo -e "${echo_cyan}Installing packages and apps${echo_normal}"
   # add third party ppas
 
@@ -17,9 +17,6 @@ function task_install {
 
   # indicator keylock
   sudo add-apt-repository -y ppa:tsbarnes/indicator-keylock
-
-  # take a break
-  sudo add-apt-repository -y ppa:vlijm/takeabreak
 
   # java 7 needed for android 6.0
   sudo add-apt-repository -y ppa:openjdk-r/ppa
@@ -44,7 +41,6 @@ function task_install {
     vim \
     gparted \
     openjdk-8-jdk \
-    openjdk-7-jdk \
     chromium-browser \
     gcolor2 \
     inkscape \
@@ -54,15 +50,12 @@ function task_install {
     thunderbird \
     pandoc \
     indicator-keylock \
-    nautilus-dropbox \
     python-pip \
     libwww-dict-leo-org-perl \
     gnome-tweak-tool \
     ppa-purge \
     checkinstall \
-    takeabreak \
     synaptic \
-    byobu \
     virtualbox \
     gimp \
     ansible
@@ -76,6 +69,18 @@ function task_install {
 
   # clean up installed packages
   sudo apt-get -y autoremove
+}
+
+function task_install_advanced {
+  # take a break
+  sudo add-apt-repository -y ppa:vlijm/takeabreak
+
+  sudo apt-get install -y byobu \
+  takeabreak
+}
+
+function task_install_optional {
+  sudo apt-get install -y nautilus-dropbox
 }
 
 # download and install webstorm
@@ -164,7 +169,8 @@ function task_npm {
     karma-cli \
     live-server \
     typescript \
-    tslint
+    tslint \
+    tslint-config-standard
 
   npm completion >> "$HOME/.bashrc"
 }
