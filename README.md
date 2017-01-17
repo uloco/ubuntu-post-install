@@ -12,11 +12,12 @@ To install the base configuration just run
 
 ### Options
 
-Only one option at a time is allowed at the moment
-e.g. post-install --proxy && post-install --base
+Only one option at a time is allowed at the moment  
+e.g. `post-install --proxy && post-install --base`
 
-`--proxy` install proxy settings (cntlm)
-`--base` base installation
-`--advanced` advanced installation (git config, themeing, extend keyboard)
-`--optional` optional installation
-`--kernel` install latest available kernel from official ubuntu repos
+
+`--proxy` install proxy settings (cntlm)  
+`--base` base installation  
+`--advanced` advanced installation (git config, themeing, extend keyboard)  
+`--optional` optional installation  
+`--kernel` install latest available kernel from official ubuntu repos  
