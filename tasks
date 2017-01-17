@@ -41,6 +41,7 @@ function task_install_base {
     vim \
     gparted \
     openjdk-8-jdk \
+    openjdk-7-jdk \
     chromium-browser \
     gcolor2 \
     inkscape \
