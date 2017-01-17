@@ -20,4 +20,4 @@ e.g. `post-install --proxy && post-install --base`
 `--base` base installation  
 `--advanced` advanced installation (git config, themeing, extend keyboard)  
 `--optional` optional installation  
-`--kernel` install latest available kernel from official ubuntu repos  
+`--kernel` install latest available kernel (be cautious, this could break your system)
