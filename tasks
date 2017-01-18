@@ -390,10 +390,10 @@ function task_terminal {
   sed -i "/^export BASH_IT_THEME/c\export BASH_IT_THEME=\'powerline-nice\'" "$HOME/.bashrc"
 
   # set bluloco color scheme
-  ./data/bluloco-gnome-terminal
+  ./data/theme/bluloco-gnome-terminal
 
     if command -v byobu >/dev/null; then
-      ./data/bluloco-guake
+      ./data/theme/bluloco-guake
     fi
 }
 

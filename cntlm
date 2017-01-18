@@ -17,10 +17,10 @@ function task_cntlm_install {
     read foo
     source "$HOME/.bashrc"
     echo "Installing CNTLM Proxy authentication"
-    sudo dpkg -i data/cntlm_0.92.3-1ubuntu1_amd64.deb
+    sudo dpkg -i data/cntlm/cntlm_0.92.3-1ubuntu1_amd64.deb
 
     mkdir "$HOME/bin"
-    cp data/cntlm-new-pw "$HOME/bin/"
+    cp data/cntlm/cntlm-new-pw "$HOME/bin/"
 }
 
 function task_cntlm_config {
