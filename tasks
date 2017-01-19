@@ -302,6 +302,11 @@ function task_settings {
     apm config set proxy "$http_proxy"
     apm config set https_proxy "$https_proxy"
   fi
+
+ # add user to shared folders group
+  if [ $(getent group vboxsf) ]; then
+    sudo usermod -a -G vboxsf "$USER"
+  fi
 }
 
 function task_cursor {
