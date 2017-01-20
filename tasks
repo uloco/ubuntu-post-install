@@ -79,6 +79,10 @@ function task_install_base {
     screen -d -m -S umake-eclipse
     screen -S umake-eclipse -p 0 -X stuff "umake ide eclipse\n\n"
 
+    # install vs-code in background and accept default location (~/.local/share/umake/ide/visual-studio-code)
+    screen -d -m -S umake-vs-code
+    screen -S umake-vs-code -p 0 -X stuff "umake ide visual-studio-code\n\na\n"
+
   # clean up installed packages
   sudo apt-get -y autoremove
 }
@@ -349,7 +353,10 @@ function task_hardcodefixer {
   sudo sed -i "/^Icon/c\Icon=webstorm" /usr/share/applications/jetbrains-webstorm.desktop
 
   # fix eclipse
-  sudo sed -i "/^Icon/c\Icon=eclipse" "$HOME/.local/share/applications/eclipse-java.desktop"
+  sed -i "/^Icon/c\Icon=eclipse" "$HOME/.local/share/applications/eclipse-java.desktop"
+
+  # fix vs-code
+  sed -i "/^Icon/c\Icon=visualstudiocode" "$HOME/.local/share/applications/visual-studio-code.desktop"
 }
 
 function task_themeing {
