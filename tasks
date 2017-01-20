@@ -24,6 +24,9 @@ function task_install_base {
   # oracle java needed for some applications
   sudo add-apt-repository -y ppa:webupd8team/java
 
+  # latest umake version, due to bug in eclipse install
+  sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make
+
   # update
   sudo apt-get update
 
@@ -68,7 +71,11 @@ function task_install_base {
     gimp \
     ansible \
     maven \
-    vagrant
+    vagrant \
+    ubuntu-make
+
+    # install eclipse and accept default location (~/.local/share/umake/ide/eclipse)
+    echo -e "\033[2K" | umake ide eclipse
 
   # clean up installed packages
   sudo apt-get -y autoremove
@@ -338,6 +345,9 @@ function task_hardcodefixer {
 
   # fix webstorm
   sudo sed -i "/^Icon/c\Icon=webstorm" /usr/share/applications/jetbrains-webstorm.desktop
+
+  # fix eclipse
+  sudo sed -i "/^Icon/c\Icon=eclipse" "$HOME/.local/share/applications/eclipse-java.desktop"
 }
 
 function task_themeing {
@@ -403,6 +413,8 @@ function task_terminal {
   ./data/theme/bluloco-gnome-terminal
 
     if command -v guake >/dev/null; then
+      rm -r "$HOME/.gconf/apps/guake"
+      cp -r data/guake "$HOME/.gconf/apps/guake"
       ./data/theme/bluloco-guake
     fi
 }
