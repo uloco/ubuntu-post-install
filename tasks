@@ -72,10 +72,12 @@ function task_install_base {
     ansible \
     maven \
     vagrant \
-    ubuntu-make
+    ubuntu-make \
+    screen
 
-    # install eclipse and accept default location (~/.local/share/umake/ide/eclipse)
-    echo -e "\033[2K" | umake ide eclipse
+    # install eclipse in background and accept default location (~/.local/share/umake/ide/eclipse)
+    screen -d -m -S umake-eclipse
+    screen -S umake-eclipse -p 0 -X stuff "umake ide eclipse\n\n"
 
   # clean up installed packages
   sudo apt-get -y autoremove
