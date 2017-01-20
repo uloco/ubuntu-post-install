@@ -73,7 +73,8 @@ function task_install_base {
     maven \
     vagrant \
     ubuntu-make \
-    screen
+    screen \
+    docker
 
     # install eclipse in background and accept default location (~/.local/share/umake/ide/eclipse)
     screen -d -m -S umake-eclipse
