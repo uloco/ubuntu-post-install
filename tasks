@@ -277,7 +277,7 @@ function task_gsettings {
   gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
   gsettings set org.gnome.seahorse.manager keyrings-selected "['secret-service://login', 'gnupg://']"
   gsettings set org.gnome.settings-daemon.plugins.media-keys calculator '<Super>asciicircum'
-  gsettings set com.canonical.Unity.Launcher favorites "['unity://expo-icon', 'unity://devices', 'application://firefox.desktop', 'application://chromium-browser.desktop', 'application://org.gnome.Nautilus.desktop', 'application://gnome-terminal.desktop', 'application://atom.desktop', 'application://jetbrains-webstorm.desktop', 'application://inkscape.desktop', 'application://gcolor2.desktop', 'application://gnome-system-monitor.desktop', 'unity://running-apps']"
+  gsettings set com.canonical.Unity.Launcher favorites "['unity://expo-icon', 'unity://devices', 'application://firefox.desktop', 'application://chromium-browser.desktop', 'application://org.gnome.Nautilus.desktop', 'application://gnome-terminal.desktop', 'application://atom.desktop', 'application://jetbrains-webstorm.desktop', 'application://gnome-system-monitor.desktop', 'unity://running-apps']"
   gsettings set org.gnome.settings-daemon.plugins.media-keys terminal '<Super>r'
   gsettings set org.gnome.desktop.media-handling automount-open false
 }
