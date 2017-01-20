@@ -58,7 +58,8 @@ function task_install_base {
     synaptic \
     virtualbox \
     gimp \
-    ansible
+    ansible \
+    maven
 
     # install latest version of vagrant due to plugin bugs
     sudo bash -c 'echo deb http://vagrant-deb.linestarve.com/ any main > /etc/apt/sources.list.d/wolfgang42-vagrant.list'
