@@ -27,6 +27,11 @@ function task_install_base {
   # latest umake version, due to bug in eclipse install
   sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make
 
+  # google chrome
+  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+  sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+
+
   # update
   sudo apt-get update
 
@@ -74,7 +79,8 @@ function task_install_base {
     vagrant \
     ubuntu-make \
     screen \
-    docker
+    docker \
+    google-chrome-stable
 
     # install eclipse in background and accept default location (~/.local/share/umake/ide/eclipse)
     screen -d -m -S umake-eclipse
@@ -296,7 +302,7 @@ function task_gsettings {
   gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
   gsettings set org.gnome.seahorse.manager keyrings-selected "['secret-service://login', 'gnupg://']"
   gsettings set org.gnome.settings-daemon.plugins.media-keys calculator '<Super>asciicircum'
-  gsettings set com.canonical.Unity.Launcher favorites "['unity://expo-icon', 'unity://devices', 'application://firefox.desktop', 'application://chromium-browser.desktop', 'application://org.gnome.Nautilus.desktop', 'application://gnome-terminal.desktop', 'application://atom.desktop', 'application://jetbrains-webstorm.desktop', 'application://gnome-system-monitor.desktop', 'unity://running-apps']"
+  gsettings set com.canonical.Unity.Launcher favorites "['unity://expo-icon', 'unity://devices', 'application://firefox.desktop', 'application://chromium-browser.desktop', 'application://google-chrome.desktop', 'application://org.gnome.Nautilus.desktop', 'application://gnome-terminal.desktop', 'application://atom.desktop', 'application://jetbrains-webstorm.desktop', 'application://gnome-system-monitor.desktop', 'unity://running-apps']"
   gsettings set org.gnome.settings-daemon.plugins.media-keys terminal '<Super>r'
   gsettings set org.gnome.desktop.media-handling automount-open false
 }
