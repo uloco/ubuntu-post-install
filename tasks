@@ -15,9 +15,6 @@ function task_install_base {
   # diodon clipboard manager
   sudo add-apt-repository -y ppa:diodon-team/stable
 
-  # indicator keylock
-  sudo add-apt-repository -y ppa:tsbarnes/indicator-keylock
-
   # java 7 needed for android 6.0
   sudo add-apt-repository -y ppa:openjdk-r/ppa
 
@@ -59,13 +56,10 @@ function task_install_base {
     openjdk-7-jdk \
     chromium-browser \
     gcolor2 \
-    inkscape \
     diodon \
     meld \
     nautilus-compare \
     thunderbird \
-    pandoc \
-    indicator-keylock \
     python-pip \
     libwww-dict-leo-org-perl \
     gnome-tweak-tool \
@@ -73,7 +67,6 @@ function task_install_base {
     checkinstall \
     synaptic \
     virtualbox \
-    gimp \
     ansible \
     maven \
     vagrant \
@@ -98,11 +91,18 @@ function task_install_advanced {
   # take a break
   sudo add-apt-repository -y ppa:vlijm/takeabreak
 
+  # indicator keylock
+  sudo add-apt-repository -y ppa:tsbarnes/indicator-keylock
+
   sudo apt-get update
 
   sudo apt-get install -y byobu \
+    inkscape \
+    gimp \
     takeabreak \
-    guake
+    guake \
+    pandoc \
+    indicator-keylock
 }
 
 function task_install_optional {
