@@ -382,7 +382,7 @@ function task_android {
   # perhaps this is enough
   echo -e "${echo_cyan}Installing android${echo_normal}"
 
-  $CURRENT_DIR=$(pwd);
+  CURRENT_DIR=$(pwd);
 
   # download android sdk
   wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
