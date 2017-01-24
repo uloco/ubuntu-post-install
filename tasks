@@ -423,7 +423,7 @@ function task_terminal {
   bash data/theme/bluloco-gnome-terminal &
 
   GUAKE_PATH="${HOME}/.gconf/apps/guake"
-  if [ -d "${GUAKE_PATH}" ]; then
+  if command -v guake >/dev/null; then
     rm -r "${GUAKE_PATH}"
     cp -r "data/guake" "${GUAKE_PATH}"
     bash data/theme/bluloco-guake &
