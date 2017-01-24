@@ -420,13 +420,14 @@ function task_terminal {
   sed -i "/^export BASH_IT_THEME/c\export BASH_IT_THEME=\'powerline-nice\'" "$HOME/.bashrc"
 
   # set bluloco color scheme
-  ./data/theme/bluloco-gnome-terminal
+  bash data/theme/bluloco-gnome-terminal &
 
-    if command -v guake >/dev/null; then
-      rm -r "$HOME/.gconf/apps/guake"
-      cp -r data/guake "$HOME/.gconf/apps/guake"
-      ./data/theme/bluloco-guake
-    fi
+  GUAKE_PATH="${HOME}/.gconf/apps/guake"
+  if [ -d "${GUAKE_PATH}" ]; then
+    rm -r "${GUAKE_PATH}"
+    cp -r "data/guake" "${GUAKE_PATH}"
+    bash data/theme/bluloco-guake &
+  fi
 }
 
 function task_alternatives {
