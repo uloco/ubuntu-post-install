@@ -414,9 +414,10 @@ function task_terminal {
   # set bluloco color scheme
   bash data/theme/bluloco-gnome-terminal &
 
-  GUAKE_PATH="${HOME}/.gconf/apps/guake"
+  GUAKE_PATH="${HOME}/.gconf/apps"
   if command -v guake &>/dev/null; then
-    rm -r "${GUAKE_PATH}"
+    rm -r "${GUAKE_PATH}/guake"
+    mkdir -pv "${GUAKE_PATH}"
     cp -r "data/guake" "${GUAKE_PATH}"
     bash data/theme/bluloco-guake &
   fi
