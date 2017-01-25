@@ -234,7 +234,7 @@ function task_folders {
 function task_dreymar {
   echo -e "${echo_cyan}Set up dreymars extended keyboard layer ${echo_normal}"
 
-  if ls /usr/share/X11/dbak-* 1> /dev/null 2>&1; then
+  if ls /usr/share/X11/dbak-* &>/dev/null; then
     echo -e "${purple}  Already installed, skipping.${echo_normal}"
   else
     git clone https://github.com/DreymaR/BigBagKbdTricks_XKB.git
@@ -429,7 +429,7 @@ function task_terminal {
   bash data/theme/bluloco-gnome-terminal &
 
   GUAKE_PATH="${HOME}/.gconf/apps/guake"
-  if command -v guake >/dev/null; then
+  if command -v guake &>/dev/null; then
     rm -r "${GUAKE_PATH}"
     cp -r "data/guake" "${GUAKE_PATH}"
     bash data/theme/bluloco-guake &
@@ -449,7 +449,7 @@ function task_kernel {
 }
 
 function task_byobu {
-  if command -v byobu >/dev/null; then
+  if command -v byobu &>/dev/null; then
     byobu-enable
   fi
 }
