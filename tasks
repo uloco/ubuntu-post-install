@@ -190,8 +190,9 @@ function task_npm {
     live-server \
     typescript \
     tslint \
-    tslint-config-standard
+    tslint-config-standard >/dev/null
 
+  npm list --global --depth 0
   npm completion >> "$HOME/.bashrc"
 }
 
