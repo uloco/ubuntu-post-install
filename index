@@ -22,7 +22,6 @@ function post-install {
     task_install_base
     task_language
     task_fonts
-    task_folders
     task_autostart
     task_webstorm
     task_diodon
@@ -42,6 +41,7 @@ function post-install {
   }
 
   function task_advanced {
+    task_folders
     task_install_advanced
     task_git
     task_dreymar
