@@ -112,19 +112,10 @@ function task_install_optional {
 # download and install webstorm
 function task_webstorm {
   echo -e "${echo_cyan}Installing webstorm${echo_normal}"
-  if [ ! -d "/opt/webstorm" ]; then
 
-    wget -O data/webstorm/webstorm.tar.gz "https://download.jetbrains.com/webstorm/WebStorm-2016.3.2.tar.gz"
-    tar -xzvf data/webstorm/webstorm.tar.gz --directory data/webstorm/
-    mv data/webstorm/WebStorm-* data/webstorm/webstorm
-    sudo cp -r data/webstorm/webstorm /opt/webstorm
-    rm -rf data/webstorm/webstorm*
-    sudo chown -R $USER:$USER /opt/webstorm
-    #/opt/webstorm/bin/webstorm.sh &
-    sudo cp data/webstorm/webstorm-bin /usr/local/bin/webstorm
-    unzip data/webstorm/webstorm-config.zip -d "$HOME"
-    sudo cp data/webstorm/jetbrains-webstorm.desktop /usr/share/applications/
-  fi
+  # install webstorm in background and accept default location (~/.local/share/umake/ide/webstorm)
+  screen -d -m -S umake-webstorm
+  screen -S umake-webstorm -p 0 -X stuff "umake ide webstorm\n\n"
 }
 
 function task_git {
@@ -262,12 +253,6 @@ function task_language {
 function task_gsettings {
   echo -e "${echo_cyan}Setting gsettings values${echo_normal}"
 
-  if [ ! -f "/usr/share/applications/jetbrains-webstorm.desktop" ]; then
-    echo -e "${echo_red}Webstorm icon not found.${echo_normal}"
-    echo -e "${echo_yellow}Please finish webstorm initiaization and then press any key to continue.${echo_normal}"
-    read foo
-  fi
-
   gsettings set org.gnome.desktop.input-sources sources "[('xkb','de+nodeadkeys')]"
   gsettings set com.canonical.indicator.datetime show-date true
   gsettings set com.canonical.indicator.datetime show-day true
@@ -357,7 +342,7 @@ function task_hardcodefixer {
   rm -rf hardcode-fixer
 
   # fix webstorm
-  sudo sed -i "/^Icon/c\Icon=webstorm" /usr/share/applications/jetbrains-webstorm.desktop
+  sudo sed -i "/^Icon/c\Icon=webstorm" "${HOME}/.local/share/applications/jetbrains-webstorm.desktop"
 
   # fix eclipse
   sed -i "/^Icon/c\Icon=eclipse" "$HOME/.local/share/applications/eclipse-java.desktop"
