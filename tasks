@@ -404,6 +404,8 @@ function task_terminal {
   git clone --depth=1 https://github.com/Bash-it/bash-it.git "$HOME/.bash_it"
   echo 'y' | "$HOME/.bash_it/install.sh"
 
+  sleep 5
+
   source "$HOME/.bashrc"
 
   bash-it enable alias git
@@ -424,6 +426,7 @@ function task_terminal {
 }
 
 function task_alternatives {
+  echo -e "${echo_cyan}Setting up default applications${echo_normal}"
   sudo sed -i 's/gedit.desktop/atom.desktop/g' /etc/gnome/defaults.list
 }
 
