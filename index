@@ -3,106 +3,78 @@
 # stop executing script on error
 # set -e
 
-echo_red='\033[1;31m';
-echo_green='\033[1;32m';
-echo_yellow='\033[1;33m';
-echo_blue='\033[1;34m';
-echo_purple='\033[1;35m';
-echo_cyan='\033[1;36m';
-echo_normal="\033[0m"
 
+source ./functions/tasks
+source ./functions/cntlm
+source ./functions/messages
 
-function post-install {
+  # # Prevent sudo timeout
+  # sudo -v # ask for sudo password up-front
+  # while true; do
+  #   # Update user's timestamp without running a command
+  #   sudo -nv; sleep 1m
+  #   # Exit when the parent process is not running any more. In fact this loop
+  #   # would be killed anyway after being an orphan(when the parent process
+  #   # exits). But this ensures that and probably exit sooner.
+  #   kill -0 $$ 2>/dev/null || exit
+  # done &
 
-  source ./tasks
-  source ./cntlm
+# case $1 in
+#   '--proxy')
+#     task_cntlm_install
+#     task_cntlm_config
+#     ;;
+#   '--base')
+#     task_mirrors
+#     task_install_base
+#     task_language
+#     task_fonts
+#     task_autostart
+#     task_webstorm
+#     task_diodon
+#     task_middleClick
+#     task_npm
+#     task_gsettings
+#     task_settings
+#     task_dconf
+#     task_terminal
+#     task_alternatives
+#     task_android
+#   	;;
+#   '--advanced')
+#     task_folders
+#     task_install_advanced
+#     task_git
+#     task_dreymar
+#     task_themeing
+#     task_byobu
+#   	;;
+#   '--optional')
+#   	task_install_optional
+#   	;;
+#   '--kernel')
+#   	task_kernel
+#   	;;
+#   *)
+#   	echo "No arguments given."
+#     show_help
+#   	;;
+# esac
+#
+# source "$HOME/.bashrc"
 
-  function task_base {
-    task_mirrors
-    task_install_base
-    task_language
-    task_fonts
-    task_autostart
-    task_webstorm
-    task_diodon
-    task_middleClick
-    task_npm
-    task_gsettings
-    task_settings
-    task_dconf
-    task_terminal
-    task_alternatives
-    task_android
-  }
-
-  function task_proxy {
-    task_cntlm_install
-    task_cntlm_config
-  }
-
-  function task_advanced {
-    task_folders
-    task_install_advanced
-    task_git
-    task_dreymar
-    task_themeing
-    task_byobu
-  }
-
-  function task_optional {
-    task_install_optional
-  }
-
-  # Prevent sudo timeout
-  sudo -v # ask for sudo password up-front
-  while true; do
-    # Update user's timestamp without running a command
-    sudo -nv; sleep 1m
-    # Exit when the parent process is not running any more. In fact this loop
-    # would be killed anyway after being an orphan(when the parent process
-    # exits). But this ensures that and probably exit sooner.
-    kill -0 $$ 2>/dev/null || exit
-  done &
-
-  case $1 in
-    '--proxy')
-      task_cntlm_install
-      task_cntlm_config
-      ;;
-    '--base')
-    	task_base
-    	;;
-    '--advanced')
-    	task_advanced
-    	;;
-    '--optional')
-    	task_optional
-    	;;
-    '--kernel')
-    	task_kernel
-    	;;
-    *)
-    	task_base
-    	;;
-  esac
-
-  source "$HOME/.bashrc"
-
-  echo -e \
-    "${echo_green}" \
-    "\n ****************************************************************************** \n" \
-    "****************************************************************************** \n" \
-    "UBUNTU POST INITIALIZATION SUCCESSFULL! \n" \
-    "Things you will have to do manually: \n" \
-    "============================================================================== \n" \
-    "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts \n" \
-    "- Import compiz config settings from file 'data/ccsm.profile'\n" \
-    "- Configure guake preferences\n" \
-    "- Copy colors from guake bluloco to gnome-terminal \n" \
-    "- REBOOT!\n"   \
-    "\n"   \
-    "${echo_normal}";
-}
+show_success
+show_success "******************************************************************************"
+show_success "******************************************************************************"
+show_success "UBUNTU POST INITIALIZATION SUCCESSFULL! "
+show_success "Things you will have to do manually: "
+show_success "============================================================================== "
+show_success "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts "
+show_success "- Import compiz config settings from file 'data/ccsm.profile'"
+show_success "- Configure guake preferences"
+show_success "- Copy colors from guake bluloco to gnome-terminal "
+show_success "- REBOOT!"
+show_success
 
 # TODO
 # atom settings

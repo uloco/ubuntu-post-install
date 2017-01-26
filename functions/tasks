@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 function task_mirrors {
-  echo -e "${echo_cyan}Switching to german update server${echo_normal}"
+  show_info "Switching to german update server"
   sudo sed -i 's/us\.archive\.ubuntu\.com/de.archive.ubuntu.com/' /etc/apt/sources.list
 }
 
 function task_install_base {
-  echo -e "${echo_cyan}Installing packages and apps${echo_normal}"
+  show_info "Installing packages and apps"
   # add third party ppas
 
   # atom editor
@@ -111,7 +111,7 @@ function task_install_optional {
 
 # download and install webstorm
 function task_webstorm {
-  echo -e "${echo_cyan}Installing webstorm${echo_normal}"
+  show_info "Installing webstorm"
 
   # install webstorm in background and accept default location (~/.local/share/umake/ide/webstorm)
   screen -d -m -S umake-webstorm
@@ -119,7 +119,7 @@ function task_webstorm {
 }
 
 function task_git {
-  echo -e "${echo_cyan}Initial git config${echo_normal}"
+  show_info "Initial git config"
   echo -n "Git Name: "
   read GIT_USER
   echo -n "Git Email: "
@@ -134,7 +134,7 @@ function task_git {
 
 # set up diodon key binding
 function task_diodon {
-  echo -e "${echo_cyan}Setting up diodon shortcut CTRL+SUPER+V${echo_normal}"
+  show_info "Setting up diodon shortcut CTRL+SUPER+V"
   gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Diodon Clipboard Manager'
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/usr/bin/diodon'
@@ -144,7 +144,7 @@ function task_diodon {
 
 # add startup applications: diodon guake
 function task_autostart {
-  echo -e "${echo_cyan}Adding apps to autostart${echo_normal}"
+  show_info "Adding apps to autostart"
   if [ ! -d "$HOME/.config/autostart/" ]; then
     mkdir "$HOME/.config/autostart/"
   fi
@@ -154,7 +154,7 @@ function task_autostart {
 # middle mouse click with three fingers
 function task_middleClick {
   if synclient &>/dev/null && ! grep 'synclient TapButton3=2' "$HOME/.bashrc" &>/dev/null; then
-    echo -e "${echo_cyan}Touchpad detected, adding middle click on 3 finger tap.${echo_normal}"
+    show_info "Touchpad detected, adding middle click on 3 finger tap."
     echo "synclient TapButton3=2" >> $HOME/.bashrc
     source "$HOME/.bashrc"
   fi
@@ -162,7 +162,7 @@ function task_middleClick {
 
 function task_npm {
   # get nvm and set up npm
-  echo -e "${echo_cyan}Setting up nvm, nodeJS and npm${echo_normal}"
+  show_info "Setting up nvm, nodeJS and npm"
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
   source $HOME/.bashrc
   nvm install 6.9.4
@@ -199,7 +199,7 @@ function task_npm {
 # install font source code pro
 
 function task_fonts {
-echo -e "${echo_cyan}Installing missing fonts.${echo_normal}"
+show_info "Installing missing fonts."
   if [ ! -d "$HOME/.fonts" ]; then
     mkdir ~/.fonts
   fi
@@ -212,7 +212,7 @@ echo -e "${echo_cyan}Installing missing fonts.${echo_normal}"
 }
 
 function task_folders {
-  echo -e "${echo_cyan}Creating default folders${echo_normal}"
+  show_info "Creating default folders"
   mkdir -pv "$HOME/Source/github"
   mkdir -pv "$HOME/Source/bitbucket"
   mkdir -pv "$HOME/Software"
@@ -224,7 +224,7 @@ function task_folders {
 }
 
 function task_dreymar {
-  echo -e "${echo_cyan}Set up dreymars extended keyboard layer ${echo_normal}"
+  show_info "Set up dreymars extended keyboard layer "
 
   if ls /usr/share/X11/dbak-* &>/dev/null; then
     echo -e "${purple}  Already installed, skipping.${echo_normal}"
@@ -243,16 +243,16 @@ function task_dreymar {
 }
 
 function task_language {
-  echo -e "${echo_cyan}Installing missing language packs${echo_normal}"
+  show_info "Installing missing language packs"
   sudo apt-get -y install $(check-language-support -l en)
   sudo apt-get -y install $(check-language-support -l de)
 
-  echo -e "${echo_cyan}Setting up locales${echo_normal}"
+  show_info "Setting up locales"
   sudo cp -f "data/locale" "/etc/default/locale"
 }
 
 function task_gsettings {
-  echo -e "${echo_cyan}Setting gsettings values${echo_normal}"
+  show_info "Setting gsettings values"
 
   gsettings set org.gnome.desktop.input-sources sources "[('xkb','de+nodeadkeys')]"
   gsettings set com.canonical.indicator.datetime show-date true
@@ -294,7 +294,7 @@ function task_gsettings {
 }
 
 function task_dconf {
-  echo -e "${echo_cyan}Setting dconf settings${echo_normal}"
+  show_info "Setting dconf settings"
   dconf write /org/compiz/profiles/unity/plugins/core/vsize 2
   dconf write /org/compiz/profiles/unity/plugins/core/hsize 2
   dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window false
@@ -321,7 +321,7 @@ function task_settings {
 }
 
 function task_cursor {
-  echo -e "${echo_cyan}Installing custom x-cursor theme 'numix'${echo_normal}"
+  show_info "Installing custom x-cursor theme 'numix'"
   git clone https://github.com/uloco/numix-cursor.git
   if [[ ! -d "$HOME/.icons" ]]; then
     mkdir "$HOME/.icons"
@@ -335,7 +335,7 @@ function task_cursor {
 }
 
 function task_hardcodefixer {
-  echo -e "${echo_cyan}Fixing hardcoded desktop icons${echo_normal}"
+  show_info "Fixing hardcoded desktop icons"
   git clone https://github.com/Foggalong/hardcode-fixer.git
   cd hardcode-fixer
   sudo ./fix.sh
@@ -372,7 +372,7 @@ function task_themeing {
 function task_android {
 
   # perhaps this is enough
-  echo -e "${echo_cyan}Installing android${echo_normal}"
+  show_info "Installing android"
 
   CURRENT_DIR=$(pwd);
 
@@ -399,7 +399,7 @@ function task_android {
 }
 
 function task_terminal {
-  echo -e "${echo_cyan}Setting up terminal colors and prompt${echo_normal}"
+  show_info "Setting up terminal colors and prompt"
 
   git clone --depth=1 https://github.com/Bash-it/bash-it.git "$HOME/.bash_it"
   echo 'y' | "$HOME/.bash_it/install.sh"
@@ -426,7 +426,7 @@ function task_terminal {
 }
 
 function task_alternatives {
-  echo -e "${echo_cyan}Setting up default applications${echo_normal}"
+  show_info "Setting up default applications"
   sudo sed -i 's/gedit.desktop/atom.desktop/g' /etc/gnome/defaults.list
 }
 
