@@ -4,7 +4,7 @@ export BASHRC="${HOME}/.bashrc"
 
 task_mirrors() {
   show_info "Switching to german update server"
-  sudo sed -i 's/us\.archive\.ubuntu\.com/de.archive.ubuntu.com/' /etc/apt/sources.list
+  sed -i 's/us\.archive\.ubuntu\.com/de.archive.ubuntu.com/' /etc/apt/sources.list
 }
 
 task_install_base() {
@@ -12,39 +12,39 @@ task_install_base() {
   # add third party ppas
 
   # atom editor
-  sudo add-apt-repository -y ppa:webupd8team/atom
+  add-apt-repository -y ppa:webupd8team/atom
 
   # diodon clipboard manager
-  sudo add-apt-repository -y ppa:diodon-team/stable
+  add-apt-repository -y ppa:diodon-team/stable
 
   # java 7 needed for android 6.0
-  sudo add-apt-repository -y ppa:openjdk-r/ppa
+  add-apt-repository -y ppa:openjdk-r/ppa
 
   # oracle java needed for some applications
-  sudo add-apt-repository -y ppa:webupd8team/java
+  add-apt-repository -y ppa:webupd8team/java
 
   # latest umake version, due to bug in eclipse install
-  sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make
+  add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make
 
   # google chrome
-  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-  sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+  sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
 
 
   # update
-  sudo apt-get update
+  apt-get update
 
   # upgrade
-  sudo apt-get -y upgrade
-  sudo apt-get -y dist-upgrade
+  apt-get -y upgrade
+  apt-get -y dist-upgrade
 
   # oracle java
-  sudo apt-get install -y python-software-properties debconf-utils
-  echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
-  sudo apt-get install -y oracle-java8-installer
+  apt-get install -y python-software-properties debconf-utils
+  echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
+  apt-get install -y oracle-java8-installer
 
   # install packages
-  sudo apt-get -y install atom \
+  apt-get -y install atom \
     htop \
     git \
     unity-tweak-tool \
@@ -88,19 +88,19 @@ task_install_base() {
     screen -S umake-vs-code -p 0 -X stuff "umake ide visual-studio-code\n\na\n"
 
   # clean up installed packages
-  sudo apt-get -y autoremove
+  apt-get -y autoremove
 }
 
 task_install_advanced() {
   # take a break
-  sudo add-apt-repository -y ppa:vlijm/takeabreak
+  add-apt-repository -y ppa:vlijm/takeabreak
 
   # indicator keylock
-  sudo add-apt-repository -y ppa:tsbarnes/indicator-keylock
+  add-apt-repository -y ppa:tsbarnes/indicator-keylock
 
-  sudo apt-get update
+  apt-get update
 
-  sudo apt-get install -y byobu \
+  apt-get install -y byobu \
     inkscape \
     gimp \
     takeabreak \
@@ -158,6 +158,7 @@ task_autostart() {
 
 # middle mouse click with three fingers
 task_middleClick() {
+<<<<<<< HEAD
   if synclient &>/dev/null && ! grep 'synclient TapButton3=2' "${BASHRC}" &>/dev/null; then
     show_info "Touchpad detected, adding middle click on 3 finger tap."
     echo "synclient TapButton3=2" >> ${BASHRC}
@@ -263,11 +264,11 @@ task_dreymar() {
 
 task_language() {
   show_info "Installing missing language packs"
-  sudo apt-get -y install $(check-language-support -l en)
-  sudo apt-get -y install $(check-language-support -l de)
+  apt-get -y install $(check-language-support -l en)
+  apt-get -y install $(check-language-support -l de)
 
   show_info "Setting up locales"
-  sudo cp -f "data/locale" "/etc/default/locale"
+  cp -f "data/locale" "/etc/default/locale"
 }
 
 task_gsettings() {
@@ -335,7 +336,7 @@ task_settings() {
 
  # add user to shared folders group
   if [ $(getent group vboxsf) ]; then
-    sudo usermod -a -G vboxsf "$USER"
+    usermod -a -G vboxsf "$USER"
   fi
 }
 
@@ -357,7 +358,7 @@ task_hardcodefixer() {
   show_info "Fixing hardcoded desktop icons"
   git clone https://github.com/Foggalong/hardcode-fixer.git
   cd hardcode-fixer
-  sudo ./fix.sh
+  ./fix.sh
   cd ..
   rm -rf hardcode-fixer
 
@@ -373,10 +374,10 @@ task_hardcodefixer() {
 
 task_themeing() {
   # numix
-  sudo add-apt-repository -y ppa:numix/ppa
-  sudo apt-get update
+  add-apt-repository -y ppa:numix/ppa
+  apt-get update
 
-  sudo apt-get install -y numix-gtk-theme \
+  apt-get install -y numix-gtk-theme \
     numix-icon-theme-circle
 
   gsettings set org.gnome.desktop.wm.preferences theme 'Numix'
@@ -401,8 +402,8 @@ task_android() {
   mv android-sdk-linux "${HOME}/Software/"
 
   # install missing libs
-  sudo apt-get -y install libbz2-1.0
-  sudo apt-get -y install lib32z1 lib32ncurses5 lib32stdc++6
+  apt-get -y install libbz2-1.0
+  apt-get -y install lib32z1 lib32ncurses5 lib32stdc++6
 
   # set path
   echo -e '\n# Set android path\nexport PATH=${PATH}:${HOME}/Software/android-sdk-linux/tools:${HOME}/Software/android-sdk-linux/platform-tools\nexport ANDROID_HOME=${HOME}/Software/android-sdk-linux' >> "${BASHRC}"
@@ -413,7 +414,7 @@ task_android() {
 
   rm android-sdk_r24.4.1-linux.tgz
 
-  sudo cp data/android-sdk.desktop /usr/share/applications/
+  cp data/android-sdk.desktop /usr/share/applications/
   cd "$CURRENT_DIR";
 }
 
@@ -446,7 +447,7 @@ task_terminal() {
 
 task_alternatives() {
   show_info "Setting up default applications"
-  sudo sed -i 's/gedit.desktop/atom.desktop/g' /etc/gnome/defaults.list
+  sed -i 's/gedit.desktop/atom.desktop/g' /etc/gnome/defaults.list
 }
 
 task_kernel() {
