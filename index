@@ -1,67 +1,88 @@
 #!/usr/bin/env bash
 
-# stop executing script on error
-# set -e
-
-
+# import functions n stuff
 source ./functions/tasks
 source ./functions/cntlm
 source ./functions/messages
 
-  # # Prevent sudo timeout
-  # sudo -v # ask for sudo password up-front
-  # while true; do
-  #   # Update user's timestamp without running a command
-  #   sudo -nv; sleep 1m
-  #   # Exit when the parent process is not running any more. In fact this loop
-  #   # would be killed anyway after being an orphan(when the parent process
-  #   # exits). But this ensures that and probably exit sooner.
-  #   kill -0 $$ 2>/dev/null || exit
-  # done &
+# Prevent sudo timeout
+sudo -v # ask for sudo password up-front
+while true; do
+  # Update user's timestamp without running a command
+  sudo -nv; sleep 1m
+  # Exit when the parent process is not running any more. In fact this loop
+  # would be killed anyway after being an orphan(when the parent process
+  # exits). But this ensures that and probably exit sooner.
+  kill -0 $$ 2>/dev/null || exit
+done &
 
-# case $1 in
-#   '--proxy')
-#     task_cntlm_install
-#     task_cntlm_config
-#     ;;
-#   '--base')
-#     task_mirrors
-#     task_install_base
-#     task_language
-#     task_fonts
-#     task_autostart
-#     task_webstorm
-#     task_diodon
-#     task_middleClick
-#     task_npm
-#     task_gsettings
-#     task_settings
-#     task_dconf
-#     task_terminal
-#     task_alternatives
-#     task_android
-#   	;;
-#   '--advanced')
-#     task_folders
-#     task_install_advanced
-#     task_git
-#     task_dreymar
-#     task_themeing
-#     task_byobu
-#   	;;
-#   '--optional')
-#   	task_install_optional
-#   	;;
-#   '--kernel')
-#   	task_kernel
-#   	;;
-#   *)
-#   	echo "No arguments given."
-#     show_help
-#   	;;
-# esac
-#
-# source "$HOME/.bashrc"
+# stop executing script on error
+error_handling() {
+    show_error "An error occured, exiting."
+    errcode=$? # save the exit code as the first thing done in the trap function
+    # show_error "error $errorcode"
+    # show_error "the command executing at the time of the error was"
+    # show_error "$BASH_COMMAND"
+    # show_error "on line ${BASH_LINENO[0]}"
+    # do some error handling, cleanup, logging, notification
+    # $BASH_COMMAND contains the command that was being executed at the time of the trap
+    # ${BASH_LINENO[0]} contains the line number in the script of that command
+    # exit the script or return to try again, etc.
+    exit $errcode  # or use some other value or do return instead
+}
+
+trap error_handling 0
+set -e
+
+show_help() {
+  echo "HELP! to be done..."
+}
+
+case $1 in
+  '--proxy')
+    task_cntlm_install
+    task_cntlm_config
+    ;;
+  '--base')
+    # task_mirrors
+    # task_install_base
+    # task_language
+    # task_fonts
+    # task_autostart
+    # task_webstorm
+    # task_diodon
+    # task_middleClick
+    # task_npm
+    # task_gsettings
+    # task_settings
+    # task_dconf
+    task_terminal
+    # task_alternatives
+    # task_android
+  	;;
+  '--advanced')
+    task_folders
+    task_install_advanced
+    task_git
+    task_dreymar
+    task_themeing
+    task_byobu
+  	;;
+  '--optional')
+  	task_install_optional
+  	;;
+  '--kernel')
+  	task_kernel
+  	;;
+  *)
+  	echo "No arguments given."
+    show_help
+  	;;
+esac
+
+source "$HOME/.bashrc"
+
+trap : 0
 
 show_success
 show_success "******************************************************************************"

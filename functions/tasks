@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
-function task_mirrors {
+export BASHRC="${HOME}/.bashrc"
+
+task_mirrors() {
   show_info "Switching to german update server"
   sudo sed -i 's/us\.archive\.ubuntu\.com/de.archive.ubuntu.com/' /etc/apt/sources.list
 }
 
-function task_install_base {
+task_install_base() {
   show_info "Installing packages and apps"
   # add third party ppas
 
@@ -77,17 +79,19 @@ function task_install_base {
 
     # install eclipse in background and accept default location (~/.local/share/umake/ide/eclipse)
     screen -d -m -S umake-eclipse
+    sleep 3
     screen -S umake-eclipse -p 0 -X stuff "umake ide eclipse\n\n"
 
     # install vs-code in background and accept default location (~/.local/share/umake/ide/visual-studio-code)
     screen -d -m -S umake-vs-code
+    sleep 3
     screen -S umake-vs-code -p 0 -X stuff "umake ide visual-studio-code\n\na\n"
 
   # clean up installed packages
   sudo apt-get -y autoremove
 }
 
-function task_install_advanced {
+task_install_advanced() {
   # take a break
   sudo add-apt-repository -y ppa:vlijm/takeabreak
 
@@ -105,20 +109,21 @@ function task_install_advanced {
     indicator-keylock
 }
 
-function task_install_optional {
+task_install_optional() {
   sudo apt-get install -y nautilus-dropbox
 }
 
 # download and install webstorm
-function task_webstorm {
+task_webstorm() {
   show_info "Installing webstorm"
 
   # install webstorm in background and accept default location (~/.local/share/umake/ide/webstorm)
   screen -d -m -S umake-webstorm
+  sleep 3
   screen -S umake-webstorm -p 0 -X stuff "umake ide webstorm\n\n"
 }
 
-function task_git {
+task_git() {
   show_info "Initial git config"
   echo -n "Git Name: "
   read GIT_USER
@@ -133,7 +138,7 @@ function task_git {
 }
 
 # set up diodon key binding
-function task_diodon {
+task_diodon() {
   show_info "Setting up diodon shortcut CTRL+SUPER+V"
   gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Diodon Clipboard Manager'
@@ -143,7 +148,7 @@ function task_diodon {
 
 
 # add startup applications: diodon guake
-function task_autostart {
+task_autostart() {
   show_info "Adding apps to autostart"
   if [ ! -d "$HOME/.config/autostart/" ]; then
     mkdir "$HOME/.config/autostart/"
@@ -152,19 +157,31 @@ function task_autostart {
 }
 
 # middle mouse click with three fingers
-function task_middleClick {
-  if synclient &>/dev/null && ! grep 'synclient TapButton3=2' "$HOME/.bashrc" &>/dev/null; then
+task_middleClick() {
+  if synclient &>/dev/null && ! grep 'synclient TapButton3=2' "${BASHRC}" &>/dev/null; then
     show_info "Touchpad detected, adding middle click on 3 finger tap."
-    echo "synclient TapButton3=2" >> $HOME/.bashrc
-    source "$HOME/.bashrc"
+    echo "synclient TapButton3=2" >> ${BASHRC}
+    source "${BASHRC}"
   fi
 }
 
-function task_npm {
+task_npm() {
   # get nvm and set up npm
   show_info "Setting up nvm, nodeJS and npm"
-  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-  source $HOME/.bashrc
+  CURRENT_DIR=$(pwd);
+
+  # Download and Install NVM
+  export NVM_DIR="$HOME/.nvm"
+  git clone https://github.com/creationix/nvm.git "$NVM_DIR"
+  cd "$NVM_DIR"
+  git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin`
+  source "$NVM_DIR/nvm.sh"
+
+  # Add to .bashrc
+  echo -e '\n# This loads nvm\nexport NVM_DIR="$HOME/.nvm"\nif [ -s "$NVM_DIR/nvm.sh" ]; then\n\tsource "$NVM_DIR/nvm.sh"\nfi\n' >> "${BASHRC}"
+
+
+  source "${BASHRC}"
   nvm install 6.9.4
   nvm alias default 6.9.4
   nvm use default
@@ -193,12 +210,14 @@ function task_npm {
     tslint-config-standard >/dev/null
 
   npm list --global --depth 0
-  npm completion >> "$HOME/.bashrc"
+  npm completion >> "${BASHRC}"
+
+  cd ${CURRENT_DIR}
 }
 
 # install font source code pro
 
-function task_fonts {
+task_fonts() {
 show_info "Installing missing fonts."
   if [ ! -d "$HOME/.fonts" ]; then
     mkdir ~/.fonts
@@ -211,7 +230,7 @@ show_info "Installing missing fonts."
   gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro Medium 11'
 }
 
-function task_folders {
+task_folders() {
   show_info "Creating default folders"
   mkdir -pv "$HOME/Source/github"
   mkdir -pv "$HOME/Source/bitbucket"
@@ -223,11 +242,11 @@ function task_folders {
   mkdir -pv "$HOME/Virtual Machines"
 }
 
-function task_dreymar {
+task_dreymar() {
   show_info "Set up dreymars extended keyboard layer "
 
   if ls /usr/share/X11/dbak-* &>/dev/null; then
-    echo -e "${purple}  Already installed, skipping.${echo_normal}"
+    show_warning "Already installed, skipping."
   else
     git clone https://github.com/DreymaR/BigBagKbdTricks_XKB.git
     cd BigBagKbdTricks_XKB
@@ -242,7 +261,7 @@ function task_dreymar {
   fi
 }
 
-function task_language {
+task_language() {
   show_info "Installing missing language packs"
   sudo apt-get -y install $(check-language-support -l en)
   sudo apt-get -y install $(check-language-support -l de)
@@ -251,7 +270,7 @@ function task_language {
   sudo cp -f "data/locale" "/etc/default/locale"
 }
 
-function task_gsettings {
+task_gsettings() {
   show_info "Setting gsettings values"
 
   gsettings set org.gnome.desktop.input-sources sources "[('xkb','de+nodeadkeys')]"
@@ -293,7 +312,7 @@ function task_gsettings {
   gsettings set org.gnome.desktop.media-handling automount-open false
 }
 
-function task_dconf {
+task_dconf() {
   show_info "Setting dconf settings"
   dconf write /org/compiz/profiles/unity/plugins/core/vsize 2
   dconf write /org/compiz/profiles/unity/plugins/core/hsize 2
@@ -305,7 +324,7 @@ function task_dconf {
   dconf write /com/canonical/indicator/power/show-percentage true
 }
 
-function task_settings {
+task_settings() {
   # set timezone
   timedatectl set-timezone Europe/Berlin
   # set atom proxy if needed
@@ -320,7 +339,7 @@ function task_settings {
   fi
 }
 
-function task_cursor {
+task_cursor() {
   show_info "Installing custom x-cursor theme 'numix'"
   git clone https://github.com/uloco/numix-cursor.git
   if [[ ! -d "$HOME/.icons" ]]; then
@@ -334,7 +353,7 @@ function task_cursor {
 
 }
 
-function task_hardcodefixer {
+task_hardcodefixer() {
   show_info "Fixing hardcoded desktop icons"
   git clone https://github.com/Foggalong/hardcode-fixer.git
   cd hardcode-fixer
@@ -343,7 +362,7 @@ function task_hardcodefixer {
   rm -rf hardcode-fixer
 
   # fix webstorm
-  sudo sed -i "/^Icon/c\Icon=webstorm" "${HOME}/.local/share/applications/jetbrains-webstorm.desktop"
+  sed -i "/^Icon/c\Icon=webstorm" "${HOME}/.local/share/applications/jetbrains-webstorm.desktop"
 
   # fix eclipse
   sed -i "/^Icon/c\Icon=eclipse" "$HOME/.local/share/applications/eclipse-java.desktop"
@@ -352,7 +371,7 @@ function task_hardcodefixer {
   sed -i "/^Icon/c\Icon=visualstudiocode" "$HOME/.local/share/applications/visual-studio-code.desktop"
 }
 
-function task_themeing {
+task_themeing() {
   # numix
   sudo add-apt-repository -y ppa:numix/ppa
   sudo apt-get update
@@ -369,7 +388,7 @@ function task_themeing {
 }
 
 # install android sdk
-function task_android {
+task_android() {
 
   # perhaps this is enough
   show_info "Installing android"
@@ -379,15 +398,15 @@ function task_android {
   # download android sdk
   wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
   tar -xf android-sdk_r24.4.1-linux.tgz
-  mv android-sdk-linux "$HOME/Software/"
+  mv android-sdk-linux "${HOME}/Software/"
 
   # install missing libs
   sudo apt-get -y install libbz2-1.0
   sudo apt-get -y install lib32z1 lib32ncurses5 lib32stdc++6
 
   # set path
-  echo -e '\n# Set android path\nexport PATH=${PATH}:${HOME}/Software/android-sdk-linux/tools:${HOME}/Software/android-sdk-linux/platform-tools\nexport ANDROID_HOME=${HOME}/Software/android-sdk-linux' >> "$HOME/.bashrc"
-  source "$HOME/.bashrc"
+  echo -e '\n# Set android path\nexport PATH=${PATH}:${HOME}/Software/android-sdk-linux/tools:${HOME}/Software/android-sdk-linux/platform-tools\nexport ANDROID_HOME=${HOME}/Software/android-sdk-linux' >> "${BASHRC}"
+  source "${BASHRC}"
 
   # run sdk manager
   android &
@@ -398,39 +417,39 @@ function task_android {
   cd "$CURRENT_DIR";
 }
 
-function task_terminal {
+task_terminal() {
   show_info "Setting up terminal colors and prompt"
 
-  git clone --depth=1 https://github.com/Bash-it/bash-it.git "$HOME/.bash_it"
-  echo 'y' | "$HOME/.bash_it/install.sh"
+  if ! grep "${HOME}/.bash-aliases" "${BASHRC}" &>/dev/null; then
+    cp data/terminal/.bash-aliases "${HOME}"
+    echo -e '\n# Load custom bash aliases\nsource "${HOME}/.bash-aliases"\n' >> "${BASHRC}"
+  fi
 
-  sleep 5
-
-  source "$HOME/.bashrc"
-
-  bash-it enable alias git
-  cp -r data/powerline-nice "$HOME/.bash_it/themes/"
-
-  sed -i "/^export BASH_IT_THEME/c\export BASH_IT_THEME=\'powerline-nice\'" "$HOME/.bashrc"
+  if ! grep "${HOME}/.bash-prompt" "${BASHRC}" &>/dev/null; then
+    cp data/terminal/.bash-prompt "${HOME}"
+    echo -e '\n# Load custom bash prompt\nsource "${HOME}/.bash-prompt"\n' >> "${BASHRC}"
+  fi
 
   # set bluloco color scheme
-  bash data/theme/bluloco-gnome-terminal &
+  bash data/terminal/bluloco-gnome-terminal &
 
   GUAKE_PATH="${HOME}/.gconf/apps"
   if command -v guake &>/dev/null; then
     rm -r "${GUAKE_PATH}/guake"
     mkdir -pv "${GUAKE_PATH}"
     cp -r "data/guake" "${GUAKE_PATH}"
-    bash data/theme/bluloco-guake &
+    bash data/terminal/bluloco-guake &
   fi
+
+  source "${BASHRC}"
 }
 
-function task_alternatives {
+task_alternatives() {
   show_info "Setting up default applications"
   sudo sed -i 's/gedit.desktop/atom.desktop/g' /etc/gnome/defaults.list
 }
 
-function task_kernel {
+task_kernel() {
   git clone https://github.com/mtompkins/linux-kernel-utilities.git
   cd linux-kernel-utilities
   ./update_ubuntu_kernel.sh --latest
@@ -438,7 +457,7 @@ function task_kernel {
   rm -rf linux-kernel-utilities
 }
 
-function task_byobu {
+task_byobu() {
   if command -v byobu &>/dev/null; then
     byobu-enable
   fi
