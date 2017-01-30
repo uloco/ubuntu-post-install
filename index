@@ -5,7 +5,6 @@ source ./functions/tasks
 source ./functions/cntlm
 source ./functions/messages
 
-<<<<<<< HEAD
 # Prevent sudo timeout
 sudo -v # ask for sudo password up-front
 while true; do
@@ -16,13 +15,6 @@ while true; do
   # exits). But this ensures that and probably exit sooner.
   kill -0 $$ 2>/dev/null || exit
 done &
-=======
-# Running is only allowed with root privileges
-if [[ $EUID -ne 0 ]]; then
-   show_warning "This script must be run with sudo."
-   exit 1
-fi
->>>>>>> 39b76d6e803a831cca8fbaee5ccb24dc3f3c88bd
 
 # stop executing script on error
 error_handling() {
@@ -52,23 +44,6 @@ case $1 in
     task_cntlm_config
     ;;
   '--base')
-<<<<<<< HEAD
-    # task_mirrors
-    # task_install_base
-    # task_language
-    # task_fonts
-    # task_autostart
-    # task_webstorm
-    # task_diodon
-    # task_middleClick
-    # task_npm
-    # task_gsettings
-    # task_settings
-    # task_dconf
-    task_terminal
-    # task_alternatives
-    # task_android
-=======
     task_mirrors
     task_install_base
     task_language
@@ -84,7 +59,6 @@ case $1 in
     task_terminal
     task_alternatives
     task_android
->>>>>>> 39b76d6e803a831cca8fbaee5ccb24dc3f3c88bd
   	;;
   '--advanced')
     task_folders
