@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Make sudo last forever
+sudo sh -c 'echo "\nDefaults timestamp_timeout=-1">>/etc/sudoers'
+
 # import functions n stuff
 source ./functions/tasks
 source ./functions/cntlm
@@ -20,25 +23,12 @@ error_handling() {
     exit $errcode  # or use some other value or do return instead
 }
 
-trap error_handling 0
+trap error_handling EXIT
 set -e
 
 show_help() {
   echo "HELP! to be done..."
 }
-
-# Prevent sudo timeout
-sudo -v # ask for sudo password up-front
-while true; do
-  # Update user's timestamp without running a command
-  sudo -nv; sleep 1m
-  # Exit when the parent process is not running any more. In fact this loop
-  # would be killed anyway after being an orphan(when the parent process
-  # exits). But this ensures that and probably exit sooner.
-  kill -0 $$ 2>/dev/null || exit
-done &
-
-sleep 3
 
 case $1 in
   '--proxy')
@@ -84,7 +74,8 @@ esac
 
 source "$HOME/.bashrc"
 
-trap : 0
+# Restore defaut sudo timout
+trap 'sudo sed -i "/Defaults timestamp_timeout=-1/d" /etc/sudoers' 0
 
 show_success
 show_success "******************************************************************************"

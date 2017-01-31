@@ -396,24 +396,34 @@ task_android() {
   CURRENT_DIR=$(pwd);
 
   # download android sdk
-  wget https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
-  tar -xf android-sdk_r24.4.1-linux.tgz
-  mv android-sdk-linux "${HOME}/Software/"
+  wget https://dl.google.com/android/repository/tools_r25.2.3-linux.zip
+  unzip -q tools_r25.2.3-linux.zip
+  if [ ! -d "${HOME}/Software/android/tools/" ]; then
+    mkdir -pv "${HOME}/Software/android/tools/"
+  fi
+  mv -v tools "${HOME}/Software/android/"
 
   # install missing libs
   sudo apt-get -y install libbz2-1.0
   sudo apt-get -y install lib32z1 lib32ncurses5 lib32stdc++6
 
   # set path
-  echo -e '\n# Set android path\nexport PATH=${PATH}:${HOME}/Software/android-sdk-linux/tools:${HOME}/Software/android-sdk-linux/platform-tools\nexport ANDROID_HOME=${HOME}/Software/android-sdk-linux' >> "${BASHRC}"
+  if ! grep "Set android path" "${BASHRC}"; then
+    echo -e '\n# Set android path\nexport PATH=${PATH}:${HOME}/Software/android/tools' >> "${BASHRC}"
+  fi
   source "${BASHRC}"
 
   # run sdk manager
-  android &
+  if [ -s "${HOME}/Software/android/tools/android" ]; then
+    "${HOME}/Software/android/tools/android" &
+  else
+    echo "Android binary not found, exiting."
+    exit 1
+  fi
 
-  rm android-sdk_r24.4.1-linux.tgz
+  rm tools_r25.2.3-linux.zip
 
-  sudo cp data/android-sdk.desktop /usr/share/applications/
+  sudo cp data/android-sdk.desktop "${HOME}/.local/share/applications/"
   cd "$CURRENT_DIR";
 }
 
@@ -422,12 +432,12 @@ task_terminal() {
 
   if ! grep "${HOME}/.bash-aliases" "${BASHRC}" &>/dev/null; then
     cp data/terminal/.bash-aliases "${HOME}"
-    echo -e '\n# Load custom bash aliases\nsource "${HOME}/.bash-aliases"\n' >> "${BASHRC}"
+    echo -e '# Load custom bash aliases\nsource "${HOME}/.bash-aliases"\n' >> "${BASHRC}"
   fi
 
   if ! grep "${HOME}/.bash-prompt" "${BASHRC}" &>/dev/null; then
     cp data/terminal/.bash-prompt "${HOME}"
-    echo -e '\n# Load custom bash prompt\nsource "${HOME}/.bash-prompt"\n' >> "${BASHRC}"
+    echo -e '# Load custom bash prompt\nsource "${HOME}/.bash-prompt"\n' >> "${BASHRC}"
   fi
 
   # set bluloco color scheme
