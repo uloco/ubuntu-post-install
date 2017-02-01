@@ -104,9 +104,10 @@ task_install_advanced() {
     inkscape \
     gimp \
     takeabreak \
-    guake \
     pandoc \
     indicator-keylock
+
+  task_guake
 }
 
 task_install_optional() {
@@ -443,14 +444,6 @@ task_terminal() {
   # set bluloco color scheme
   bash data/terminal/bluloco-gnome-terminal &
 
-  GUAKE_PATH="${HOME}/.gconf/apps"
-  if command -v guake &>/dev/null; then
-    rm -r "${GUAKE_PATH}/guake"
-    mkdir -pv "${GUAKE_PATH}"
-    cp -r "data/guake" "${GUAKE_PATH}"
-    bash data/terminal/bluloco-guake &
-  fi
-
   source "${BASHRC}"
 }
 
@@ -470,5 +463,17 @@ task_kernel() {
 task_byobu() {
   if command -v byobu &>/dev/null; then
     byobu-enable
+  fi
+}
+
+task_guake() {
+  sudo apt-get -y install guake
+
+  GUAKE_PATH="${HOME}/.gconf/apps"
+  if command -v guake &>/dev/null; then
+    rm -r "${GUAKE_PATH}/guake"
+    mkdir -pv "${GUAKE_PATH}"
+    cp -r "data/guake" "${GUAKE_PATH}"
+    bash data/terminal/bluloco-guake &
   fi
 }
