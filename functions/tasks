@@ -475,3 +475,7 @@ task_guake() {
 
   cp data/autostart/guake.desktop "$HOME/.config/autostart/"
 }
+
+task_ccsm() {
+  ./data/ccsm-import data/ccsm.profile
+}

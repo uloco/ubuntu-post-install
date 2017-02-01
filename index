@@ -52,6 +52,7 @@ case $1 in
     task_dreymar
     task_themeing
     task_byobu
+    task_ccsm
   	;;
   '--optional')
   	task_install_optional
