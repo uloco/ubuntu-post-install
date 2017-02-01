@@ -89,6 +89,12 @@ task_install_base() {
 
   # clean up installed packages
   sudo apt-get -y autoremove
+
+  # Add apps to autostart
+  if [ ! -d "$HOME/.config/autostart/" ]; then
+    mkdir "$HOME/.config/autostart/"
+  fi
+  cp data/autostart/thunderbird.desktop "$HOME/.config/autostart/"
 }
 
 task_install_advanced() {
@@ -145,16 +151,6 @@ task_diodon() {
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Diodon Clipboard Manager'
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/usr/bin/diodon'
   gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Primary><Super>v'
-}
-
-
-# add startup applications: diodon guake
-task_autostart() {
-  show_info "Adding apps to autostart"
-  if [ ! -d "$HOME/.config/autostart/" ]; then
-    mkdir "$HOME/.config/autostart/"
-  fi
-  cp data/autostart/* "$HOME/.config/autostart/"
 }
 
 # middle mouse click with three fingers
@@ -476,4 +472,6 @@ task_guake() {
     cp -r "data/guake" "${GUAKE_PATH}"
     bash data/terminal/bluloco-guake &
   fi
+
+  cp data/autostart/guake.desktop "$HOME/.config/autostart/"
 }
