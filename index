@@ -12,6 +12,8 @@ source ./functions/messages
 error_handling() {
     show_error "An error occured, exiting."
     errcode=$? # save the exit code as the first thing done in the trap function
+    # Restore defaut sudo timout
+    sudo sed -i "/Defaults timestamp_timeout=-1/d" /etc/sudoers
     # show_error "error $errorcode"
     # show_error "the command executing at the time of the error was"
     # show_error "$BASH_COMMAND"
