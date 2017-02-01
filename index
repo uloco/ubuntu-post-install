@@ -46,9 +46,9 @@ case $1 in
     task_android
   	;;
   '--advanced')
+    task_git
     task_folders
     task_install_advanced
-    task_git
     task_dreymar
     task_themeing
     task_byobu
