@@ -74,7 +74,7 @@ task_install_base() {
     vagrant \
     ubuntu-make \
     screen \
-    docker \
+    docker.io \
     google-chrome-stable
 
     # install eclipse in background and accept default location (~/.local/share/umake/ide/eclipse)
