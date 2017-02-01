@@ -14,14 +14,6 @@ error_handling() {
     errcode=$? # save the exit code as the first thing done in the trap function
     # Restore defaut sudo timout
     sudo sed -i "/Defaults timestamp_timeout=-1/d" /etc/sudoers
-    # show_error "error $errorcode"
-    # show_error "the command executing at the time of the error was"
-    # show_error "$BASH_COMMAND"
-    # show_error "on line ${BASH_LINENO[0]}"
-    # do some error handling, cleanup, logging, notification
-    # $BASH_COMMAND contains the command that was being executed at the time of the trap
-    # ${BASH_LINENO[0]} contains the line number in the script of that command
-    # exit the script or return to try again, etc.
     exit $errcode  # or use some other value or do return instead
 }
 
@@ -86,12 +78,10 @@ show_success "Things you will have to do manually: "
 show_success "============================================================================== "
 show_success "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts "
 show_success "- Import compiz config settings from file 'data/ccsm.profile'"
-show_success "- Configure guake preferences"
-show_success "- Copy colors from guake bluloco to gnome-terminal "
+show_success "- Import IDE/Editor Settings & Plugins"
 show_success "- REBOOT!"
 show_success
 
 # TODO
 # atom settings
-# exit on error
-# grob minimal version
+# ccsm import
