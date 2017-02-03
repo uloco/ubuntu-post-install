@@ -1,5 +1,5 @@
 [Desktop Entry]
 Name=Android SDK
-Exec=sh -c '$HOME/Software/android-sdk-linux/tools/android'
+Exec=sh -c '$HOME/Software/android/tools/android'
 Icon=android-sdk
 Type=Application
