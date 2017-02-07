@@ -78,7 +78,6 @@ show_success "UBUNTU POST INITIALIZATION SUCCESSFULL! "
 show_success "Things you will have to do manually: "
 show_success "============================================================================== "
 show_success "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts "
-show_success "- Import compiz config settings from file 'data/ccsm.profile'"
 show_success "- Import IDE/Editor Settings & Plugins"
 show_success "- REBOOT!"
 show_success

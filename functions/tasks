@@ -469,5 +469,9 @@ task_guake() {
 }
 
 task_ccsm() {
-  ./data/ccsm-import data/ccsm.profile
+  if [ $(getent group vboxsf) ]; then
+    ./data/ccsm/import.py data/ccsm/unity-lowgfx.profile
+  else
+    ./data/ccsm/import.py data/ccsm/unity-custom.profile
+  fi
 }
