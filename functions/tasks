@@ -466,7 +466,6 @@ task_guake() {
   sudo apt-get -y install guake
 
   GUAKE_PATH="${HOME}/.gconf/apps"
-  
   mkdir -pv "${GUAKE_PATH}"
   cp -r "data/guake" "${GUAKE_PATH}"
   bash data/terminal/bluloco-guake &
