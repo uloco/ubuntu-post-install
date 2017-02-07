@@ -457,12 +457,6 @@ task_kernel() {
   rm -rf linux-kernel-utilities
 }
 
-task_byobu() {
-  if command -v byobu &>/dev/null; then
-    byobu-enable
-  fi
-}
-
 task_guake() {
   sudo apt-get -y install guake
 
