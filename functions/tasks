@@ -47,6 +47,7 @@ task_install_base() {
   sudo apt-get -y install atom \
     htop \
     git \
+    gitg \
     unity-tweak-tool \
     dconf-editor \
     compizconfig-settings-manager \
