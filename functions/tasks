@@ -140,7 +140,7 @@ task_git() {
   git config --global user.name "$GIT_USER"
   git config --global user.email "$GIT_EMAIL"
   git config --global push.default simple
-  git config --global credential.helper cache 3600
+  git config --global credential.helper "cache 36000"
   git config --global svn.rmdir true
   git config --global core.autocrlf input
 }
