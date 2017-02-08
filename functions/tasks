@@ -232,7 +232,6 @@ show_info "Installing missing fonts."
 task_folders() {
   show_info "Creating default folders"
   mkdir -pv "$HOME/Source/github"
-  mkdir -pv "$HOME/Source/bitbucket"
   mkdir -pv "$HOME/Software"
   mkdir -pv "$HOME/Scripts"
   mkdir -pv "$HOME/Pictures/Screenshots"
