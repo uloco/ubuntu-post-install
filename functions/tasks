@@ -48,6 +48,7 @@ task_install_base() {
     htop \
     git \
     gitg \
+    subversion \
     unity-tweak-tool \
     dconf-editor \
     compizconfig-settings-manager \
