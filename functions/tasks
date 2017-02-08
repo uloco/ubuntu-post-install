@@ -93,9 +93,7 @@ task_install_base() {
   sudo apt-get -y autoremove
 
   # Add apps to autostart
-  if [ ! -d "$HOME/.config/autostart/" ]; then
-    mkdir "$HOME/.config/autostart/"
-  fi
+  mkdir -pv "$HOME/.config/autostart/"
   cp data/autostart/thunderbird.desktop "$HOME/.config/autostart/"
 }
 
@@ -218,9 +216,7 @@ task_npm() {
 
 task_fonts() {
 show_info "Installing missing fonts."
-  if [ ! -d "$HOME/.fonts" ]; then
-    mkdir ~/.fonts
-  fi
+  mkdir -pv ~/.fonts
   tar -xzvf data/source-code-pro.tar.gz
   cp -f source-code-pro/* ~/.fonts
   fc-cache -f -v
@@ -340,9 +336,7 @@ task_settings() {
 task_cursor() {
   show_info "Installing custom x-cursor theme 'numix'"
   git clone https://github.com/uloco/numix-cursor.git
-  if [[ ! -d "$HOME/.icons" ]]; then
-    mkdir "$HOME/.icons"
-  fi
+  mkdir -pv "$HOME/.icons"
   if [[ ! -d "$HOME/.icons/Numix-Cursor" ]]; then
     cp -rv numix-cursor/theme/Numix-Cursor "$HOME/.icons/Numix-Cursor"
   fi
