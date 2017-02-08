@@ -81,7 +81,7 @@ task_install_base() {
     # install eclipse in background and accept default location (~/.local/share/umake/ide/eclipse)
     screen -d -m -S umake-eclipse
     sleep 3
-    screen -S umake-eclipse -p 0 -X stuff "umake ide eclipse\n\n"
+    screen -S umake-eclipse -p 0 -X stuff "umake ide eclipse-jee\n\n"
 
     # install vs-code in background and accept default location (~/.local/share/umake/ide/visual-studio-code)
     screen -d -m -S umake-vs-code
@@ -363,7 +363,7 @@ task_hardcodefixer() {
   sed -i "/^Icon/c\Icon=webstorm" "${HOME}/.local/share/applications/jetbrains-webstorm.desktop"
 
   # fix eclipse
-  sed -i "/^Icon/c\Icon=eclipse" "$HOME/.local/share/applications/eclipse-java.desktop"
+  sed -i "/^Icon/c\Icon=eclipse" "$HOME/.local/share/applications/eclipse-jee.desktop"
 
   # fix vs-code
   sed -i "/^Icon/c\Icon=visualstudiocode" "$HOME/.local/share/applications/visual-studio-code.desktop"
