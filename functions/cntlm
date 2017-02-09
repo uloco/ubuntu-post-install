@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 CONF='/etc/cntlm.conf'
+BASHRC="${HOME}/.bashrc"
 
 function task_cntlm_install {
     sudo sed -i '/Defaults\tenv_reset/i Defaults\tenv_keep="http_proxy https_proxy ftp_proxy no_proxy HTTP_PROXY HTTPS_PROXY FTP_PROXY NO_PROXY"' /etc/sudoers
@@ -15,7 +16,7 @@ function task_cntlm_install {
     gsettings set org.gnome.system.proxy.ftp host '127.0.0.1'
     gsettings set org.gnome.system.proxy.ftp port 3128
     read foo
-    source "$HOME/.bashrc"
+    source "${BASHRC}"
     echo "Installing CNTLM Proxy authentication"
     sudo dpkg -i data/cntlm/cntlm_0.92.3-1ubuntu1_amd64.deb
 
@@ -62,17 +63,13 @@ function task_cntlm_config {
   sudo sed -i "/^NoProxy/c\NoProxy  $(echo $NO_PROXY | sed s/','/'\,'/ )" "$CONF"
 
   # add environment variables
-  if ! grep "export http_proxy" "$HOME/.bashrc"; then
-		echo '
-		# Proxy
-		export http_proxy="http://127.0.0.1:3128"
-		export https_proxy="http://127.0.0.1:3128"
-		export ftp_proxy="http://127.0.0.1:3128"
-		export HTTP_PROXY="http://127.0.0.1:3128"
-		export HTTPS_PROXY="http://127.0.0.1:3128"
-		export FTP_PROXY="http://127.0.0.1:3128"
-		' >> "$HOME/.bashrc";
-		source "$HOME/.bashrc";
+  if ! grep "export http_proxy" "${BASHRC}"; then
+    echo "# Proxy" >> "${BASHRC}";
+		echo "export http_proxy="http://127.0.0.1:3128"" >> "${BASHRC}";
+    echo "export https_proxy="http://127.0.0.1:3128"" >> "${BASHRC}";
+    echo "export ftp_proxy="http://127.0.0.1:3128"" >> "${BASHRC}"
+
+		source "${BASHRC}";
   fi
 
   ## make apt work
