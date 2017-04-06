@@ -122,7 +122,8 @@ task_install_advanced() {
     gnomeshell-extension-manage --install --extension-id 307
     # topicons - legacy icons in tray
     gnomeshell-extension-manage --install --extension-id 405
-
+    # open-weather
+    gnomeshell-extension-manage --install --extension-id 705
   fi
 }
 
@@ -325,8 +326,12 @@ task_gsettings() {
   gsettings set com.canonical.Unity.Launcher favorites "['unity://expo-icon', 'unity://devices', 'application://firefox.desktop', 'application://chromium-browser.desktop', 'application://google-chrome.desktop', 'application://org.gnome.Nautilus.desktop', 'application://gnome-terminal.desktop', 'application://code.desktop', 'application://jetbrains-webstorm.desktop', 'application://gnome-system-monitor.desktop', 'unity://running-apps']"
   gsettings set org.gnome.settings-daemon.plugins.media-keys terminal '<Super>r'
   gsettings set org.gnome.desktop.media-handling automount-open false
+  
+  # gnome 3
   gsettings set org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:'
   gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gtk/DecorationLayout':<'close,minimize,maximize:'>}"
+  gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'google-chrome.desktop', 'org.gnome.Nautilus.desktop', 'gnome-terminal.desktop', 'code.desktop', 'jetbrains-webstorm.desktop', 'gnome-system-monitor.desktop']"
+
 }
 
 task_dconf() {
@@ -339,6 +344,10 @@ task_dconf() {
   dconf write /org/gnome/nautilus/list-view/use-tree-view true
   dconf write /com/canonical/indicator/power/show-time true
   dconf write /com/canonical/indicator/power/show-percentage true
+
+  if [ "$DESKTOP_SESSION" = "gnome" ]; then
+    dconf load / < data/dconf-dump
+  fi
 }
 
 task_settings() {
