@@ -149,12 +149,21 @@ task_git() {
   read GIT_USER
   echo -n "Git Email: "
   read GIT_EMAIL
+  echo -n "Do you want to use vim as your git editor: (Y/n) "
+  read GIT_EDITOR
   git config --global user.name "$GIT_USER"
   git config --global user.email "$GIT_EMAIL"
   git config --global push.default simple
   git config --global credential.helper "cache 36000"
   git config --global svn.rmdir true
   git config --global core.autocrlf input
+
+  if [[ "$GIT_EDITOR" =~ [yY](es)? ]] || [ -z "$GIT_EDITOR" ]; then
+    echo "Using vim as default editor"
+    git config --global core.editor "vim"
+  else
+    echo "Keep using default editor"
+  fi
 }
 
 # set up diodon key binding
