@@ -202,6 +202,8 @@ task_npm() {
     eslint-config-standard \
     eslint-plugin-standard \
     eslint-plugin-promise \
+    eslint-plugin-import \
+    eslint-plugin-node \
     babel-eslint \
     flow-bin \
     grunt-cli \
