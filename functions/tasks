@@ -388,7 +388,7 @@ task_hardcodefixer() {
   sed -i "/^Icon/c\Icon=eclipse" "$HOME/.local/share/applications/eclipse-jee.desktop"
 
   # fix vs-code
-  sed -i "/^Icon/c\Icon=vscode" "/usr/share/applications/code.desktop"
+  sudo sed -i "/^Icon/c\Icon=vscode" "/usr/share/applications/code.desktop"
 }
 
 task_themeing() {
