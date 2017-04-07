@@ -124,7 +124,7 @@ task_install_advanced() {
     # topicons - legacy icons in tray
     gnomeshell-extension-manage --install --extension-id 405
     # open-weather
-    gnomeshell-extension-manage --install --extension-id 705
+    gnomeshell-extension-manage --install --extension-id 750
   fi
 }
 
