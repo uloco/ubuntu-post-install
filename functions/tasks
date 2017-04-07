@@ -122,7 +122,7 @@ task_install_advanced() {
     # dock to dash - unity like launcher
     gnomeshell-extension-manage --install --extension-id 307
     # topicons - legacy icons in tray
-    gnomeshell-extension-manage --install --extension-id 405
+    gnomeshell-extension-manage --install --extension-id 495
     # open-weather
     gnomeshell-extension-manage --install --extension-id 750
   fi
