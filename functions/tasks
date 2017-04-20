@@ -163,6 +163,8 @@ task_git() {
   else
     echo "Keep using default editor"
   fi
+
+  cp data/scripts/git-* "${HOME}/.local/bin/"
 }
 
 # set up diodon key binding

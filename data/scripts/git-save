@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -e
+
+BRANCH="wip-uloco"
+CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+echo "Saving work in progress in branch ${BRANCH} ..."
+
+if [ $(git branch --list "${BRANCH}") ]; then
+  git branch -d "${BRANCH}"
+fi
+
+git stash -u
+git checkout -b "${BRANCH}"
+git stash pop
+git add .
+git commit -m wip
+git push -fu origin "${BRANCH}"
+git checkout "${CURRENT_BRANCH}"
+
+echo "Successfully saved work in progress."

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+BRANCH="wip-uloco"
+CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+echo "Restoring work in progress from branch ${BRANCH} ..."
+
+git stash -u
+
+if [ $(git branch --list "${BRANCH}") ]; then
+  git branch -D "${BRANCH}"
+fi
+
+git pull
+git checkout "${BRANCH}"
+git reset HEAD^
+git stash -u
+git checkout "${CURRENT_BRANCH}"
+git stash pop
+
+echo "Successfully restored work in progress."
