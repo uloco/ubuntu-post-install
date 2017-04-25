@@ -179,8 +179,9 @@ task_diodon() {
 # middle mouse click with three fingers
 task_middleClick() {
   if synclient &>/dev/null && ! grep 'synclient TapButton3=2' "${BASHRC}" &>/dev/null; then
-    show_info "Touchpad detected, adding middle click on 3 finger tap."
+    show_info "Touchpad detected, adding middle click on 3 finger tap + click."
     echo "synclient TapButton3=2" >> ${BASHRC}
+    echo "synclient ClickFinger3=2" >> ${BASHRC}
     source "${BASHRC}"
   fi
 }
