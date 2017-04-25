@@ -36,7 +36,7 @@ case $1 in
     task_fonts
     task_webstorm
     task_diodon
-    task_middleClick
+    task_touchpad
     task_npm
     task_gsettings
     task_settings

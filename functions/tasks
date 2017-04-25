@@ -177,11 +177,21 @@ task_diodon() {
 }
 
 # middle mouse click with three fingers
-task_middleClick() {
+task_touchpad() {
   if synclient &>/dev/null && ! grep 'synclient TapButton3=2' "${BASHRC}" &>/dev/null; then
     show_info "Touchpad detected, adding middle click on 3 finger tap + click."
     echo "synclient TapButton3=2" >> ${BASHRC}
     echo "synclient ClickFinger3=2" >> ${BASHRC}
+    echo "synclient PalmDetect=1" >> ${BASHRC}
+    echo "synclient PalmMinWidth=3" >> ${BASHRC}
+
+    # disable right click area on click pad
+    if synclient -l | grep 'ClickPad                = 1' &>/dev/null; then
+      show_info "ClickPad detected, removing right click area"
+      echo "synclient RightButtonAreaLeft=0" >> ${BASHRC}
+      echo "synclient RightButtonAreaTop=0" >> ${BASHRC}
+    fi
+
     source "${BASHRC}"
   fi
 }
