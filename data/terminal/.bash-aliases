@@ -8,9 +8,17 @@ alias gs='git status'
 alias gss='git status -s'
 alias ga='git add'
 alias gcm='git commit -m'
+alias gp='git push'
+alias gpt='git push --follow-tags'
+alias gpl='git pull --all'
+alias gr='git reset'
+alias grl='git reset @^'
 alias gg='git log --graph --pretty=format:'\''%C(bold)%h%Creset%C(magenta)%d%Creset %s %C(yellow)<%an> %C(cyan)(%cr)%Creset'\'' --abbrev-commit --date=relative'
 alias ggs='gg --stat'
 alias gll='git log --graph --pretty=oneline --abbrev-commit'
+alias gd='git diff'
+alias gdc='git diff --cached'
+
 
 alias tree='find . -print | sed -e '\''s;[^/]*/;|____;g;s;____|; |;g'\'''
 
