@@ -27,11 +27,11 @@ SCM_GIT_STAGED_CHAR="S:"
 
 normal="\[\e[0m\]"
 
-THEME_PROMPT_SEPARATOR=""
+THEME_PROMPT_SEPARATOR=""
 
 SHELL_SSH_CHAR=" "
-SHELL_THEME_PROMPT_COLOR=4
-SHELL_THEME_PROMPT_COLOR_SUDO=3
+SHELL_THEME_PROMPT_COLOR=12
+SHELL_THEME_PROMPT_COLOR_SUDO=9
 
 SCM_NONE_CHAR=""
 SCM_GIT_CHAR=" "
@@ -46,7 +46,7 @@ INPUT_LINE_COLOR=12
 
 CWD_THEME_PROMPT_COLOR=8
 
-LAST_STATUS_THEME_PROMPT_COLOR=5
+LAST_STATUS_THEME_PROMPT_COLOR=9
 
 IN_VIM_PROMPT_COLOR=10
 IN_VIM_PROMPT_TEXT="vim"
@@ -111,7 +111,7 @@ function git_prompt_vars {
   if [[ "$(git config --get bash-it.hide-status)" != "1" ]]; then
     [[ "${SCM_GIT_IGNORE_UNTRACKED}" = "true" ]] && local git_status_flags='-uno'
     local status_lines=$((git status --porcelain ${git_status_flags} -b 2> /dev/null ||
-                          git status --porcelain ${git_status_flags}    2> /dev/null) | git_status_summary))
+                          git status --porcelain ${git_status_flags}    2> /dev/null) | git_status_summary)
     local status=$(awk 'NR==1' <<< "$status_lines")
     local counts=$(awk 'NR==2' <<< "$status_lines")
     IFS=$'\t' read untracked_count unstaged_count staged_count <<< "$counts"
@@ -209,7 +209,7 @@ function powerline_shell_prompt {
     else
         SHELL_PROMPT="\u"
     fi
-    SHELL_PROMPT="${bold_white}$(set_rgb_color - ${SHELL_PROMPT_COLOR}) ${SHELL_PROMPT} ${normal}"
+    SHELL_PROMPT="$(set_rgb_color 15 ${SHELL_PROMPT_COLOR}) ${SHELL_PROMPT} ${normal}"
     LAST_THEME_COLOR=${SHELL_PROMPT_COLOR}
 }
 
@@ -237,7 +237,7 @@ function powerline_scm_prompt {
 }
 
 function powerline_cwd_prompt {
-    CWD_PROMPT="$(set_rgb_color ${LAST_THEME_COLOR} ${CWD_THEME_PROMPT_COLOR})${THEME_PROMPT_SEPARATOR}${normal}$(set_rgb_color - ${CWD_THEME_PROMPT_COLOR}) \w ${normal}$(set_rgb_color ${CWD_THEME_PROMPT_COLOR} -)${normal}"
+    CWD_PROMPT="$(set_rgb_color ${LAST_THEME_COLOR} ${CWD_THEME_PROMPT_COLOR})${THEME_PROMPT_SEPARATOR}$(set_rgb_color 15 ${CWD_THEME_PROMPT_COLOR}) \w ${normal}$(set_rgb_color ${CWD_THEME_PROMPT_COLOR} -)${normal}"
     LAST_THEME_COLOR=${CWD_THEME_PROMPT_COLOR}
 }
 
@@ -245,7 +245,7 @@ function powerline_last_status_prompt {
     if [[ "$1" -eq 0 ]]; then
         LAST_STATUS_PROMPT="$(set_rgb_color ${LAST_THEME_COLOR} -)${THEME_PROMPT_SEPARATOR}${normal}"
     else
-        LAST_STATUS_PROMPT="$(set_rgb_color ${LAST_THEME_COLOR} ${LAST_STATUS_THEME_PROMPT_COLOR})${THEME_PROMPT_SEPARATOR}${normal}$(set_rgb_color - ${LAST_STATUS_THEME_PROMPT_COLOR}) ${LAST_STATUS} ${normal}$(set_rgb_color ${LAST_STATUS_THEME_PROMPT_COLOR} -)${THEME_PROMPT_SEPARATOR}${normal}"
+        LAST_STATUS_PROMPT="$(set_rgb_color ${LAST_THEME_COLOR} ${LAST_STATUS_THEME_PROMPT_COLOR})${THEME_PROMPT_SEPARATOR}${normal}$(set_rgb_color 7 ${LAST_STATUS_THEME_PROMPT_COLOR}) ${LAST_STATUS} ${normal}$(set_rgb_color ${LAST_STATUS_THEME_PROMPT_COLOR} -)${THEME_PROMPT_SEPARATOR}${normal}"
     fi
 }
 
@@ -267,7 +267,7 @@ function powerline_prompt_command() {
     powerline_cwd_prompt
     powerline_last_status_prompt LAST_STATUS
 
-    PS1="${SHELL_PROMPT}${IN_VIM_PROMPT}${SCM_PROMPT}${CWD_PROMPT}${LAST_STATUS_PROMPT}\n$(set_rgb_color - ${INPUT_LINE_COLOR}) ${normal}$(set_rgb_color ${INPUT_LINE_COLOR} -)${THEME_PROMPT_SEPARATOR}${normal} "
+    PS1="${SHELL_PROMPT}${IN_VIM_PROMPT}${SCM_PROMPT}${CWD_PROMPT}${LAST_STATUS_PROMPT}\n$(set_rgb_color ${INPUT_LINE_COLOR}) \$ ${normal}"
 }
 
 PROMPT_COMMAND=powerline_prompt_command
