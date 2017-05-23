@@ -31,6 +31,7 @@ THEME_PROMPT_SEPARATOR=""
 
 SHELL_SSH_CHAR=" "
 SHELL_THEME_PROMPT_COLOR=12
+SHELL_THEME_PROMPT_COLOR_FG=15
 SHELL_THEME_PROMPT_COLOR_SUDO=9
 
 SCM_NONE_CHAR=""
@@ -47,9 +48,8 @@ INPUT_LINE_COLOR=12
 CWD_THEME_PROMPT_COLOR=8
 
 LAST_STATUS_THEME_PROMPT_COLOR=9
+LAST_STATUS_THEME_PROMPT_COLOR_FG=7
 
-IN_VIM_PROMPT_COLOR=10
-IN_VIM_PROMPT_TEXT="vim"
 
 function scm {
   if [[ "$SCM_CHECK" = false ]]; then SCM=$SCM_NONE
@@ -110,7 +110,7 @@ function git_prompt_vars {
   SCM_STATE=${GIT_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
   if [[ "$(git config --get bash-it.hide-status)" != "1" ]]; then
     [[ "${SCM_GIT_IGNORE_UNTRACKED}" = "true" ]] && local git_status_flags='-uno'
-    local status_lines=$((git status --porcelain ${git_status_flags} -b 2> /dev/null ||
+    local status_lines=$( (git status --porcelain ${git_status_flags} -b 2> /dev/null ||
                           git status --porcelain ${git_status_flags}    2> /dev/null) | git_status_summary)
     local status=$(awk 'NR==1' <<< "$status_lines")
     local counts=$(awk 'NR==2' <<< "$status_lines")
@@ -209,8 +209,7 @@ function powerline_shell_prompt {
     else
         SHELL_PROMPT="\u"
     fi
-    SHELL_PROMPT="$(set_rgb_color 15 ${SHELL_PROMPT_COLOR}) ${SHELL_PROMPT} ${normal}"
-    LAST_THEME_COLOR=${SHELL_PROMPT_COLOR}
+    SHELL_PROMPT="$(set_rgb_color ${SHELL_THEME_PROMPT_COLOR_FG} ${SHELL_PROMPT_COLOR}) ${SHELL_PROMPT} ${normal}"
 }
 
 function powerline_scm_prompt {
@@ -229,45 +228,33 @@ function powerline_scm_prompt {
         if [[ "${SCM_GIT_CHAR}" == "${SCM_CHAR}" ]]; then
             SCM_PROMPT+=" ${SCM_CHAR}${SCM_BRANCH}"
         fi
-        SCM_PROMPT="$(set_rgb_color ${LAST_THEME_COLOR} ${SCM_THEME_PROMPT_COLOR})${THEME_PROMPT_SEPARATOR}${normal}${SCM_PROMPT} ${normal}"
-        LAST_THEME_COLOR=${SCM_THEME_PROMPT_COLOR}
+        SCM_PROMPT="${normal}${SCM_PROMPT} ${normal}"
     else
         SCM_PROMPT=""
     fi
 }
 
 function powerline_cwd_prompt {
-    CWD_PROMPT="$(set_rgb_color ${LAST_THEME_COLOR} ${CWD_THEME_PROMPT_COLOR})${THEME_PROMPT_SEPARATOR}$(set_rgb_color 15 ${CWD_THEME_PROMPT_COLOR}) \w ${normal}$(set_rgb_color ${CWD_THEME_PROMPT_COLOR} -)${normal}"
-    LAST_THEME_COLOR=${CWD_THEME_PROMPT_COLOR}
+    CWD_PROMPT="$(set_rgb_color ${SHELL_THEME_PROMPT_COLOR_FG} ${CWD_THEME_PROMPT_COLOR}) \w ${normal}"
 }
 
 function powerline_last_status_prompt {
     if [[ "$1" -eq 0 ]]; then
-        LAST_STATUS_PROMPT="$(set_rgb_color ${LAST_THEME_COLOR} -)${THEME_PROMPT_SEPARATOR}${normal}"
+        LAST_STATUS_PROMPT="${normal}"
     else
-        LAST_STATUS_PROMPT="$(set_rgb_color ${LAST_THEME_COLOR} ${LAST_STATUS_THEME_PROMPT_COLOR})${THEME_PROMPT_SEPARATOR}${normal}$(set_rgb_color 7 ${LAST_STATUS_THEME_PROMPT_COLOR}) ${LAST_STATUS} ${normal}$(set_rgb_color ${LAST_STATUS_THEME_PROMPT_COLOR} -)${THEME_PROMPT_SEPARATOR}${normal}"
+        LAST_STATUS_PROMPT="${normal}$(set_rgb_color ${LAST_STATUS_THEME_PROMPT_COLOR_FG} ${LAST_STATUS_THEME_PROMPT_COLOR}) ${LAST_STATUS} ${normal}"
     fi
-}
-
-function powerline_in_vim_prompt {
-  if [ -z "$VIMRUNTIME" ]; then
-    IN_VIM_PROMPT=""
-  else
-    IN_VIM_PROMPT="$(set_rgb_color ${LAST_THEME_COLOR} ${IN_VIM_PROMPT_COLOR})${THEME_PROMPT_SEPARATOR}${normal}$(set_rgb_color - ${IN_VIM_PROMPT_COLOR}) ${IN_VIM_PROMPT_TEXT} ${normal}$(set_rgb_color ${IN_VIM_PROMPT_COLOR} -)${normal}"
-    LAST_THEME_COLOR=${IN_VIM_PROMPT_COLOR}
-  fi
 }
 
 function powerline_prompt_command() {
     local LAST_STATUS="$?"
 
     powerline_shell_prompt
-    powerline_in_vim_prompt
     powerline_scm_prompt
     powerline_cwd_prompt
     powerline_last_status_prompt LAST_STATUS
 
-    PS1="${SHELL_PROMPT}${IN_VIM_PROMPT}${SCM_PROMPT}${CWD_PROMPT}${LAST_STATUS_PROMPT}\n$(set_rgb_color ${INPUT_LINE_COLOR}) \$ ${normal}"
+    PS1="${SHELL_PROMPT}${SCM_PROMPT}${CWD_PROMPT}${LAST_STATUS_PROMPT}\n$(set_rgb_color ${INPUT_LINE_COLOR}) \$ ${normal}"
 }
 
 PROMPT_COMMAND=powerline_prompt_command
