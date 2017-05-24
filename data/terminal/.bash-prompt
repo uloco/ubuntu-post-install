@@ -254,7 +254,7 @@ function powerline_prompt_command() {
     powerline_cwd_prompt
     powerline_last_status_prompt LAST_STATUS
 
-    PS1="${SHELL_PROMPT}${SCM_PROMPT}${CWD_PROMPT}${LAST_STATUS_PROMPT}\n$(set_rgb_color ${INPUT_LINE_COLOR}) \$ ${normal}"
+    PS1="${SHELL_PROMPT}${SCM_PROMPT}${CWD_PROMPT}${LAST_STATUS_PROMPT}\n$(set_rgb_color ${INPUT_LINE_COLOR} - ) \$ ${normal}"
 }
 
 PROMPT_COMMAND=powerline_prompt_command
