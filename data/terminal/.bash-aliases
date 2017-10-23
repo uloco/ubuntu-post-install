@@ -44,5 +44,5 @@ alias npm-globals='npm list --global --depth 0'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 alias noproxy='unset http_proxy https_proxy ftp_proxy'
-alias addproxy='export http_proxy=https://magnum.grob.local:3128 && export https_proxy=$http_proxy'
+alias addproxy='export http_proxy=http://magnum.grob.local:3128 && export https_proxy=$http_proxy'
 

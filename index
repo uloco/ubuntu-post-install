@@ -30,34 +30,15 @@ case $1 in
     task_cntlm_config
     ;;
   '--base')
-    task_mirrors
+    # task_mirrors
     task_install_base
-    task_language
     task_fonts
-    task_webstorm
-    task_diodon
-    task_touchpad
     task_npm
-    task_gsettings
     task_settings
-    task_dconf
     task_terminal
-    task_alternatives
     task_android
-  	;;
-  '--advanced')
     task_git
     task_folders
-    task_install_advanced
-    task_dreymar
-    task_themeing
-    task_ccsm
-  	;;
-  '--optional')
-  	task_install_optional
-  	;;
-  '--kernel')
-  	task_kernel
   	;;
   *)
   	echo "No arguments given."
@@ -73,7 +54,7 @@ trap 'sudo sed -i "/Defaults timestamp_timeout=-1/d" /etc/sudoers' 0
 show_success
 show_success "******************************************************************************"
 show_success "******************************************************************************"
-show_success "UBUNTU POST INITIALIZATION SUCCESSFULL! "
+show_success "MACOS POST INITIALIZATION SUCCESSFULL! "
 show_success "Things you will have to do manually: "
 show_success "============================================================================== "
 show_success "- Install Thunderbird addons: Minimize to Tray, Lightning, add email accounts "

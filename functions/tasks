@@ -1,145 +1,91 @@
 #!/usr/bin/env bash
 
-export BASHRC="${HOME}/.bashrc"
-
-task_mirrors() {
-  show_info "Switching to german update server"
-  sudo sed -i 's/us\.archive\.ubuntu\.com/de.archive.ubuntu.com/' /etc/apt/sources.list
-}
+export BASHRC="${HOME}/.bash_profile"
 
 task_install_base() {
   show_info "Installing packages and apps"
-  # add third party ppas
+  
+  # install homebrew
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:${PATH}"
 
-  # diodon clipboard manager
-  sudo add-apt-repository -y ppa:diodon-team/stable
+  brew update
+  
 
-  # java 7 needed for android 6.0
-  sudo add-apt-repository -y ppa:openjdk-r/ppa
+  brew install mas
 
-  # oracle java needed for some applications
-  sudo add-apt-repository -y ppa:webupd8team/java
+  mas signing uloco@schiefewelt.de
+  # xcode
+  mas install 497799835
+  # copy-clip
+  mas install 595191960
+  # apple configurator 
+  mas install 1037126344
+  mas install 497799835
 
-  # latest umake version, due to bug in eclipse install
-  sudo add-apt-repository -y ppa:ubuntu-desktop/ubuntu-make
+  brew install coreutils
+  brew install binutils
+  brew install diffutils
+  brew install ed --with-default-names
+  brew install findutils --with-default-names
+  brew install gawk
+  brew install gnu-indent --with-default-names
+  brew install gnu-sed --with-default-names
+  brew install gnu-tar --with-default-names
+  brew install gnu-which --with-default-names
+  brew install gnutls
+  brew install grep --with-default-names
+  brew install gzip
+  brew install screen
+  brew install watch
+  brew install wdiff --with-gettext
+  brew install wget
 
-  # google chrome
-  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-  sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+  brew install bash
+  brew install emacs
+  brew install less
+  brew install m4
+  brew install make
+  brew install nano
 
-  # vs-code
-  sudo apt-get -y install curl
-  curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-  sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
-  sudo sh -c 'echo "deb [arch=amd64] http://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+  brew install file-formula
+  brew install git
+  brew install openssh
+  brew install perl
+  brew install python
+  brew install rsync
+  brew install svn
+  brew install unzip
+  brew install vim --override-system-vi
+  brew install macvim --override-system-vim --custom-system-icons
+  brew install zsh
+  brew install htop
+  brew install docker
+  brew install docker-compose
 
-  # update
-  sudo apt-get update
+  brew install node
+  brew install ansible
+  brew install maven
 
-  # upgrade
-  sudo apt-get -y upgrade
-  sudo apt-get -y dist-upgrade
-
-  # oracle java
-  sudo apt-get install -y python-software-properties debconf-utils
-  echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
-  sudo apt-get install -y oracle-java8-installer
-
-  # install packages
-  sudo apt-get -y install code \
-    htop \
-    git \
-    gitg \
-    subversion \
-    unity-tweak-tool \
-    dconf-editor \
-    compizconfig-settings-manager \
-    compiz-plugins-extra \
-    gksu \
-    vim \
-    gparted \
-    openjdk-8-jdk \
-    openjdk-7-jdk \
-    chromium-browser \
-    gcolor2 \
-    diodon \
-    meld \
-    nautilus-compare \
-    thunderbird \
-    python-pip \
-    libwww-dict-leo-org-perl \
-    gnome-tweak-tool \
-    ppa-purge \
-    checkinstall \
-    synaptic \
-    virtualbox \
-    ansible \
-    maven \
-    vagrant \
-    ubuntu-make \
-    screen \
-    docker.io \
-    google-chrome-stable
-
-    # install eclipse in background and accept default location (~/.local/share/umake/ide/eclipse)
-    screen -d -m -S umake-eclipse
-    sleep 3
-    screen -S umake-eclipse -p 0 -X stuff "umake ide eclipse-jee\n\n"
+  brew cask install java
+  brew cask install google-chrome
+  brew cask install thunderbird
+  brew cask install vagrant
+  brew cask install jetbrains-toolbox
+  brew cask install webstorm
+  brew cask install visual-studio-code
+  brew cask install franz
+  brew cask install virtualbox
+  brew cask install docker
+  brew cask install ccmenu
+  brew cask install karabiner-elements
+  brew cask install keyboard-maestro
+  brew cask install android-sdk
+  brew cask install android-studio
+  brew cask install magicprefs
+  brew cask install iterm2
 
 
-  # clean up installed packages
-  sudo apt-get -y autoremove
-
-  # Add apps to autostart
-  mkdir -pv "$HOME/.config/autostart/"
-  cp data/autostart/thunderbird.desktop "$HOME/.config/autostart/"
-}
-
-task_install_advanced() {
-  # take a break
-  sudo add-apt-repository -y ppa:vlijm/takeabreak
-
-  # indicator keylock
-  sudo add-apt-repository -y ppa:tsbarnes/indicator-keylock
-
-  sudo apt-get update
-
-  sudo apt-get install -y byobu \
-    inkscape \
-    gimp \
-    takeabreak \
-    pandoc \
-    indicator-keylock
-
-  task_guake
-
-  # install gnome extensions
-  if [ "$DESKTOP_SESSION" = "gnome" ]; then
-    # install tool
-    sudo wget -O /usr/local/bin/gnomeshell-extension-manage "https://raw.githubusercontent.com/NicolasBernaerts/ubuntu-scripts/master/ubuntugnome/gnomeshell-extension-manage"
-    sudo chmod +x /usr/local/bin/gnomeshell-extension-manage
-    
-    # dock to dash - unity like launcher
-    gnomeshell-extension-manage --install --extension-id 307
-    # topicons - legacy icons in tray
-    gnomeshell-extension-manage --install --extension-id 495
-    # open-weather
-    gnomeshell-extension-manage --install --extension-id 750
-  fi
-}
-
-task_install_optional() {
-  sudo apt-get install -y nautilus-dropbox
-}
-
-# download and install webstorm
-task_webstorm() {
-  show_info "Installing webstorm"
-
-  # install webstorm in background and accept default location (~/.local/share/umake/ide/webstorm)
-  screen -d -m -S umake-webstorm
-  sleep 3
-  screen -S umake-webstorm -p 0 -X stuff "umake ide webstorm\n\n"
 }
 
 task_git() {
@@ -153,9 +99,8 @@ task_git() {
   git config --global user.name "$GIT_USER"
   git config --global user.email "$GIT_EMAIL"
   git config --global push.default simple
-  git config --global credential.helper "cache 36000"
+  git config --global credential.helper osxkeychain
   git config --global svn.rmdir true
-  git config --global core.autocrlf input
 
   if [[ "$GIT_EDITOR" =~ [yY](es)? ]] || [ -z "$GIT_EDITOR" ]; then
     echo "Using vim as default editor"
@@ -167,79 +112,16 @@ task_git() {
   cp data/scripts/git-* "${HOME}/.local/bin/"
 }
 
-# set up diodon key binding
-task_diodon() {
-  show_info "Setting up diodon shortcut CTRL+SUPER+V"
-  gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
-  gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'Diodon Clipboard Manager'
-  gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command '/usr/bin/diodon'
-  gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding '<Primary><Super>v'
-}
-
-# middle mouse click with three fingers
-task_touchpad() {
-  if synclient &>/dev/null && ! grep 'synclient TapButton3=2' "${BASHRC}" &>/dev/null; then
-    show_info "Touchpad detected, adding middle click on 3 finger tap + click."
-    echo "synclient TapButton3=2" >> ${BASHRC}
-    echo "synclient ClickFinger3=2" >> ${BASHRC}
-    echo "synclient PalmDetect=1" >> ${BASHRC}
-    echo "synclient PalmMinWidth=3" >> ${BASHRC}
-
-    # disable right click area on click pad
-    if synclient -l | grep 'ClickPad                = 1' &>/dev/null; then
-      show_info "ClickPad detected, removing right click area"
-      echo "synclient RightButtonAreaLeft=0" >> ${BASHRC}
-      echo "synclient RightButtonAreaTop=0" >> ${BASHRC}
-    fi
-
-    source "${BASHRC}"
-  fi
-}
-
 task_npm() {
-  # get nvm and set up npm
-  show_info "Setting up nvm, nodeJS and npm"
   CURRENT_DIR=$(pwd);
-
-  # Download and Install NVM
-  export NVM_DIR="$HOME/.nvm"
-  git clone https://github.com/creationix/nvm.git "$NVM_DIR"
-  cd "$NVM_DIR"
-  git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" origin`
-  source "$NVM_DIR/nvm.sh"
-
-  # Add to .bashrc
-  echo -e '\n# This loads nvm\nexport NVM_DIR="$HOME/.nvm"\nif [ -s "$NVM_DIR/nvm.sh" ]; then\n\tsource "$NVM_DIR/nvm.sh"\nfi\n' >> "${BASHRC}"
-
-
-  source "${BASHRC}"
-  nvm install 6.9.4
-  nvm alias default 6.9.4
-  nvm use default
 
   npm install -g \
     npm \
-    babel-cli \
-    bower \
+    vsce \
     cordova \
-    esformatter \
-    eslint \
-    eslint-config-standard \
-    eslint-plugin-standard \
-    eslint-plugin-promise \
-    eslint-plugin-import \
-    eslint-plugin-node \
-    babel-eslint \
-    flow-bin \
-    grunt-cli \
-    gulp \
-    http-server \
     ionic \
-    jsdoc \
-    karma-cli \
     live-server \
     typescript \
-    tslint \
     tslint-config-standard >/dev/null
 
   npm list --global --depth 0
@@ -252,216 +134,35 @@ task_npm() {
 
 task_fonts() {
 show_info "Installing missing fonts."
-  mkdir -pv ~/.fonts
   tar -xzvf data/source-code-pro.tar.gz
-  cp -f source-code-pro/* ~/.fonts
-  fc-cache -f -v
+  cp -f source-code-pro/* ~/Library/Fonts/
   rm -r source-code-pro/
-
-  gsettings set org.gnome.desktop.interface monospace-font-name 'Source Code Pro Medium 11'
 }
 
 task_folders() {
   show_info "Creating default folders"
-  mkdir -pv "$HOME/Source/github"
+  mkdir -pv "$HOME/Source/"
   mkdir -pv "$HOME/Software"
-  mkdir -pv "$HOME/Scripts"
-  mkdir -pv "$HOME/Pictures/Screenshots"
   mkdir -pv "$HOME/tmp"
   mkdir -pv "$HOME/Workshops"
   mkdir -pv "$HOME/Virtual Machines"
 }
 
-task_dreymar() {
-  show_info "Set up dreymars extended keyboard layer "
-
-  if ls /usr/share/X11/dbak-* &>/dev/null; then
-    show_warning "Already installed, skipping."
-  else
-    git clone https://github.com/DreymaR/BigBagKbdTricks_XKB.git
-    cd BigBagKbdTricks_XKB
-    chmod u+x install-dreymar-xmod.sh
-    ./install-dreymar-xmod.sh -o
-    gsettings set org.gnome.desktop.input-sources xkb-options "['lv5:caps_switch_lock', 'misc:extend', 'shift:both_capslock', 'compose:rctrl']"
-    cd ..
-    rm -rf BigBagKbdTricks_XKB
-    # fix issues with f1-f12 media keys, capslock on numbers and space
-    cp -f data/extend /usr/share/X11/xkb/symbols/extend
-
-  fi
-}
-
-task_language() {
-  show_info "Installing missing language packs"
-  sudo apt-get -y install $(check-language-support -l en)
-  sudo apt-get -y install $(check-language-support -l de)
-
-  show_info "Setting up locales"
-  sudo cp -f "data/locale" "/etc/default/locale"
-}
-
-task_gsettings() {
-  show_info "Setting gsettings values"
-
-  gsettings set org.gnome.desktop.input-sources sources "[('xkb','de+nodeadkeys')]"
-  gsettings set com.canonical.indicator.datetime show-date true
-  gsettings set com.canonical.indicator.datetime show-day true
-  gsettings set com.canonical.indicator.datetime show-week-numbers true
-  gsettings set com.canonical.indicator.datetime time-format '24-hour'
-  gsettings set com.canonical.indicator.datetime timezone-name 'Europe/Berlin Mindelheim'
-  gsettings set com.canonical.indicator.messages applications "['thunderbird.desktop']"
-  gsettings set com.canonical.Unity integrated-menus true
-  gsettings set org.compiz.integrated show-hud "['disabled']"
-  gsettings set org.freedesktop.ibus.general engines-order "['xkb:de:nodeadkeys:ger']"
-  gsettings set org.freedesktop.ibus.general preload-engines "['xkb:de:nodeadkeys:ger']"
-  gsettings set org.gnome.calculator button-mode 'advanced'
-  gsettings set org.gnome.desktop.session idle-delay 'uint32 0'
-  #gsettings set org.gnome.desktop.lockdown disable-lock-screen true
-  gsettings set org.gnome.desktop.notifications application-children "['diodon', 'thunderbird']"
-  gsettings set org.gnome.desktop.screensaver lock-enabled false
-  gsettings set org.gnome.desktop.screensaver ubuntu-lock-on-suspend true
-  gsettings set org.gnome.desktop.wm.keybindings maximize "['<Primary><Super>Up']"
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down "['<Control><Alt><Super>Down']"
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-left "['<Control><Alt><Super>Left']"
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-right "['<Control><Alt><Super>Right']"
-  gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up "['<Control><Alt><Super>Up']"
-  gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down "['<Alt><Super>Down']"
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Alt><Super>Left']"
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Alt><Super>Right']"
-  gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up "['<Alt><Super>Up']"
-  gsettings set org.gnome.desktop.wm.keybindings toggle-shaded "['']"
-  gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier '<Super>'
-  gsettings set org.gnome.gnome-screenshot auto-save-directory "'file://$HOME/Pictures/Screenshots'"
-  gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
-  gsettings set org.gnome.nautilus.preferences executable-text-activation 'ask'
-  gsettings set org.gnome.seahorse.manager keyrings-selected "['secret-service://login', 'gnupg://']"
-  gsettings set org.gnome.settings-daemon.plugins.media-keys calculator '<Super>asciicircum'
-  gsettings set com.canonical.Unity.Launcher favorites "['unity://expo-icon', 'unity://devices', 'application://firefox.desktop', 'application://chromium-browser.desktop', 'application://google-chrome.desktop', 'application://org.gnome.Nautilus.desktop', 'application://gnome-terminal.desktop', 'application://code.desktop', 'application://jetbrains-webstorm.desktop', 'application://gnome-system-monitor.desktop', 'unity://running-apps']"
-  gsettings set org.gnome.settings-daemon.plugins.media-keys terminal '<Super>r'
-  gsettings set org.gnome.desktop.media-handling automount-open false
-  
-  # gnome 3
-  gsettings set org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:'
-  gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gtk/DecorationLayout':<'close,minimize,maximize:'>}"
-  gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'google-chrome.desktop', 'org.gnome.Nautilus.desktop', 'gnome-terminal.desktop', 'code.desktop', 'jetbrains-webstorm.desktop', 'gnome-system-monitor.desktop']"
-
-}
-
-task_dconf() {
-  show_info "Setting dconf settings"
-  dconf write /org/compiz/profiles/unity/plugins/core/vsize 2
-  dconf write /org/compiz/profiles/unity/plugins/core/hsize 2
-  dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window false
-  dconf write /org/gnome/desktop/wm/preferences/action-middle-click-titlebar "'none'"
-  dconf write /org/gtk/settings/file-chooser/show-hidden true
-  dconf write /org/gnome/nautilus/list-view/use-tree-view true
-  dconf write /com/canonical/indicator/power/show-time true
-  dconf write /com/canonical/indicator/power/show-percentage true
-
-  if [ "$DESKTOP_SESSION" = "gnome" ]; then
-    dconf load / < data/dconf-dump
-  fi
-}
-
 task_settings() {
-  # set timezone
-  timedatectl set-timezone Europe/Berlin
-
  # add user to shared folders group
   if [ $(getent group vboxsf) ]; then
     sudo usermod -a -G vboxsf "$USER"
   fi
-}
 
-task_cursor() {
-  show_info "Installing custom x-cursor theme 'numix'"
-  git clone https://github.com/uloco/numix-cursor.git
-  mkdir -pv "$HOME/.icons"
-  if [[ ! -d "$HOME/.icons/Numix-Cursor" ]]; then
-    cp -rv numix-cursor/theme/Numix-Cursor "$HOME/.icons/Numix-Cursor"
-  fi
-  gsettings set org.gnome.desktop.interface cursor-theme "Numix-Cursor"
-  rm -rf numix-cursor/
-
-}
-
-task_hardcodefixer() {
-  show_info "Fixing hardcoded desktop icons"
-  git clone https://github.com/Foggalong/hardcode-fixer.git
-  cd hardcode-fixer
-  sudo ./fix.sh
-  cd ..
-  rm -rf hardcode-fixer
-
-  # fix webstorm
-  sed -i "/^Icon/c\Icon=webstorm" "${HOME}/.local/share/applications/jetbrains-webstorm.desktop"
-
-  # fix eclipse
-  sed -i "/^Icon/c\Icon=eclipse" "$HOME/.local/share/applications/eclipse-jee.desktop"
-
-  # fix vs-code
-  sudo sed -i "/^Icon/c\Icon=vscode" "/usr/share/applications/code.desktop"
-}
-
-task_themeing() {
-  # numix
-  sudo add-apt-repository -y ppa:numix/ppa
-  sudo apt-get update
-
-  sudo apt-get install -y numix-gtk-theme \
-    numix-icon-theme-circle
-
-  gsettings set org.gnome.desktop.wm.preferences theme 'Numix'
-  gsettings set org.gnome.desktop.interface gtk-theme 'Numix'
-  gsettings set org.gnome.desktop.interface icon-theme 'Numix-Circle'
-
-  task_hardcodefixer
-  task_cursor
-}
-
-# install android sdk
-task_android() {
-
-  # perhaps this is enough
-  show_info "Installing android"
-
-  CURRENT_DIR=$(pwd);
-
-  # download android sdk
-  wget https://dl.google.com/android/repository/tools_r25.2.3-linux.zip
-  unzip -q tools_r25.2.3-linux.zip
-  if [ ! -d "${HOME}/Software/android/tools/" ]; then
-    mkdir -pv "${HOME}/Software/android/tools/"
-  fi
-  mv -v tools "${HOME}/Software/android/"
-
-  # install missing libs
-  sudo apt-get -y install libbz2-1.0
-  sudo apt-get -y install lib32z1 lib32ncurses5 lib32stdc++6
-
-  # set path
-  if ! grep "Set android path" "${BASHRC}"; then
-    echo -e '\n# Set android path\nexport PATH=${PATH}:${HOME}/Software/android/tools' >> "${BASHRC}"
-  fi
-  source "${BASHRC}"
-
-  # run sdk manager
-  if [ -s "${HOME}/Software/android/tools/android" ]; then
-    "${HOME}/Software/android/tools/android" &
-  else
-    echo "Android binary not found, exiting."
-    exit 1
-  fi
-
-  rm tools_r25.2.3-linux.zip
-
-  sudo cp data/android-sdk.desktop "${HOME}/.local/share/applications/"
-  cd "$CURRENT_DIR";
+  # TODO add macos settings here
 }
 
 task_terminal() {
   show_info "Setting up terminal colors and prompt"
+
+  cat data/terminal/.bash_profile >> "${HOME}/.bash_profile"
+
+  ln -s ~/.bash_profile ~/.bashrc
 
   if ! grep "${HOME}/.bash-aliases" "${BASHRC}" &>/dev/null; then
     cp data/terminal/.bash-aliases "${HOME}"
@@ -474,40 +175,5 @@ task_terminal() {
   fi
 
   # set bluloco color scheme
-  bash data/terminal/bluloco-gnome-terminal &
-
   source "${BASHRC}"
-}
-
-task_alternatives() {
-  show_info "Setting up default applications"
-  sudo sed -i 's/gedit.desktop/code.desktop/g' /etc/gnome/defaults.list
-  sudo update-alternatives --set editor /usr/bin/code
-}
-
-task_kernel() {
-  git clone https://github.com/mtompkins/linux-kernel-utilities.git
-  cd linux-kernel-utilities
-  ./update_ubuntu_kernel.sh --latest
-  cd ..
-  rm -rf linux-kernel-utilities
-}
-
-task_guake() {
-  sudo apt-get -y install guake
-
-  GUAKE_PATH="${HOME}/.gconf/apps"
-  mkdir -pv "${GUAKE_PATH}"
-  cp -r "data/guake" "${GUAKE_PATH}"
-  bash data/terminal/bluloco-guake &
-
-  cp data/autostart/guake.desktop "$HOME/.config/autostart/"
-}
-
-task_ccsm() {
-  if [ $(getent group vboxsf) ]; then
-    ./data/ccsm/import.py data/ccsm/unity-lowgfx.profile
-  else
-    ./data/ccsm/import.py data/ccsm/unity-custom.profile
-  fi
 }
