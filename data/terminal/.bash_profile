@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -32,9 +32,9 @@ fi
 # Proxy
 # export http_proxy=http://localhost:3128
 # export https_proxy=http://localhost:3128
-export http_proxy=http://magnum.grob.local:3128
-export https_proxy=http://magnum.grob.local:3128
-export no_proxy="localhost, 127.0.0.1, gmvm003lx, 172.28.0.66"
+# export http_proxy=http://magnum.grob.local:3128
+# export https_proxy=http://magnum.grob.local:3128
+# export no_proxy="localhost, 127.0.0.1, gmvm003lx, 172.28.0.66"
 
 
 ###-begin-npm-completion-###
@@ -115,8 +115,4 @@ export PATH="${PATH}:${HOME}/.local/bin"
 # Use gnu implementations instead of bsd
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
-
-# begin gnux completion
-source /Users/topuzoglu/.gnux/completion.sh
-# end gnux completion
 

@@ -14,7 +14,7 @@ task_install_base() {
 
   brew install mas
 
-  mas signing uloco@schiefewelt.de
+  mas signin uloco@schiefewelt.de
   # xcode
   mas install 497799835
   # copy-clip
@@ -149,12 +149,8 @@ task_folders() {
 }
 
 task_settings() {
- # add user to shared folders group
-  if [ $(getent group vboxsf) ]; then
-    sudo usermod -a -G vboxsf "$USER"
-  fi
-
   # TODO add macos settings here
+
 }
 
 task_terminal() {
