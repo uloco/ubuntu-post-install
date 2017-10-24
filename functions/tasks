@@ -10,20 +10,14 @@ task_install_base() {
   export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:${PATH}"
 
   brew update
+
+  show_warning "Please install the following apps manually from the appstore first and hit Enter"
+  show_warning "xcode"
+  show_warning "copyclip"
+  show_warning "apple configurator 2"
+
+  read
   
- # Does not work, App Store installs need to be manually made
-
-  # brew install mas
-
-  # mas signin uloco@schiefewelt.de
-  # # xcode
-  # mas install 497799835
-  # # copy-clip
-  # mas install 595191960
-  # # apple configurator 
-  # mas install 1037126344
-  # mas install 497799835
-
   brew install coreutils
   brew install binutils
   brew install diffutils
