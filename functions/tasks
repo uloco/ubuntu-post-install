@@ -17,7 +17,7 @@ task_install_base() {
   show_warning "apple configurator 2"
 
   read
-  
+
   brew install coreutils
   brew install binutils
   brew install diffutils
@@ -120,7 +120,6 @@ task_npm() {
     tslint-config-standard >/dev/null
 
   npm list --global --depth 0
-  npm completion >> "${BASHRC}"
 
   cd ${CURRENT_DIR}
 }
