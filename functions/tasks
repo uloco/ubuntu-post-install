@@ -11,17 +11,18 @@ task_install_base() {
 
   brew update
   
+ # Does not work, App Store installs need to be manually made
 
-  brew install mas
+  # brew install mas
 
-  mas signin uloco@schiefewelt.de
-  # xcode
-  mas install 497799835
-  # copy-clip
-  mas install 595191960
-  # apple configurator 
-  mas install 1037126344
-  mas install 497799835
+  # mas signin uloco@schiefewelt.de
+  # # xcode
+  # mas install 497799835
+  # # copy-clip
+  # mas install 595191960
+  # # apple configurator 
+  # mas install 1037126344
+  # mas install 497799835
 
   brew install coreutils
   brew install binutils
