@@ -36,7 +36,6 @@ case $1 in
     task_npm
     task_settings
     task_terminal
-    task_android
     task_git
     task_folders
   	;;

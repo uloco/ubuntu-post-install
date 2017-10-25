@@ -144,7 +144,11 @@ task_folders() {
 
 task_settings() {
   # TODO add macos settings here
-
+  cp ./data/.vimrc ${HOME}/
+  cp -r ./data/.config/* ${HOME}/.config/
+  defaults import com.vladalexa.MagicPrefs ./data/magicpref.plist
+  show_info "You need to import keyboard maestro macros manually from ./data/kbmaestro.kbmmacros"
+  sleep 3
 }
 
 task_terminal() {
