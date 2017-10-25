@@ -62,6 +62,7 @@ task_install_base() {
   brew install ansible
   brew install maven
 
+  brew cask install dropbox
   brew cask install java
   brew cask install google-chrome
   brew cask install thunderbird
