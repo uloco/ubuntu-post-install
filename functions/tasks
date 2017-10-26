@@ -94,6 +94,7 @@ task_install_base() {
   brew cask install android-studio
   brew cask install magicprefs
   brew cask install iterm2
+  brew cask install spotify
 
 
 }
@@ -162,6 +163,14 @@ task_folders() {
 
 task_settings() {
   # TODO add macos settings here
+
+  # Keyrepeat
+  defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+  # Faster Dock
+  defaults write com.apple.dock autohide-time-modifier -float 0.12;killall Dock
+  defaults write com.apple.Dock autohide-delay -float 0.05; killall Dock
+
   cp ./data/.vimrc ${HOME}/
   cp -r ./data/.config/* ${HOME}/.config/
   defaults import com.vladalexa.MagicPrefs ./data/magicpref.plist
