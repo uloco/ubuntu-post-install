@@ -31,10 +31,10 @@ case $1 in
     ;;
   '--base')
     task_install_base
+    task_terminal
     task_fonts
     task_npm
     task_settings
-    task_terminal
     task_git
     task_folders
   	;;

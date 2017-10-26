@@ -118,6 +118,8 @@ task_git() {
   else
     echo "Keep using default editor"
   fi
+  
+  mkdir -p "${HOME}/.local/bin/"
 
   cp data/scripts/git-* "${HOME}/.local/bin/"
 }
@@ -132,6 +134,7 @@ task_npm() {
     ionic \
     live-server \
     typescript \
+    tslint \
     tslint-config-standard >/dev/null
 
   npm list --global --depth 0
