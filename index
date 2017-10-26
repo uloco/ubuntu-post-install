@@ -30,7 +30,6 @@ case $1 in
     task_cntlm_config
     ;;
   '--base')
-    # task_mirrors
     task_install_base
     task_fonts
     task_npm
@@ -45,7 +44,7 @@ case $1 in
   	;;
 esac
 
-source "$HOME/.bashrc"
+source "$HOME/.bash_profile"
 
 # Restore defaut sudo timout
 trap 'sudo sed -i "/Defaults timestamp_timeout=-1/d" /etc/sudoers' 0

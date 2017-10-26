@@ -13,13 +13,15 @@ task_install_base() {
   # Any user from the admin group will be able to manage the homebrew and cask installation on the machine.
   
   # allow admins to manage homebrew's local install directory
-  chgrp -R admin /usr/local
-  chmod -R g+w /usr/local
+  sudo chgrp -R admin /usr/local
+  sudo chmod -R g+w /usr/local
   
   # allow admins to homebrew's local cache of formulae and source files
-  chgrp -R admin /Library/Caches/Homebrew
-  chmod -R g+w /Library/Caches/Homebrew
-  
+  if [ -e /Library/Caches/Homebrew ]; then
+    sudo chgrp -R admin /Library/Caches/Homebrew
+    sudo chmod -R g+w /Library/Caches/Homebrew
+  fi
+
   brew update
 
   show_warning "Please install the following apps manually from the appstore first and hit Enter"
@@ -71,10 +73,11 @@ task_install_base() {
 
   brew install node
   brew install ansible
+  
+  brew cask install java8 
   brew install maven
 
   brew cask install dropbox
-  brew cask install java
   brew cask install google-chrome
   brew cask install thunderbird
   brew cask install vagrant
