@@ -9,6 +9,17 @@ task_install_base() {
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:${PATH}"
 
+  # Configure homebrew permissions to allow multiple users on MAC OSX.
+  # Any user from the admin group will be able to manage the homebrew and cask installation on the machine.
+  
+  # allow admins to manage homebrew's local install directory
+  chgrp -R admin /usr/local
+  chmod -R g+w /usr/local
+  
+  # allow admins to homebrew's local cache of formulae and source files
+  chgrp -R admin /Library/Caches/Homebrew
+  chmod -R g+w /Library/Caches/Homebrew
+  
   brew update
 
   show_warning "Please install the following apps manually from the appstore first and hit Enter"
