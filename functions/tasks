@@ -182,6 +182,7 @@ task_settings() {
 task_terminal() {
   show_info "Setting up terminal colors and prompt"
 
+  touch ${HOME}/.hushlogin
   cat data/terminal/.bash_profile >> "${HOME}/.bash_profile"
 
   ln -s ~/.bash_profile ~/.bashrc
