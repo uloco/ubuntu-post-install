@@ -48,6 +48,7 @@ task_install_base() {
   brew install watch
   brew install wdiff --with-gettext
   brew install wget
+  brew install translate-shell
 
   brew install bash
   brew install emacs
