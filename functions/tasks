@@ -60,6 +60,7 @@ task_install_base() {
 
   brew install file-formula
   brew install git
+  brew install bash-completion
   brew install openssh
   brew install perl
   brew install python
