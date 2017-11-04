@@ -33,6 +33,7 @@ task_install_base() {
 
   brew install coreutils
   brew install binutils
+  ln -s /usr/bin/gcc `brew --prefix`/bin/gcc
   brew install diffutils
   brew install ed --with-default-names
   brew install findutils --with-default-names
