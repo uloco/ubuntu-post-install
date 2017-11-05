@@ -8,7 +8,7 @@ task_install_base() {
   # install homebrew
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:${PATH}"
-
+  
   # Configure homebrew permissions to allow multiple users on MAC OSX.
   # Any user from the admin group will be able to manage the homebrew and cask installation on the machine.
   
@@ -21,16 +21,16 @@ task_install_base() {
     sudo chgrp -R admin /Library/Caches/Homebrew
     sudo chmod -R g+w /Library/Caches/Homebrew
   fi
-
+  
   brew update
-
+  
   show_warning "Please install the following apps manually from the appstore first and hit Enter"
   show_warning "xcode"
   show_warning "copyclip"
   show_warning "apple configurator 2"
-
+  
   read
-
+  
   brew install coreutils
   brew install binutils
   ln -s /usr/bin/gcc `brew --prefix`/bin/gcc
@@ -50,14 +50,14 @@ task_install_base() {
   brew install wdiff --with-gettext
   brew install wget
   brew install translate-shell
-
+  
   brew install bash
   brew install emacs
   brew install less
   brew install m4
   brew install make
   brew install nano
-
+  
   brew install file-formula
   brew install git
   brew install bash-completion
@@ -73,19 +73,30 @@ task_install_base() {
   brew install htop
   brew install docker
   brew install docker-compose
-
+  
   brew install node
   brew install ansible
   
-  brew cask install java8 
+  brew cask install java8
   brew install maven
-
+  
   brew cask install dropbox
   brew cask install google-chrome
   brew cask install google-chrome-canary
   brew cask install thunderbird
   brew cask install vagrant
+  
   brew cask install webstorm
+  # fix webstorm alert sound on ctrl-cmd-left/right
+  mkdir -p ${HOME}/Library/KeyBindings
+  (
+    echo '{'
+    echo '  "^@\UF701" = "noop:";'
+    echo '  "^@\UF702" = "noop:";'
+    echo '  "^@\UF703" = "noop:";'
+    echo '}'
+  ) >> DefaultKeyBinding.dict
+  
   brew cask install visual-studio-code
   brew cask install franz
   brew cask install virtualbox
@@ -98,8 +109,8 @@ task_install_base() {
   brew cask install magicprefs
   brew cask install iterm2
   brew cask install spotify
-
-
+  
+  
 }
 
 task_git() {
@@ -115,7 +126,7 @@ task_git() {
   git config --global push.default simple
   git config --global credential.helper osxkeychain
   git config --global svn.rmdir true
-
+  
   if [[ "$GIT_EDITOR" =~ [yY](es)? ]] || [ -z "$GIT_EDITOR" ]; then
     echo "Using vim as default editor"
     git config --global core.editor "vim"
@@ -124,32 +135,32 @@ task_git() {
   fi
   
   mkdir -p "${HOME}/.local/bin/"
-
+  
   cp data/scripts/git-* "${HOME}/.local/bin/"
 }
 
 task_npm() {
   CURRENT_DIR=$(pwd);
-
+  
   npm install -g \
-    npm \
-    vsce \
-    cordova \
-    ionic \
-    live-server \
-    typescript \
-    tslint \
-    tslint-config-standard >/dev/null
-
+  npm \
+  vsce \
+  cordova \
+  ionic \
+  live-server \
+  typescript \
+  tslint \
+  tslint-config-standard >/dev/null
+  
   npm list --global --depth 0
-
+  
   cd ${CURRENT_DIR}
 }
 
 # install font source code pro
 
 task_fonts() {
-show_info "Installing missing fonts."
+  show_info "Installing missing fonts."
   tar -xzvf data/source-code-pro.tar.gz
   cp -f source-code-pro/* ~/Library/Fonts/
   rm -r source-code-pro/
@@ -166,14 +177,14 @@ task_folders() {
 
 task_settings() {
   # TODO add macos settings here
-
+  
   # Keyrepeat
   defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
-
+  
   # Faster Dock
   defaults write com.apple.dock autohide-time-modifier -float 0.12;killall Dock
   defaults write com.apple.Dock autohide-delay -float 0.05; killall Dock
-
+  
   cp ./data/.vimrc ${HOME}/
   cp -r ./data/.config/* ${HOME}/.config/
   defaults import com.vladalexa.MagicPrefs ./data/magicpref.plist
@@ -183,22 +194,28 @@ task_settings() {
 
 task_terminal() {
   show_info "Setting up terminal colors and prompt"
-
+  
   touch ${HOME}/.hushlogin
   cat data/terminal/.bash_profile >> "${HOME}/.bash_profile"
-
+  
   ln -s ~/.bash_profile ~/.bashrc
-
+  
   if ! grep "${HOME}/.bash-aliases" "${BASHRC}" &>/dev/null; then
     cp data/terminal/.bash-aliases "${HOME}"
-    echo -e '# Load custom bash aliases\nsource "${HOME}/.bash-aliases"\n' >> "${BASHRC}"
+    (
+      echo '# Load custom bash aliases'
+      echo 'source "${HOME}/.bash-aliases"'
+    ) >> "${BASHRC}"
   fi
-
+  
   if ! grep "${HOME}/.bash-prompt" "${BASHRC}" &>/dev/null; then
     cp data/terminal/.bash-prompt "${HOME}"
-    echo -e '# Load custom bash prompt\nsource "${HOME}/.bash-prompt"\n' >> "${BASHRC}"
+    (
+      echo '# Load custom bash prompt'
+      echo 'source "${HOME}/.bash-prompt"'
+    ) >> "${BASHRC}"
   fi
-
+  
   # set bluloco color scheme
   source "${BASHRC}"
 }
