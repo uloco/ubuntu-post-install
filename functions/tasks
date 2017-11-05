@@ -85,7 +85,6 @@ task_install_base() {
   brew cask install google-chrome-canary
   brew cask install thunderbird
   brew cask install vagrant
-  brew cask install jetbrains-toolbox
   brew cask install webstorm
   brew cask install visual-studio-code
   brew cask install franz
