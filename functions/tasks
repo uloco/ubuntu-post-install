@@ -95,7 +95,7 @@ task_install_base() {
     echo '  "^@\UF702" = "noop:";'
     echo '  "^@\UF703" = "noop:";'
     echo '}'
-  ) >> DefaultKeyBinding.dict
+  ) >> ${HOME}/Library/KeyBindings/DefaultKeyBinding.dict
   
   brew cask install visual-studio-code
   brew cask install franz
