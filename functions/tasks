@@ -94,7 +94,12 @@ task_install_base() {
     echo '  "^@\UF701" = "noop:";'
     echo '  "^@\UF702" = "noop:";'
     echo '  "^@\UF703" = "noop:";'
+    echo '  "\UF729"  = moveToBeginningOfLine:; // home'
+    echo '  "\UF72B"  = moveToEndOfLine:; // end'
+    echo '  "$\UF729" = moveToBeginningOfLineAndModifySelection:; // shift-home'
+    echo '  "$\UF72B" = moveToEndOfLineAndModifySelection:; // shift-end'
     echo '}'
+
   ) >> ${HOME}/Library/KeyBindings/DefaultKeyBinding.dict
   
   brew cask install visual-studio-code
