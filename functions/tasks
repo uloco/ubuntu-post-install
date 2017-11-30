@@ -114,7 +114,7 @@ task_install_base() {
   brew cask install magicprefs
   brew cask install iterm2
   brew cask install spotify
-  
+  brew cask install postman
   
 }
 
