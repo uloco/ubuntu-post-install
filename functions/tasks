@@ -73,7 +73,7 @@ task_install_base() {
   brew install htop
   brew install docker
   brew install docker-compose
-  
+  brew install brew-cask-completion  
   brew install node
   brew install ansible
   
