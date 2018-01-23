@@ -192,13 +192,11 @@ task_settings() {
   defaults write com.apple.dock autohide-time-modifier -float 0.12;killall Dock
   defaults write com.apple.Dock autohide-delay -float 0.05; killall Dock
  
-  # vim 
-  cp ./data/.vimrc ${HOME}/
-
-  # vifm
-  mkdir -p ${HOME}/.vifm/colors
-  cp ./data/vifmrc ${HOME}/.vifm/
-  cp ./data/terminal/bluloco-dark.vifm ${HOME}/.vifm/colors/
+  # Setup dotfiles
+  git clone https://github.com/uloco/dotfiles.git
+  cd dotfiles/
+  ./setup-dotfiles.sh
+  cd ../
 
   cp -r ./data/.config/* ${HOME}/.config/
   defaults import com.vladalexa.MagicPrefs ./data/magicpref.plist
