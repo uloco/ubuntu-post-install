@@ -117,7 +117,7 @@ task_install_base() {
   brew cask install iterm2
   brew cask install spotify
   brew cask install postman
-  
+  brew cask install michaelvillar-timer  
 }
 
 task_git() {
