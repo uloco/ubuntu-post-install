@@ -78,6 +78,7 @@ task_install_base() {
   brew install brew-cask-completion  
   brew install node
   brew install ansible
+  brew install rename
   
   brew cask install java8
   brew install maven
