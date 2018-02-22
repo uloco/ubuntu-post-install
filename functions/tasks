@@ -30,7 +30,10 @@ task_install_base() {
   show_warning "apple configurator 2"
   
   read
-  
+ 
+  sudo xcode-select --install
+  sudo xcodebuild -license agree
+
   brew install coreutils
   brew install binutils
   ln -s /usr/bin/gcc `brew --prefix`/bin/gcc
