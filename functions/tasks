@@ -12,7 +12,7 @@ task_install_base() {
   # Configure homebrew permissions to allow multiple users on MAC OSX.
   # Any user from the admin group will be able to manage the homebrew and cask installation on the machine.
   
-  # allow admins to manage homebrew's local install directory
+  show_info "allow admins to manage homebrew's local install directory"
   sudo chgrp -R admin $(brew --prefix)/*
   sudo chmod -R g+w $(brew --prefix)/*
   
