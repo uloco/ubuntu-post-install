@@ -23,14 +23,22 @@ task_install_base() {
   fi
   
   brew update
-  
-  show_warning "Please install the following apps manually from the appstore first and hit Enter"
-  show_warning "xcode"
-  show_warning "copyclip"
-  show_warning "apple configurator 2"
-  
-  read
- 
+
+  # install mac app store cli tool
+  brew install mas
+
+  show_info "Sign in with apple id"
+  mas signin uloco@schiefewelt.de --dialog 
+
+  # xcode
+  mas install 497799835
+  # copy clip
+  mas install 595191960
+  # apple configurator 2
+  mas install 1037126344
+  # color slurp
+  mas install 1287239339
+
   sudo xcode-select --install
   sudo xcodebuild -license agree
 
