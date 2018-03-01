@@ -206,12 +206,6 @@ task_settings() {
   # Faster Dock
   defaults write com.apple.dock autohide-time-modifier -float 0.12;killall Dock
   defaults write com.apple.Dock autohide-delay -float 0.05; killall Dock
- 
-  # Setup dotfiles
-  git clone https://github.com/uloco/dotfiles.git
-  cd dotfiles/
-  ./setup-dotfiles.sh
-  cd ../
 
   cp -r ./data/.config/* ${HOME}/.config/
   defaults import com.vladalexa.MagicPrefs ./data/magicpref.plist
@@ -223,26 +217,17 @@ task_terminal() {
   show_info "Setting up terminal colors and prompt"
   
   touch ${HOME}/.hushlogin
-  cat data/terminal/.bash_profile >> "${HOME}/.bash_profile"
+ 
+  # Setup dotfiles
+  git clone https://github.com/uloco/dotfiles.git
+  ./dotfiles/setup-dotfiles.sh
+
+  # get aliases and stuff
+  source "${BASHRC}"
   
-  ln -s ~/.bash_profile ~/.bashrc
-  
-  if ! grep "${HOME}/.bash-aliases" "${BASHRC}" &>/dev/null; then
-    cp data/terminal/.bash-aliases "${HOME}"
-    (
-      echo '# Load custom bash aliases'
-      echo 'source "${HOME}/.bash-aliases"'
-    ) >> "${BASHRC}"
-  fi
-  
-  if ! grep "${HOME}/.bash-prompt" "${BASHRC}" &>/dev/null; then
-    cp data/terminal/.bash-prompt "${HOME}"
-    (
-      echo '# Load custom bash prompt'
-      echo 'source "${HOME}/.bash-prompt"'
-    ) >> "${BASHRC}"
-  fi
-  
+  # install powerline-shell
+  pip install powerline-shell
+
   # set bluloco color scheme
   source "${BASHRC}"
 }
