@@ -188,6 +188,9 @@ task_folders() {
 
 task_settings() {
   # TODO add macos settings here
+
+  # Fix font aliasing on Mojave
+  defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO
   
   # Keyrepeat
   defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
