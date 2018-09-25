@@ -12,9 +12,9 @@ task_install_base() {
   # Configure homebrew permissions to allow multiple users on MAC OSX.
   # Any user from the admin group will be able to manage the homebrew and cask installation on the machine.
   
-  # allow admins to manage homebrew's local install directory
-  sudo chgrp -R admin /usr/local
-  sudo chmod -R g+w /usr/local
+  show_info "allow admins to manage homebrew's local install directory"
+  sudo chgrp -R admin $(brew --prefix)/*
+  sudo chmod -R g+w $(brew --prefix)/*
   
   # allow admins to homebrew's local cache of formulae and source files
   if [ -e /Library/Caches/Homebrew ]; then
@@ -23,14 +23,25 @@ task_install_base() {
   fi
   
   brew update
-  
-  show_warning "Please install the following apps manually from the appstore first and hit Enter"
-  show_warning "xcode"
-  show_warning "copyclip"
-  show_warning "apple configurator 2"
-  
-  read
-  
+
+  # install mac app store cli tool
+  brew install mas
+
+  show_info "Sign in with apple id"
+  mas signin uloco@schiefewelt.de --dialog 
+
+  # xcode
+  mas install 497799835
+  # copy clip
+  mas install 595191960
+  # apple configurator 2
+  mas install 1037126344
+  # color slurp
+  mas install 1287239339
+
+  sudo xcode-select --install
+  sudo xcodebuild -license agree
+
   brew install coreutils
   brew install binutils
   ln -s /usr/bin/gcc `brew --prefix`/bin/gcc
@@ -198,12 +209,6 @@ task_settings() {
   # Faster Dock
   defaults write com.apple.dock autohide-time-modifier -float 0.12;killall Dock
   defaults write com.apple.Dock autohide-delay -float 0.05; killall Dock
- 
-  # Setup dotfiles
-  git clone https://github.com/uloco/dotfiles.git
-  cd dotfiles/
-  ./setup-dotfiles.sh
-  cd ../
 
   cp -r ./data/.config/* ${HOME}/.config/
   defaults import com.vladalexa.MagicPrefs ./data/magicpref.plist
@@ -215,26 +220,17 @@ task_terminal() {
   show_info "Setting up terminal colors and prompt"
   
   touch ${HOME}/.hushlogin
-  cat data/terminal/.bash_profile >> "${HOME}/.bash_profile"
+ 
+  # Setup dotfiles
+  git clone https://github.com/uloco/dotfiles.git
+  ./dotfiles/setup-dotfiles.sh
+
+  # get aliases and stuff
+  source "${BASHRC}"
   
-  ln -s ~/.bash_profile ~/.bashrc
-  
-  if ! grep "${HOME}/.bash-aliases" "${BASHRC}" &>/dev/null; then
-    cp data/terminal/.bash-aliases "${HOME}"
-    (
-      echo '# Load custom bash aliases'
-      echo 'source "${HOME}/.bash-aliases"'
-    ) >> "${BASHRC}"
-  fi
-  
-  if ! grep "${HOME}/.bash-prompt" "${BASHRC}" &>/dev/null; then
-    cp data/terminal/.bash-prompt "${HOME}"
-    (
-      echo '# Load custom bash prompt'
-      echo 'source "${HOME}/.bash-prompt"'
-    ) >> "${BASHRC}"
-  fi
-  
+  # install powerline-shell
+  pip install powerline-shell
+
   # set bluloco color scheme
   source "${BASHRC}"
 }
