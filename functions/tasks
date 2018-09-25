@@ -65,9 +65,6 @@ task_install_base() {
   # Microsoft Remote Desktop
   # mas install 715768417
 
-  # CCMenu
-  # mas install 603117688
-
   # GIPHY CAPTURE
   # mas install 668208984
 
@@ -141,8 +138,6 @@ task_install_base() {
   brew cask install dropbox
   brew cask install google-chrome
   brew cask install google-chrome-canary
-  brew cask install thunderbird
-  brew cask install vagrant
   
   brew cask install webstorm
   # fix webstorm alert sound on ctrl-cmd-left/right
@@ -161,19 +156,18 @@ task_install_base() {
   ) >> ${HOME}/Library/KeyBindings/DefaultKeyBinding.dict
   
   brew cask install visual-studio-code
-  brew cask install franz
-  brew cask install virtualbox
-  brew cask install docker
   brew cask install ccmenu
   brew cask install karabiner-elements
-  brew cask install keyboard-maestro
   brew cask install android-sdk
   brew cask install android-studio
-  brew cask install magicprefs
   brew cask install iterm2
   brew cask install spotify
   brew cask install postman
-  brew cask install michaelvillar-timer  
+  brew cask install michaelvillar-timer
+  brew cask install alfred
+  brew cask install whatsapp
+  brew cask install meld
+  brew cask install slack
 }
 
 task_git() {
