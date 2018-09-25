@@ -27,17 +27,61 @@ task_install_base() {
   # install mac app store cli tool
   brew install mas
 
-  show_info "Sign in with apple id"
-  mas signin uloco@schiefewelt.de --dialog 
+  open "/Applications/App Store.app";
 
-  # xcode
-  mas install 497799835
-  # copy clip
-  mas install 595191960
-  # apple configurator 2
-  mas install 1037126344
-  # color slurp
-  mas install 1287239339
+  show_info "Mac AppStore CLI utility is broken on Mojave.
+  Please install the following apps manually:
+    * Xcode 
+    * Copy Clip
+    * Apple Configurator 2
+    * Trello
+    * Magnet
+    * Microsoft Remote Desktop
+    * CCMenu
+    * Giphy Capture
+    * MSG Viewer for Outlook
+    * Pages
+    * Color Slurp
+    * Lastpass
+  "
+  
+  read -p "Ensure you are signed in to the App Store, then hit enter. ";
+
+  # Xcode
+  # mas install 497799835
+
+  # Copy Clip
+  # mas install 595191960
+
+  # Apple Configurator 2
+  # mas install 1037126344
+
+  # Trello
+  # mas install 1278508951
+
+  # Magnet
+  # mas install 441258766
+
+  # Microsoft Remote Desktop
+  # mas install 715768417
+
+  # CCMenu
+  # mas install 603117688
+
+  # GIPHY CAPTURE
+  # mas install 668208984
+
+  # MSG Viewer for Outlook
+  # mas install 973213640
+
+  # Pages
+  # mas install 409201541
+
+  # ColorSlurp
+  # mas install 1287239339
+
+  # LastPass
+  # mas install 926036361
 
   sudo xcode-select --install
   sudo xcodebuild -license agree
@@ -133,13 +177,8 @@ task_install_base() {
 }
 
 task_git() {
-  show_info "Initial git config"
-  echo -n "Git Name: "
-  read GIT_USER
-  echo -n "Git Email: "
-  read GIT_EMAIL
-  echo -n "Do you want to use vim as your git editor: (Y/n) "
-  read GIT_EDITOR
+  show_info "Setup git"
+  export GIT_EMAIL="uloco@schiefewelt.de"
   git config --global user.name "$GIT_USER"
   git config --global user.email "$GIT_EMAIL"
   git config --global push.default simple
@@ -147,23 +186,45 @@ task_git() {
   git config --global svn.rmdir true
   git config --global diff.tool vimdiff
   git config --global difftool.prompt false
-  git config --global alias.d difftool 
+  git config --global core.editor "vim"
 
-  if [[ "$GIT_EDITOR" =~ [yY](es)? ]] || [ -z "$GIT_EDITOR" ]; then
-    echo "Using vim as default editor"
-    git config --global core.editor "vim"
-  else
-    echo "Keep using default editor"
-  fi
+  # aliases
+  git config --global alias.d difftool 
+  git config --global alias.b = branch
+  git config --global alias.d = difftool
+  git config --global alias.s = status
+  git config --global alias.ss = status -s
+  git config --global alias.a = add
+  git config --global alias.aa = add .
+  git config --global alias.ba = branch --all
+  git config --global alias.co = checkout
+  git config --global alias.cob = checkout -b
+  git config --global alias.c = commit
+  git config --global alias.cm = commit -m
+  git config --global alias.cam = commit --amend -C HEAD
+  git config --global alias.pu = "! git push -u origin $(git rev-parse --abbrev-ref HEAD)"
+  git config --global alias.pt = push --follow-tags
+  git config --global alias.r = reset
+  git config --global alias.rl = reset @^
+  git config --global alias.rls = reset @^ --soft
+  git config --global alias.g = log --graph --pretty=format:'%C(bold)%h%Creset%C(magenta)%d%Creset %s %C(yellow)<%an> %C(cyan)(%cr)%Creset' --abbrev-commit --date=relative
+  git config --global alias.gs = g --stat
+  git config --global alias.l = log
+  git config --global alias.ll = l --graph --pretty=oneline --abbrev-commit
+  git config --global alias.d = diff
+  git config --global alias.dc = d --cached
+  git config --global alias.pop = stash pop
+  git config --global alias.delete = push --delete origin
+  git config --global alias.cleanup = "! git remote prune origin && git cleanup-branches"
+  git config --global alias.sh = show
+  git config --global alias.t = tag
   
+  # Setup custom git scripts
   mkdir -p "${HOME}/.local/bin/"
-  
   cp data/scripts/git-* "${HOME}/.local/bin/"
 }
 
 task_npm() {
-  CURRENT_DIR=$(pwd);
-  
   npm install -g \
   npm \
   vsce \
@@ -175,11 +236,7 @@ task_npm() {
   tslint-config-standard >/dev/null
   
   npm list --global --depth 0
-  
-  cd ${CURRENT_DIR}
 }
-
-# install font source code pro
 
 task_fonts() {
   show_info "Installing missing fonts."
@@ -209,11 +266,6 @@ task_settings() {
   # Faster Dock
   defaults write com.apple.dock autohide-time-modifier -float 0.12;killall Dock
   defaults write com.apple.Dock autohide-delay -float 0.05; killall Dock
-
-  cp -r ./data/.config/* ${HOME}/.config/
-  defaults import com.vladalexa.MagicPrefs ./data/magicpref.plist
-  show_info "You need to import keyboard maestro macros manually from ./data/kbmaestro.kbmmacros"
-  sleep 3
 }
 
 task_terminal() {
