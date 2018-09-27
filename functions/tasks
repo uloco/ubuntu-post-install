@@ -237,6 +237,7 @@ task_fonts() {
   tar -xzvf data/source-code-pro.tar.gz
   cp -f source-code-pro/* ~/Library/Fonts/
   rm -r source-code-pro/
+  cp -f data/fonts/* ~/Library/Fonts/
 }
 
 task_folders() {
