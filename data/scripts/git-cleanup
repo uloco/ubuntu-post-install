@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-git-checkout-default &>/dev/null && git branch -vv | grep 'origin/.*: gone]' |
-  awk '{print \$1}' | xargs git branch -d
