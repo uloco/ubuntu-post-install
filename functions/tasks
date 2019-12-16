@@ -257,6 +257,8 @@ task_settings() {
   
   # Keyrepeat
   defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+  defaults write -g InitialKeyRepeat -int 15
+  defaults write -g KeyRepeat -int 2
   
   # Faster Dock
   defaults write com.apple.dock autohide-time-modifier -float 0.12;killall Dock
